@@ -5,7 +5,7 @@
         <div class="col-auto">
           <q-card class="shadow-10 bg-grey-2">
             <q-card-section :class="{ 'q-pa-lg': !$q.platform.is.mobile }">
-              <bitter-payer-logo></bitter-payer-logo>
+              <bittery-logo></bittery-logo>
               <div class="text-primary text-h6"
                    :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.8}px` : `width: ${screenWidth * 0.15}px`">
                 Create your account
@@ -22,14 +22,14 @@
 </template>
 
 <script lang="ts">
-  import { isLogged } from '../../api/session-service';
+  import { isLogged } from 'src/api/session-service';
   import GlobalMixin from "../../mixins/global-mixin";
-  import BitterPayerLogo from 'components/utils/BitterPayerLogo.vue';
+  import BitteryLogo from 'components/utils/BitteryLogo.vue';
   import RegisterForm from 'components/register/RegisterForm.vue';
 
   export default GlobalMixin.extend({
     name: 'RegisterPage',
-    components: { BitterPayerLogo, RegisterForm },
+    components: { BitteryLogo, RegisterForm },
     mounted() {
       if (isLogged()) {
         this.$router.push('/');

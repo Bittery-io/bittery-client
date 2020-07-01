@@ -23,14 +23,13 @@
 </template>
 
 <script lang="ts">
-  import BitterPayerLogo from 'components/utils/BitterPayerLogo.vue';
+  import BitteryLogo from 'components/utils/BitteryLogo.vue';
   import LoginForm from 'components/login/LoginForm.vue';
   import RegisterForm from 'components/register/RegisterForm.vue';
-  import { isLogged } from '../api/session-service';
   import GlobalMixin from "../mixins/global-mixin";
 
   export default GlobalMixin.extend({
     name: 'MainLayoutInformative',
-    components: { BitterPayerLogo, LoginForm, RegisterForm },
+    components: { BitteryLogo, LoginForm, RegisterForm },
   });
 </script>

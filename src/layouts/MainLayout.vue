@@ -12,7 +12,7 @@
         />
 
         <q-toolbar-title class="text-secondary">
-          <bitter-payer-logo style="width:100px; height:100%;"></bitter-payer-logo>
+          <bittery-logo style="width:100px; height:100%;"></bittery-logo>
         </q-toolbar-title>
 <!--        <q-toolbar-title class="text-bold text-right">-->
 <!--          <login-menu-button></login-menu-button>-->
@@ -54,13 +54,13 @@
   import EssentialLink from 'components/EssentialLink';
   import GlobalMixin from '../mixins/global-mixin';
   import LoginMenuButton from '../components/login/LoginMenuButton';
-  import BitterPayerLogo from '../components/utils/BitterPayerLogo';
+  import BitteryLogo from '../components/utils/BitteryLogo';
 
   export default GlobalMixin.extend({
     name: 'MainLayout',
 
     components: {
-      EssentialLink, LoginMenuButton, BitterPayerLogo
+      EssentialLink, LoginMenuButton, BitteryLogo
     },
     methods: {
       isActive(essentialLink) {

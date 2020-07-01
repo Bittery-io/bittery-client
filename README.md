@@ -1,4 +1,4 @@
-# Bitter Payer (bitter-payer-client)
+# Bittery (bittery-client)
 
 Better Bitcoin payments
 

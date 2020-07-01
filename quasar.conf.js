@@ -248,7 +248,7 @@ module.exports = configure((ctx) => ({
     builder: {
       // https://www.electron.build/configuration/configuration
 
-      appId: 'bitter-payer-client',
+      appId: 'bittery-client',
     },
 
     // More info: https://quasar.dev/quasar-cli/developing-electron-apps/node-integration

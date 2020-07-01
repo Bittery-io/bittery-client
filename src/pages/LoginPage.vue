@@ -5,7 +5,7 @@
         <div class="col-auto">
           <q-card class="q-ma-md shadow-10 bg-grey-2">
             <q-card-section :class="{ 'q-pa-lg': !$q.platform.is.mobile }">
-              <bitter-payer-logo></bitter-payer-logo>
+              <bittery-logo></bittery-logo>
               <div class="text-primary text-h6"
                    :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.8}px` : `width: ${screenWidth * 0.15}px`">
                 Sign in to continue
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-  import BitterPayerLogo from 'components/utils/BitterPayerLogo.vue';
+  import BitteryLogo from 'components/utils/BitteryLogo.vue';
   import LoginForm from 'components/login/LoginForm.vue';
   import RegisterForm from 'components/register/RegisterForm.vue';
   import { isLogged } from '../api/session-service';
@@ -30,7 +30,7 @@
 
   export default GlobalMixin.extend({
     name: 'LoginPage',
-    components: { BitterPayerLogo, LoginForm, RegisterForm },
+    components: { BitteryLogo, LoginForm, RegisterForm },
     mounted() {
       this.pushToMainPathIfLogged();
       // eslint-disable-next-line @typescript-eslint/no-misused-promises

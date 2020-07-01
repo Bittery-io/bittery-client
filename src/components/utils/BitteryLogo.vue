@@ -10,7 +10,7 @@
   import GlobalMixin from 'src/mixins/global-mixin';
 
   export default GlobalMixin.extend({
-    name: 'BitterPayerLogo',
+    name: 'BitteryLogo',
     props: {
       inverted: {
         type: Boolean,
