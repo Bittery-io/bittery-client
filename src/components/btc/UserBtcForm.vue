@@ -1,0 +1,47 @@
+<template>
+  <q-card class="q-ma-md shadow-10 bg-grey-2" v-if="this.userBtcWalletDto">
+    <q-card-section>
+      <div class="text-h4">Your Bitcoin wallet</div>
+    </q-card-section>
+    <q-card-section>
+      <div class="row q-pa-xs">
+        <div class="col-12">
+          <q-input
+            type="text"
+            onkeypress="return false;"
+            name="email"
+            square
+            :value="this.userBtcWalletDto.bip49RootPublicKey"
+            label="BIP49 Root Public Key">
+            <template v-slot:before>
+              <q-icon style="width:50px;" color="primary" name="mdi-key" />
+            </template>
+          </q-input>
+        </div>
+      </div>
+    </q-card-section>
+  </q-card>
+</template>
+
+<script lang="ts">
+  import GlobalMixin from "../../mixins/global-mixin";
+  import { UserLndDto } from 'src/dto/user-lnd-dto';
+  import QrCode from 'components/utils/QrCode.vue';
+
+  export default GlobalMixin.extend({
+    components: { QrCode },
+    name: 'UserBtcForm',
+    props: {
+      userBtcWalletDto: {
+        type: UserLndDto,
+        required: true,
+      },
+    },
+    methods: {
+      openUrl(url: string) {
+        window.open(url, '_blank');
+      },
+    },
+  });
+
+</script>
