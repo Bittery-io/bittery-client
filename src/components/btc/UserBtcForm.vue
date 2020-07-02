@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-ma-md shadow-10 bg-grey-2" v-if="this.userBtcWalletDto">
     <q-card-section>
-      <div class="text-h4">Your Bitcoin wallet</div>
+      <header-qchip text="Your Bitcoin wallet" icon="mdi-bitcoin"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row q-pa-xs">
@@ -27,9 +27,10 @@
   import GlobalMixin from "../../mixins/global-mixin";
   import { UserLndDto } from 'src/dto/user-lnd-dto';
   import QrCode from 'components/utils/QrCode.vue';
+  import HeaderQchip from 'components/utils/HeaderQchip.vue';
 
   export default GlobalMixin.extend({
-    components: { QrCode },
+    components: { QrCode, HeaderQchip },
     name: 'UserBtcForm',
     props: {
       userBtcWalletDto: {

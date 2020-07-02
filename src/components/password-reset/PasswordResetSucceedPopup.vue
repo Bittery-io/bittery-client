@@ -4,20 +4,22 @@
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
-            <q-icon size="xl" name="mdi-qrcode" color="primary"/>
+            <q-icon size="xl" name="mdi-lock-check" color="primary"/>
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h5 text-primary text-center">
-              {{header}}
+              Password reset succeed
             </div>
-            <qr-code class="q-mt-xs" :width="500" :height="500" id="big-qr-code" :text="qrCode"></qr-code>
+            <div class="text-primary text-primary text-center text-subtitle1">
+              You can sign in using your new password
+            </div>
           </div>
         </div>
         <div class="row justify-center q-pt-md">
-          <div class="col-auto text-primary">
-            <q-btn outlined @click="close()" color="primary">Close</q-btn>
+          <div class="col-auto">
+            <q-btn outlined @click="closeAndGoToLoginView()" color="primary" text-color="white">Sign in</q-btn>
           </div>
         </div>
       </q-card-section>
@@ -29,26 +31,21 @@
 </style>
 
 <script lang="ts">
-  import Vue from 'vue';
-  import QrCode from 'components/utils/QrCode.vue';
-  export default Vue.extend({
-    name: 'QrCodePopup',
-    components: { QrCode },
+
+  import GlobalMixin from 'src/mixins/global-mixin';
+
+  export default GlobalMixin.extend({
+    name: 'PasswordResetSucceedPopup',
+    components: {},
     props: {
       show: {
         type: Boolean,
         required: true,
       },
-      qrCode: {
-        type: String,
-        required: false,
-        default: '',
-      },
     },
     data() {
       return {
         showPopup: false,
-        header: 'LND connect Qr Code',
       };
     },
     watch: {
@@ -57,8 +54,9 @@
       },
     },
     methods: {
-      close() {
+      closeAndGoToLoginView() {
         this.showPopup = false;
+        this.$router.push('/login');
       },
     },
   });

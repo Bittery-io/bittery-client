@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-ma-md shadow-10 bg-grey-2" v-if="this.customLndDto">
     <q-card-section>
-      <div class="text-h4">Your Lightning Network node</div>
+      <header-qchip text="Your Lightning Network node"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row">
@@ -105,9 +105,10 @@
   import { showNotificationInfo } from 'src/api/notificatios-api';
   import QrCodePopup from 'components/utils/QrCodePopup.vue';
   import LndFormMixin from './mixins/lnd-form-mixin';
+  import HeaderQchip from 'components/utils/HeaderQchip.vue';
 
   export default GlobalMixin.extend({
-    components: { QrCode, QrCodePopup },
+    components: { QrCode, QrCodePopup, HeaderQchip },
     mixins: [ LndFormMixin ],
     name: 'CustomLndForm',
     props: {

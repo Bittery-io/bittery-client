@@ -20,7 +20,7 @@ export const showNotificationError = (text: string, caption?: string) => {
     message: text,
     icon: 'mdi-information',
     position: 'top',
-    timeout: 10000,
+    timeout: 5000,
     progress: true,
     closeBtn: true,
     type: 'negative',

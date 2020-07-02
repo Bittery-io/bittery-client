@@ -41,16 +41,18 @@
         this.showLoading = false;
         console.log('User lnd data: ', res.data);
         this.userLndDto = res.data;
-      }, (err) => {
+      }, async (err) => {
         console.log('User lnd get err: ', err);
-        get(this.$axios, '/api/lnd/custom', (res: any) => {
+        get(this.$axios, '/api/lnd/custom', async (res: any) => {
           this.showLoading = false;
           console.log('Custom lnd data: ', res.data);
           this.customLndDto = res.data;
-        }, (err) => {
+        }, async (err) => {
           console.log('Custom lnd get err: ', err);
+          await this.sleep(200);
           this.showLoading = false;
-          this.$router.push('/lnd/setup');
+          await this.sleep(200);
+          await this.$router.push('/lnd/setup');
         });
       });
       get(this.$axios, '/api/btc/wallet', (res: any) => {

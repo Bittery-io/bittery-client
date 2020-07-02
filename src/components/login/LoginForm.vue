@@ -22,6 +22,9 @@
                 :rules="[ val => (
                         loginformstate.email !== undefined &&
                         loginformstate.email.$valid) || 'Adres email jest wymagany']">
+                <template v-slot:prepend>
+                  <q-icon color="primary" name="mdi-account "/>
+                </template>
               </q-input>
             </validate>
           </div>
@@ -36,21 +39,31 @@
                 name="password"
                 v-model="password"
                 label="Hasło"
-                type="password"
+                :type="isPwd ? 'password' : 'text'"
                 :rules="[ val => (
                         loginformstate.password !== undefined &&
                         loginformstate.password.$valid) || 'Hasło jest wymagane.']"
                 required>
+                <template v-slot:prepend>
+                  <q-icon color="primary" name="mdi-lock "/>
+                </template>
+                <template v-slot:append>
+                  <q-icon
+                    :name="isPwd ? 'visibility_off' : 'visibility'"
+                    class="cursor-pointer"
+                    @click="isPwd = !isPwd"
+                  />
+                </template>
               </q-input>
             </validate>
           </div>
         </div>
-        <div class="row" :class="{ 'q-pt-md': !$q.platform.is.mobile }">
+        <div class="row">
           <div class="col-grow">
             <q-btn type="submit"
                    color="primary"
                    icon="mdi-login"
-                   label="ZALOGUJ SIĘ"
+                   label="SIGN IN"
                    :disabled="!(loginformstate.email !== undefined &&
                                 !loginformstate.password !== undefined &&
                                  loginformstate.password.$valid &&
@@ -61,7 +74,14 @@
         <div class="row q-pt-md">
           <div class="col-grow">
             <q-chip clickable icon="mdi-information" class="shadow-10" @click="$router.push('/register')" color="grey-8" text-color="white">
-              Nie masz konta? Zarejestruj się!
+              Don't have account yet? Sign up.
+            </q-chip>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-grow">
+            <q-chip clickable icon="mdi-account-lock" class="shadow-10" @click="$router.push('/password/reset')" color="grey-8" text-color="white">
+              Forgot your password?
             </q-chip>
           </div>
         </div>
@@ -88,6 +108,7 @@
       loginButtonLocked: false,
       emailInitialValid: true,
       passwordInitialValid: true,
+      isPwd: true,
     }),
     name: 'LoginForm',
     watch: {

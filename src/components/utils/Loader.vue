@@ -17,7 +17,7 @@
       show() {
         if (this.show) {
           this.$q.loading.show({
-            message: 'Proszę czekać',
+            message: 'Please wait',
           });
         } else if (this.$q.loading.isActive) {
           this.$q.loading.hide();

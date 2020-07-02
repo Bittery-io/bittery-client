@@ -1,35 +1,13 @@
 <template>
   <div class="row">
     <div class="col-grow">
-      <registered-popup :show="registered"></registered-popup>
       <loader :show="showLoading"></loader>
-      <error-popup header="Registration failed"
+      <error-popup header="Login failed"
                    :error-message="errorBannerMessage"
                    :show="errorBannerMessage !== ''">
       </error-popup>
-      <vue-form :state='registerformstate' @submit.prevent="onSubmit">
-        <div class="row" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
-          <div class="col-grow">
-            <validate>
-              <q-input
-                outlined
-                square
-                bg-color="accent"
-                type="email"
-                name="email"
-                v-model="email"
-                label="E-mail address"
-                required
-                :rules="[ val => (
-                        registerformstate.email !== undefined &&
-                        registerformstate.email.$valid) || 'Given e-mail address is incorrect']">
-                <template v-slot:prepend>
-                  <q-icon color="primary" name="mdi-account "/>
-                </template>
-              </q-input>
-            </validate>
-          </div>
-        </div>
+      <password-reset-succeed-popup :show="showPopup"></password-reset-succeed-popup>
+      <vue-form :state='resetpasswordformstate' @submit.prevent="onSubmit">
         <div class="row" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
           <div class="col-grow">
             <validate>
@@ -40,11 +18,11 @@
                 name="password"
                 ref="password"
                 v-model="password"
-                label="Password"
+                label="New password"
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[ val => (
-                        registerformstate.password !== undefined &&
-                        registerformstate.password.$valid) || 'Password is required',
+                        resetpasswordformstate.password !== undefined &&
+                        resetpasswordformstate.password.$valid) || 'Password is required',
                         val => (password.trim().length >= 6) || 'Password must have at least 6 characters',
                         val => (password.trim() !== '') || 'Password cannot be empty',]"
                 required>
@@ -72,14 +50,14 @@
                 name="password2"
                 ref="password2"
                 v-model="password2"
-                label="Repeat password"
+                label="Repeat new password"
                 :type="isPwd2 ? 'password' : 'text'"
                 :rules="[ val => (
-                        registerformstate.password2 !== undefined &&
-                        registerformstate.password2.$valid) || 'Please repeat your password',
+                        resetpasswordformstate.password2 !== undefined &&
+                        resetpasswordformstate.password2.$valid) || 'Please repeat your password',
                          val => (
-                        registerformstate.password2 !== undefined &&
-                        registerformstate.password !== undefined &&
+                        resetpasswordformstate.password2 !== undefined &&
+                        resetpasswordformstate.password !== undefined &&
                         password2 === password) || 'Passwords don\'t match',
                         val => (password2.trim() !== '') || 'Password cannot be empty']"
                 required>
@@ -102,23 +80,21 @@
             <Recaptcha @captchaCode="onCaptchaProvided"></Recaptcha>
           </div>
         </div>
-        <div class="row" :class="{ 'q-pt-md': !$q.platform.is.mobile }">
-          <div class="col-grow">
+        <div class="row">
+          <div class="col-grow q-pt-md">
             <q-btn type="submit"
                    color="primary"
-                   icon="mdi-account-plus"
-                   label="Sign up"
-                   :disabled="!(registerformstate.password !== undefined &&
-                                registerformstate.password2 !== undefined &&
-                                registerformstate.email !== undefined &&
-                                registerformstate.password.$valid &&
-                                registerformstate.password2.$valid &&
+                   icon="mdi-lock-reset"
+                   label="CHANGE PASSWORD"
+                   :disabled="!(resetpasswordformstate.password !== undefined &&
+                                resetpasswordformstate.password2 !== undefined &&
+                                resetpasswordformstate.password.$valid &&
+                                resetpasswordformstate.password2.$valid &&
                                 password.trim() !== '' &&
                                 password2.trim() !== '' &&
-                                registerformstate.email.$valid &&
                                 captchaCode !== '' &&
                                 password === password2 &&
-                                !registerButtonLocked)">
+                                !resetPasswordButtonLocked)">
             </q-btn>
           </div>
         </div>
@@ -136,27 +112,28 @@
 </template>
 <script lang="ts">
 
-  import { post } from 'src/api/http-service';
-  import GlobalMixin from 'src/mixins/global-mixin';
-  import Loader from 'components/utils/Loader.vue';
   import ErrorPopup from 'components/utils/ErrorPopup.vue';
-  import RegisteredPopup from 'components/register/RegisteredPopup.vue';
+  import Loader from 'components/utils/Loader.vue';
+  import { post } from 'src/api/http-service';
+  import GlobalMixin from "../../mixins/global-mixin";
+  import PasswordResetSucceedPopup from 'components/password-reset/PasswordResetSucceedPopup.vue';
+  import { showNotificationError } from 'src/api/notificatios-api';
   import Recaptcha from 'components/utils/Recaptcha.vue';
+  import { PasswordResetConfirmDto } from 'src/dto/password-reset-confirm-dto';
 
   export default GlobalMixin.extend({
-    components: { Loader, ErrorPopup, RegisteredPopup, Recaptcha },
+    components: { ErrorPopup, Loader, PasswordResetSucceedPopup, Recaptcha },
+    name: 'ConfirmResetPasswordForm',
     data: () => ({
-      registerformstate: {},
+      resetpasswordformstate: {},
       password: '',
       password2: '',
-      email: '',
-      captchaCode: '',
-      registered: false,
-      registerButtonLocked: false,
+      resetPasswordButtonLocked: false,
+      showPopup: false,
       isPwd: true,
       isPwd2: true,
+      captchaCode: '',
     }),
-    name: 'RegisterForm',
     watch: {
       // These watchers are for password validation, when one changes -> check second.
       password() {
@@ -175,39 +152,25 @@
         this.captchaCode = captchaCode;
       },
       onSubmit() {
-        this.errorBannerMessage = '';
+        this.resetPasswordButtonLocked = true;
         this.showLoading = true;
-        this.registerButtonLocked = true;
+        this.errorBannerMessage = '';
         post(this.$axios,
-          '/api/user/register',
-          {
-            password: this.password,
-            repeatPassword: this.password2,
-            email: this.email.trim(),
-            captchaCode: this.captchaCode,
-          },
-          (resp) => {
+          `/api/user/password/reset/confirm`,
+          new PasswordResetConfirmDto(
+            this.password,
+            this.password2,
+            <string>this.$route.query.email,
+            this.captchaCode,
+            <string>this.$route.query.resetKey,
+          ),
+          async (resp: any) => {
             console.log(resp);
             this.showLoading = false;
-            this.registered = true;
+            await this.sleep(200); // small sleep required
+            this.showPopup = true;
           },
-          (err) => {
-            this.handleRequestError(err, (errorCode) => {
-              switch (errorCode) {
-                case 0:
-                  this.errorBannerMessage = 'E-mail is already taken.';
-                  break;
-                case 1:
-                  this.errorBannerMessage = 'E-mail is already taken.';
-                  break;
-                case 2:
-                  this.errorBannerMessage = 'E-mail is incorrect.';
-                  break;
-                default:
-                  this.errorBannerMessage = 'Unexpected server error.';
-              }
-            });
-            this.registerButtonLocked = false;
+          (err: any) => {
             this.showLoading = false;
             console.log(err);
           });

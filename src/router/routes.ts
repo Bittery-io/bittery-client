@@ -53,6 +53,14 @@ const routes: RouteConfig[] = [
       { path: 'confirm', component: () => import('pages/registration/ConfirmRegistrationPage.vue') },
     ],
   },
+  {
+    path: '/password',
+    component: () => import('layouts/MainLayoutInformative.vue'),
+    children: [
+      { path: 'reset', component: () => import('pages/password-reset/ResetPasswordPage.vue') },
+      { path: 'reset/confirm', component: () => import('pages/password-reset/ConfirmResetPasswordPage.vue') },
+    ],
+  },
 ];
 
 // Always leave this as last one

@@ -15,7 +15,6 @@
 
   import CreateInvoiceFormCard from 'components/payments/CreateInvoiceFormCard.vue';
   import InvoicesTableCard from 'components/payments/InvoicesTableCard.vue';
-  import { get } from 'src/api/http-service';
   import GlobalMixin from "../../mixins/global-mixin";
 
   export default GlobalMixin.extend({
@@ -23,19 +22,8 @@
     components: { CreateInvoiceFormCard, InvoicesTableCard },
     data() {
       return {
-        userLndDto: undefined,
         someInvoiceWasCreated: false,
       };
-    },
-    mounted() {
-      this.showLoading = true;
-      get(this.$axios, '/api/btc/wallet', (res: any) => {
-        this.showLoading = false;
-        this.userLndDto = res.data;
-      }, () => {
-        this.showLoading = false;
-        this.$router.push('/payments/setup');
-      });
     },
     methods: {
       onInvoiceCreated() {

@@ -53,7 +53,7 @@
         </div>
         <q-stepper-navigation>
           <q-btn outline @click="step = 1" color="primary" label="Previous step"/>
-          <q-btn @click="step = 3" color="primary" label="NEXT STEP" class="q-ml-sm"/>
+          <q-btn @click="step = 3" color="primary" :disabled="lndRestAddress === ''" label="NEXT STEP" class="q-ml-sm"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -95,7 +95,7 @@
         </div>
         <q-stepper-navigation>
           <q-btn outline @click="step = 2" color="primary" label="Previous step"/>
-          <q-btn @click="step = 4" color="primary" label="NEXT STEP" class="q-ml-sm"/>
+          <q-btn @click="step = 4" color="primary" :disabled="macaroonHex === ''" label="NEXT STEP" class="q-ml-sm"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -113,7 +113,7 @@
                      @onFileUploaded="tlsCertFileUploaded"></file-reader>
         <q-stepper-navigation>
           <q-btn outline @click="step = 3" color="primary" label="Previous step"/>
-          <q-btn @click="setupExistingLndNode" color="primary" label="SAVE" class="q-ml-sm"/>
+          <q-btn @click="setupExistingLndNode" color="primary" label="SAVE" :disabled="tlsCertFileText === ''" class="q-ml-sm"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
@@ -126,6 +126,7 @@
   import Loader from 'components/utils/Loader.vue';
   import FileReader from 'components/utils/FileReader.vue';
   import { post } from 'src/api/http-service';
+  import { showNotificationInfo } from 'src/api/notificatios-api';
 
   export default GlobalMixin.extend({
     name: 'SetupNewLndForm',
@@ -134,7 +135,7 @@
       return {
         step: 1,
         lndRestAddress: 'emergencja:445/lnd-rest/btc',
-        macaroonHex: '0201036c6e64023d030a105656ab315f47d92e3b00e189b7331ec61201301a0c0a04696e666f1204726561641a170a08696e766f69636573120472656164120577726974650000062049fb8e9c1ea8b4441e482d827852a8fd9a13ed5f7849852d54a9629ec608344e',
+        macaroonHex: '0201036c6e64023d030a10aba9f16d82c6fb182f6e802cfd21ef721201301a0c0a04696e666f1204726561641a170a08696e766f6963657312047265616412057772697465000006205de3834d0334a41f200fef0c1bb303b4de98bd4802c84764014a9354025d726a',
         tlsCertFileText: '',
       };
     },
@@ -155,6 +156,7 @@
         }, async () => {
           this.showLoading = false;
           await this.sleep(200); // small sleep required
+          showNotificationInfo('Custom LND node added', 'Your node information successfully saved');
         }, (err: any) => {
           this.showLoading = false;
           console.log(err);

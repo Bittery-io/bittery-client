@@ -3,7 +3,7 @@
     <loader :show="showLoading"></loader>
     <q-card class="q-ma-md shadow-10 bg-grey-2">
       <q-card-section>
-        <div class="text-h4">Your invoices</div>
+        <header-qchip text="Your invoices" icon="mdi-file-multiple"></header-qchip>
       </q-card-section>
       <q-card-section>
         <div :class="{ 'q-pa-md': !$q.platform.is.mobile }">
@@ -133,9 +133,9 @@
   import Loader from 'components/utils/Loader.vue';
   import { get } from 'src/api/http-service';
   import { formatDate } from "src/api/date-service";
-
+  import HeaderQchip from 'components/utils/HeaderQchip.vue';
   export default GlobalMixin.extend({
-    components: { Loader },
+    components: { Loader, HeaderQchip },
     name: 'InvoicesTableCard',
     props: {
       reloadInvoices: {

@@ -30,6 +30,7 @@
   import { ConfirmRegistrationDto } from 'src/dto/confirm-registration-dto';
   import Loader from 'components/utils/Loader.vue';
   import RegistrationConfirmedPopup from 'components/register/RegistrationConfirmedPopup.vue';
+  import { showNotificationError } from 'src/api/notificatios-api';
 
   export default GlobalMixin.extend({
     name: 'ConfirmRegistrationPage',
@@ -47,10 +48,9 @@
         new ConfirmRegistrationDto(this.$route.query.email, this.$route.query.signUpKey), async () => {
         this.showLoading = false;
         this.confirmed = true;
-        // await this.$router.push('/bitcoin/login');
       }, (err: any) => {
         this.showLoading = false;
-        this.errorBannerMessage = 'Registration confirmation failed';
+        showNotificationError('Registration confirmation failed', 'The link is invalid');
         console.log(err);
       });
     },

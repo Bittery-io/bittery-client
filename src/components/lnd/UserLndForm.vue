@@ -2,7 +2,7 @@
   <q-card class="q-ma-md shadow-10 bg-grey-2" v-if="this.userLndDto">
     <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUrl"></qr-code-popup>
     <q-card-section>
-      <div class="text-h4">Your Lightning Network node</div>
+    <header-qchip text="Your Lightning Network node" icon="mdi-flash"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row">
@@ -112,7 +112,7 @@
             v-model="this.userLndDto.rtlAddress"
             label="RTL address">
             <template v-slot:before>
-              <div class="text-primary text-center" style="width:50px">RTL</div>
+              <q-icon style="width:50px;" color="primary" name="mdi-web"/>
             </template>
             <template v-slot:after>
               <q-btn
@@ -134,14 +134,7 @@
             v-model="this.userLndDto.lndConnectUrl"
             label="LND Connect URI">
             <template v-slot:before>
-              <div class="text-primary text-center" style="width:50px">ZAP</div>
-            </template>
-            <template v-slot:after>
-              <q-btn
-                flat
-                color="primary"
-                icon="mdi-arrow-right-bold-box-outline"
-                @click="openUrl(userLndDto.lndConnectUrl)"/>
+              <q-icon style="width:50px;" color="primary" name="mdi-wallet"/>
             </template>
           </q-input>
         </div>
@@ -150,7 +143,7 @@
         <div class="col-12">
           <q-field readonly borderless label="Zap QR code" stack-label>
             <template v-slot:before>
-              <div class="text-primary text-center" style="width:50px"></div>
+              <q-icon style="width:50px;" color="primary" name="mdi-qrcode"/>
             </template>
             <template v-slot:after>
               <q-btn
@@ -174,9 +167,10 @@
   import { showNotificationInfo } from 'src/api/notificatios-api';
   import LndFormMixin from 'components/lnd/mixins/lnd-form-mixin';
   import QrCodePopup from 'components/utils/QrCodePopup.vue';
+  import HeaderQchip from 'components/utils/HeaderQchip.vue';
 
   export default GlobalMixin.extend({
-    components: { QrCode, QrCodePopup },
+    components: { QrCode, QrCodePopup, HeaderQchip },
     name: 'UserLndForm',
     mixins: [ LndFormMixin ],
     props: {

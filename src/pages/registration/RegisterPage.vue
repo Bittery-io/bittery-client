@@ -3,11 +3,11 @@
     <div class="fixed-center">
       <div class="row justify-center text-center items-center">
         <div class="col-auto">
-          <q-card class="shadow-10 bg-grey-2">
+          <q-card class="shadow-10 bg-grey-2" >
             <q-card-section :class="{ 'q-pa-lg': !$q.platform.is.mobile }">
               <bittery-logo></bittery-logo>
-              <div class="text-primary text-h6"
-                   :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.8}px` : `width: ${screenWidth * 0.15}px`">
+              <div class="text-primary q-pt-md text-h5 "
+                   :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.8}px` : `width: ${screenWidth * 0.18}px`">
                 Create your account
               </div>
             </q-card-section>

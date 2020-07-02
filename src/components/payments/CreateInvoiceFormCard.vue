@@ -3,7 +3,7 @@
     <loader :show="showLoading"></loader>
     <q-card class="q-ma-md shadow-10 bg-grey-2">
       <q-card-section>
-        <div class="text-h4">Create invoice</div>
+        <header-qchip text="Create invoice" icon="mdi-file-document-edit"></header-qchip>
       </q-card-section>
       <q-card-section>
         <vue-form :state='createInvoiceFormState' @submit.prevent="onSubmit">
@@ -18,7 +18,7 @@
                   square
                   v-model="amount"
                   label="Amount">
-                  <template v-slot:before>
+                  <template v-slot:prepend>
                     <q-icon style="width:50px;" color="primary" name="mdi-cash-multiple"/>
                   </template>
                 </q-input>
@@ -29,7 +29,7 @@
             <div class="col-12">
               <validate>
                 <q-select square outlined bg-color="accent" v-model="currency" :options="currencies" label="Currency">
-                  <template v-slot:before>
+                  <template v-slot:prepend>
                       <q-icon style="width:50px;" color="primary" name="mdi-cash-usd-outline"/>
                     </template>
                 </q-select>
@@ -48,7 +48,7 @@
                   v-model="description"
                   required
                   label="Item description">
-                  <template v-slot:before>
+                  <template v-slot:prepend>
                     <q-icon style="width:50px;" color="primary" name="mdi-file-document-edit"/>
                   </template>
                 </q-input>
@@ -67,15 +67,15 @@
                   v-model="buyer"
                   required
                   label="Buyer (customer)">
-                  <template v-slot:before>
+                  <template v-slot:prepend>
                     <q-icon style="width:50px;" color="primary" name="mdi-card-account-details"/>
                   </template>
                 </q-input>
               </validate>
             </div>
           </div>
-          <div class="row q-pa-md">
-            <div class="col-12">
+          <div class="row q-pa-md justify-center">
+            <div class="col-auto justify-center">
               <q-btn color="primary" icon="mdi-file-plus" text-color="white" label="Create invoice" @click="saveInvoice"
                      :disabled="amount <= 0 || createInvoiceButtonLocked"/>
             </div>
@@ -92,15 +92,15 @@
   import { post } from 'src/api/http-service';
   import { SaveInvoiceDto } from 'src/dto/save-invoice-dto';
   import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
-
+  import HeaderQchip from 'components/utils/HeaderQchip.vue';
   export default GlobalMixin.extend({
-    components: { Loader },
+    components: { Loader, HeaderQchip },
     name: 'CreateNewInvoiceFormCard',
     data() {
       return {
         amount: 0,
         currency: 'PLN',
-        currencies: ['PLN', 'USD'],
+        currencies: ['PLN', 'USD', 'EUR'],
         description: '',
         buyer: '',
         createInvoiceFormState: {},

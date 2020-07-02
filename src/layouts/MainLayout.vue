@@ -1,5 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
+    <loader :show="showLoading"></loader>
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -12,11 +13,10 @@
         />
 
         <q-toolbar-title class="text-secondary">
-          <bittery-logo style="width:100px; height:100%;"></bittery-logo>
+          <router-link to="/payments/overview">
+            <bittery-logo style="width:100px; height:100%;"></bittery-logo>
+          </router-link>
         </q-toolbar-title>
-<!--        <q-toolbar-title class="text-bold text-right">-->
-<!--          <login-menu-button></login-menu-button>-->
-<!--        </q-toolbar-title>-->
       </q-toolbar>
     </q-header>
 
@@ -55,12 +55,13 @@
   import GlobalMixin from '../mixins/global-mixin';
   import LoginMenuButton from '../components/login/LoginMenuButton';
   import BitteryLogo from '../components/utils/BitteryLogo';
+  import Loader from '../components/utils/Loader';
 
   export default GlobalMixin.extend({
     name: 'MainLayout',
 
     components: {
-      EssentialLink, LoginMenuButton, BitteryLogo
+      EssentialLink, LoginMenuButton, BitteryLogo, Loader
     },
     methods: {
       isActive(essentialLink) {
@@ -69,6 +70,7 @@
     },
     data() {
       return {
+        showLoading: false,
         leftDrawerOpen: false,
         essentialLinks: [
           {
