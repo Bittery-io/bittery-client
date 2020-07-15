@@ -17,6 +17,12 @@
             <bittery-logo style="width:100px; height:100%;"></bittery-logo>
           </router-link>
         </q-toolbar-title>
+
+        <q-toolbar-title class="text-bold text-right" v-if="!$q.platform.is.mobile">
+          <q-chip clickable color="accent" text-color="primary" square
+                  @click="openUrlTheSameTab('https://bittery.io')"
+                  outline icon="mdi-home-circle" size="md">HOMEPAGE</q-chip>
+        </q-toolbar-title>
       </q-toolbar>
     </q-header>
 
@@ -29,9 +35,9 @@
       <q-list>
         <q-item-label
           header
-          class="text-grey-8"
+          class="text-grey-8 text-bold"
         >
-          Your services
+          Your features
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -39,6 +45,18 @@
           v-bind="link"
           :active="isActive(link)"
         />
+        <q-item clickable active-class="bg-accent" @click="openUrlTheSameTab('https://bittery.io')" v-if="$q.platform.is.mobile">
+          <q-item-section avatar>
+            <q-icon name="mdi-home-circle" size="md"/>
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Homepage</q-item-label>
+            <q-item-label caption>
+              Bitter.io homepage
+            </q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
       <login-menu-button class="absolute-bottom"></login-menu-button>
     </q-drawer>
@@ -46,7 +64,6 @@
     <q-page-container>
       <router-view/>
     </q-page-container>
-
   </q-layout>
 </template>
 
@@ -76,14 +93,14 @@
           {
             title: 'Services',
             caption: 'Configure your Bitcoin services',
-            icon: 'ion-logo-bitcoin',
+            icon: 'mdi-bitcoin',
             link: '/bitcoin/overview',
             active: true,
           },
           {
             title: 'Payments',
             caption: 'Manage your cryptocurrency payments',
-            icon: 'mdi-contactless-payment',
+            icon: 'mdi-contactless-payment-circle',
             link: '/payments/overview',
             active: false,
           },

@@ -21,7 +21,7 @@
                 required
                 :rules="[ val => (
                         loginformstate.email !== undefined &&
-                        loginformstate.email.$valid) || 'Adres email jest wymagany']">
+                        loginformstate.email.$valid) || 'E-mail address is required']">
                 <template v-slot:prepend>
                   <q-icon color="primary" name="mdi-account "/>
                 </template>
@@ -42,7 +42,7 @@
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[ val => (
                         loginformstate.password !== undefined &&
-                        loginformstate.password.$valid) || 'Hasło jest wymagane.']"
+                        loginformstate.password.$valid) || 'Password is required']"
                 required>
                 <template v-slot:prepend>
                   <q-icon color="primary" name="mdi-lock "/>
@@ -97,7 +97,6 @@
   import { post } from 'src/api/http-service';
   import { setSessionInStorage } from 'src/api/session-service';
   import GlobalMixin from "../../mixins/global-mixin";
-  import { showNotificationError } from 'src/api/notificatios-api';
 
   export default GlobalMixin.extend({
     components: { ErrorPopup, Loader },
@@ -135,7 +134,7 @@
             this.showLoading = false;
             await this.sleep(200); // small sleep required
             setSessionInStorage(resp.data);
-            await this.$router.push('/bitcoin/overview');
+            await this.$router.push('/payments/overview');
           },
           (err: any) => {
             this.handleRequestError(err, (errorCode: any) => {

@@ -38,11 +38,6 @@
         required: true,
       },
     },
-    methods: {
-      openUrl(url: string) {
-        window.open(url, '_blank');
-      },
-    },
   });
 
 </script>

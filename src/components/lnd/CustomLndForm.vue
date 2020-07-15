@@ -1,7 +1,7 @@
 <template>
   <q-card class="q-ma-md shadow-10 bg-grey-2" v-if="this.customLndDto">
     <q-card-section>
-      <header-qchip text="Your Lightning Network node"></header-qchip>
+      <header-qchip :text="$q.platform.is.mobile ? 'Your LN node' : 'Your Lightning Network node'" icon="mdi-flash"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row">
@@ -12,7 +12,7 @@
               {{this.customLndDto.lndStatus}}
             </q-chip>
             <template v-slot:before>
-              <q-icon style="width:50px;" color="primary" name="mdi-alarm-light"/>
+              <q-icon style="width:50px;" color="primary" name="mdi-lightbulb-on"/>
             </template>
           </q-field>
         </div>

@@ -1,10 +1,8 @@
 <template>
-  <q-chip color="accent" size="xl" :icon="icon"
-          text-color="black" v-if="icon">
+  <q-chip color="accent" size="xl" :icon="icon" text-color="black" v-if="icon">
     {{text}}
   </q-chip>
-  <q-chip color="accent" size="xl" square
-          text-color="primary" class="shadow-3" v-else>
+  <q-chip color="accent" size="xl" square text-color="primary" v-else>
     {{text}}
   </q-chip>
 </template>

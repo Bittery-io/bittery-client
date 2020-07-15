@@ -2,7 +2,7 @@
   <q-card class="q-ma-md shadow-10 bg-grey-2" v-if="this.userLndDto">
     <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUrl"></qr-code-popup>
     <q-card-section>
-    <header-qchip text="Your Lightning Network node" icon="mdi-flash"></header-qchip>
+    <header-qchip :text="$q.platform.is.mobile ? 'Your LN node' : 'Your Lightning Network node'" icon="mdi-flash"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row">
@@ -13,7 +13,7 @@
               {{this.userLndDto.lndStatus}}
             </q-chip>
             <template v-slot:before>
-              <q-icon style="width:50px;" color="primary" name="mdi-alarm-light"/>
+              <q-icon style="width:50px;" color="primary" name="mdi-lightbulb-on"/>
             </template>
           </q-field>
         </div>
@@ -37,6 +37,9 @@
             square
             :value="this.userLndDto.lndUrl"
             label="LND address">
+            <q-tooltip>
+              The public address of your personal LN node.
+            </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px; color: gold" name="mdi-flash"/>
             </template>
@@ -52,6 +55,9 @@
             square
             :value="this.userLndDto.lndRestAddress"
             label="LND node address (REST)">
+            <q-tooltip>
+              Your personal LN node REST API url.
+            </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-api"/>
             </template>
@@ -70,6 +76,9 @@
             <template v-slot:before>
               <q-icon color="primary" style="width:50px" name="mdi-attachment" />
             </template>
+            <q-tooltip>
+             TLS certificate for secure connection with your LN node.
+            </q-tooltip>
             <template v-slot:after>
               <q-btn
                 flat
@@ -92,6 +101,9 @@
             <template v-slot:before>
               <q-icon color="primary" style="width:50px" name="mdi-attachment" />
             </template>
+            <q-tooltip>
+              Do not share macaroon to anyone.
+            </q-tooltip>
             <template v-slot:after>
               <q-btn
                 flat
@@ -114,12 +126,39 @@
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-web"/>
             </template>
+            <q-tooltip>
+              Lightning Network node management console. Manage your node funds, channels and settings.
+            </q-tooltip>
             <template v-slot:after>
               <q-btn
                 flat
                 color="primary"
                 icon="mdi-arrow-right-bold-box-outline"
-                @click="openUrl(userLndDto.rtlAddress)"/>
+                @click="openUrlNewTab(userLndDto.rtlAddress)"/>
+            </template>
+          </q-input>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <q-input
+            :type="isPwd ? 'password' : 'text'"
+            square
+            onkeypress="return false;"
+            v-model="this.userLndDto.rtlInitPassword"
+            label="RTL initital password">
+            <q-tooltip>
+              Unique initial password for logging in RTL. Change the password as soon as possible directly in RTL.
+            </q-tooltip>
+            <template v-slot:before>
+              <q-icon style="width:50px;" color="primary" name="mdi-lock"/>
+            </template>
+            <template v-slot:after>
+              <q-btn
+                flat
+                color="primary"
+                :icon="isPwd ? 'visibility_off' : 'visibility'"
+                @click="isPwd = !isPwd"/>
             </template>
           </q-input>
         </div>
@@ -133,6 +172,9 @@
             onkeypress="return false;"
             v-model="this.userLndDto.lndConnectUrl"
             label="LND Connect URI">
+            <q-tooltip>
+              ZAP wallet connection URI.
+            </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-wallet"/>
             </template>
@@ -145,6 +187,9 @@
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-qrcode"/>
             </template>
+            <q-tooltip>
+              ZAP wallet connection QR code (scan on mobile).
+            </q-tooltip>
             <template v-slot:after>
               <q-btn
                 flat
@@ -178,6 +223,11 @@
         type: Object,
         required: true,
       },
+    },
+    data() {
+      return {
+        isPwd: true,
+      };
     },
     methods: {
       downloadTls() {

@@ -2,10 +2,12 @@
   <div class="q-pa-xs">
     <loader :show="showLoading"></loader>
     <q-stepper
-      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.9}px` : `width: ${screenWidth * 0.35}px`"
+      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.35}px`"
       v-model="step"
       vertical
       color="primary"
+      bordered
+      class="bg-grey-2"
       animated
     >
       <q-step
@@ -14,12 +16,13 @@
         icon="info"
         class="text-left text-subtitle1"
         :done="step > 1">
-        Bitcoin LND is a single user dedicated service which allows to send/receive Bitcoin payments using Lightning Network. <br>
-        Bittery communicates with LND when accepting Bitcoin payments this is why you must provide your node information. <br>
-        <div class="text-subtitle1 text-bold">
+        Bitcoin LN node is a single user dedicated service which allows <br> to send/receive
+        Bitcoin payments using Lightning Network. <br>
+        Bittery communicates with LN node during Bitcoin payments processing this is why you must provide your node information. <br>
+        <div class="text-bold">
           Bittery has no possibility to access your LN funds. It's technically impossible.
         </div>
-        Your own Lighting Network Daemon must be accessible through the internet in order to be used with Bittery.<br>
+        Your own Lightning Network must be accessible through the internet in order to be used with Bittery.<br>
         <q-stepper-navigation>
           <q-btn @click="step = 2" color="primary" label="PROCEED"/>
         </q-stepper-navigation>
@@ -78,7 +81,7 @@
           </q-input>
         </q-banner>
         <div class="text-subtitle1 q-pt-md q-pb-md text-bold text-center">
-          Step 2/3: Provided generated macaroon encoded (hex) value.
+          Step 2/3: Provide generated macaroon encoded (hex) value.
         </div>
         <div class="row">
           <div class="col-12">
@@ -126,7 +129,7 @@
   import Loader from 'components/utils/Loader.vue';
   import FileReader from 'components/utils/FileReader.vue';
   import { post } from 'src/api/http-service';
-  import { showNotificationInfo } from 'src/api/notificatios-api';
+  import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
 
   export default GlobalMixin.extend({
     name: 'SetupNewLndForm',
@@ -140,9 +143,6 @@
       };
     },
     methods: {
-      // macaroonFileUploaded(fileTextData: string) {
-      //   this.macaroonBase64 = fileTextData;
-      // },
       tlsCertFileUploaded(fileTextData: string) {
         this.tlsCertFileText = fileTextData;
       },
@@ -153,12 +153,22 @@
           macaroonHex: this.macaroonHex,
           tlsCertFileText: this.tlsCertFileText,
           lndRestAddress: `https://${this.lndRestAddress}`,
-        }, async () => {
+        }, async (err: any) => {
           this.showLoading = false;
           await this.sleep(200); // small sleep required
           showNotificationInfo('Custom LND node added', 'Your node information successfully saved');
+          await this.$router.push('/bitcoin/overview');
         }, (err: any) => {
+          let caption: string = 'Internal server error.';
+          switch (err.response.data.errorCode) {
+            case 0:
+              caption = 'User already has LND';
+              break;
+            case 2:
+              caption = 'Connection to node failed. Please verify the node is reachable and connection details you provided are correct.';
+          }
           this.showLoading = false;
+          showNotificationError('Adding LND failed', caption);
           console.log(err);
         });
       },

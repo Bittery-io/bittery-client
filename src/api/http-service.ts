@@ -26,7 +26,7 @@ const handleHttpError = (error, axios, recallFunction, url, payload, successCall
   } else if (error.response.status === 500) {
     showNotificationError('Request failed', 'Unexpected server error');
     errorCallback(error);
-  } else if (error.response.status === 401 && hasAccessToken()) {
+  } else if (error.response.status === 401 && hasAccessToken() && !urlsWhichHandle401.includes(url)) {
     // eslint-disable-next-line no-use-before-define
     refreshJWTTokenAndRecallRequest(axios,
       recallFunction,

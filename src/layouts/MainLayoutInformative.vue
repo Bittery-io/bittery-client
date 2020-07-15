@@ -13,7 +13,7 @@
       <router-view/>
     </q-page-container>
 
-    <q-footer elevated class="bg-grey-1 text-black text-center">
+    <q-footer class="bg-accent text-black text-center">
       <q-toolbar>
         <q-toolbar-title class="text-subtitle2">
           2020 Bittery.io All rights reserved

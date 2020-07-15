@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { openURL } from 'quasar'
 
 export default Vue.extend({
   data() {
@@ -15,9 +16,11 @@ export default Vue.extend({
     },
   },
   methods: {
-    openUrl(url: string) {
-      console.log(url);
-      window.open(url, '_blank');
+    openUrlNewTab(url: string) {
+      openURL(url);
+    },
+    openUrlTheSameTab(url: string) {
+      window.open(url, '_self');
     },
     handleRequestError(err: any, errorCodeCallback: any) {
       if (this.isHttpError(err) &&
@@ -29,7 +32,7 @@ export default Vue.extend({
           this.errorBannerMessage = err.response.data.errorMessage;
         }
       } else if (this.isHttpError(err) && this.isHttpErrorStatus(err, 401)) {
-        this.errorBannerMessage = 'Logowanie nieudane.';
+        this.errorBannerMessage = 'Given credentials are incorrect';
       } else {
         this.errorBannerMessage = 'Request failed. Unexpected server error.';
       }

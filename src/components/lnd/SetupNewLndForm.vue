@@ -6,9 +6,11 @@
                  :show="errorBannerMessage !== ''">
     </error-popup>
     <q-stepper
-      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.9}px` : `width: ${screenWidth * 0.35}px`"
+      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.35}px`"
       v-model="step"
       vertical
+      bordered
+      class="bg-grey-2"
       color="primary"
       animated
     >
@@ -18,12 +20,12 @@
         icon="info"
         class="text-center text-subtitle1"
         :done="step > 1">
-        Bitcoin LND is a single user dedicated service which allows to send/receive
-        Bitcoin payments using Lightning Network. <br>
-        Having LND node gives you the ability to utilize Lightning Network payments. <br>
-        You will have ability to use your LND node with external services like any LN crypto wallet.
+          Bitcoin LN node is a single user dedicated service which allows <br> to send/receive
+          Bitcoin payments using Lightning Network. <br>
+        <span class="text-bold">Having LN node gives you the ability to utilize Lightning Network payments. </span><br>
+          You will be able to use your LN node with external services like any LN crypto wallet.
         <q-stepper-navigation>
-          <q-btn @click="setupNewLndNode" color="primary" label="Initialize new LND"/>
+          <q-btn @click="setupNewLndNode" color="primary" icon="mdi-flash" label="Initialize new LND"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>

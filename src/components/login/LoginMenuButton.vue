@@ -1,5 +1,5 @@
 <template>
-  <div class="row justify-center q-pa-md">
+    <div class="row justify-center q-pa-md">
     <div class="col-auto justify-center">
       <q-btn icon="mdi-logout" color="accent" text-color="primary" size="md" @click="logout">SIGN OUT</q-btn>
     </div>

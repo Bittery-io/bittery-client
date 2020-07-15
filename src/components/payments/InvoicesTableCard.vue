@@ -14,15 +14,16 @@
             row-key="name"
             hide-header>
             <template v-slot:top-right>
-              <div class="q-pa-xs" style="width: 200px;height:100%;" debounce="300">
+              <div class="q-pa-xs" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'" debounce="300">
                 <q-select v-model="invoiceStatus" :options="invoiceStatuses" label="Invoice status"/>
               </div>
-              <div class="q-pa-xs" style="width: 200px;height:100%;" debounce="300">
+              <div class="q-pa-xs" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'" debounce="300">
                 <q-select v-model="orderByDate" :options="orderByDateOptions" label="Order by date"/>
               </div>
             </template>
             <template v-slot:top-left>
-              <q-input dense debounce="300" v-model="filter" placeholder="Search">
+              <q-input dense debounce="300" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : ''"
+                       v-model="filter" placeholder="Search">
                 <template v-slot:append>
                   <q-icon name="search"/>
                 </template>
@@ -62,7 +63,7 @@
                           <q-icon color="primary" name="description"/>
                         </q-item-section>
                         <q-item-section>
-                          <q-item-label>{{props.row.itemDesc}}</q-item-label>
+                          <q-item-label>{{props.row.itemDesc.substr(0, 50)}}</q-item-label>
                           <q-item-label caption>Description</q-item-label>
                         </q-item-section>
                       </q-item>
@@ -71,7 +72,7 @@
                           <q-icon color="primary" name="account_box"/>
                         </q-item-section>
                         <q-item-section>
-                          <q-item-label>{{props.row.buyer.name}}</q-item-label>
+                          <q-item-label>{{props.row.buyer.name.substr(0, 50)}}</q-item-label>
                           <q-item-label caption>Buyer (customer)</q-item-label>
                         </q-item-section>
                       </q-item>
@@ -97,6 +98,17 @@
                       </q-item>
                       <q-item>
                         <q-item-section avatar>
+                          <q-icon color="primary" name="mdi-calendar-clock"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>
+                            {{dateFormatted(addDueTimeToDate(props.row.invoiceTime))}}
+                          </q-item-label>
+                          <q-item-label caption>Payment due date</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item>
+                        <q-item-section avatar>
                           <q-icon color="primary" name="mdi-identifier"/>
                         </q-item-section>
                         <q-item-section>
@@ -106,15 +118,11 @@
                           <q-item-label caption>Invoice ID</q-item-label>
                         </q-item-section>
                       </q-item>
-                      <q-item>
-                        <q-item-section>
-                          <q-btn color="primary" label="Invoice PDF" icon="mdi-file-pdf" @click="$router.push(`/payments/pdf/${props.row.id}`)"/>
-                        </q-item-section>
+                      <q-item class="justify-center">
+                          <q-btn color="primary" label="Invoice PDF" :style="$q.platform.is.mobile ? 'width: 100%' : 'width: 80%'" icon="mdi-file-pdf" @click="$router.push(`/payments/pdf/${props.row.id}`)"/>
                       </q-item>
-                      <q-item >
-                        <q-item-section>
-                            <q-btn  color="primary" label="Payment" icon="mdi-eye-settings" @click="openInNewTab(props.row.id)"/>
-                        </q-item-section>
+                      <q-item class="justify-center">
+                            <q-btn  color="primary" label="Payment" :style="$q.platform.is.mobile ? 'width: 100%' : 'width: 80%'" icon="mdi-contactless-payment" @click="openInNewTab(props.row.id)"/>
                       </q-item>
                     </q-list>
                   </q-card-section>
@@ -132,7 +140,7 @@
   import GlobalMixin from "../../mixins/global-mixin";
   import Loader from 'components/utils/Loader.vue';
   import { get } from 'src/api/http-service';
-  import { formatDate } from "src/api/date-service";
+  import { addDaysToDate, formatDate } from "src/api/date-service";
   import HeaderQchip from 'components/utils/HeaderQchip.vue';
   export default GlobalMixin.extend({
     components: { Loader, HeaderQchip },
@@ -238,6 +246,9 @@
       },
       dateFormatted(date: number) {
         return formatDate(date);
+      },
+      addDueTimeToDate(date: number) {
+        return addDaysToDate(date, 24);
       },
       openInNewTab(invoiceId: string) {
         if (this.$q.platform.is.mobile) {

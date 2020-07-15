@@ -1,7 +1,7 @@
 import { cleanSessionInStorage, setNewAccessTokenInStorage } from './session-service';
 
 export const refreshAccessToken = (axios: any, successCallback: Function, errorCallback: Function) => {
-  axios.post('/api/auth/refreshToken').then((response: any) => {
+  axios.post('/api/user/refreshToken').then((response: any) => {
     console.log(response);
     const newAccessToken = response.data.accessToken;
     setNewAccessTokenInStorage(newAccessToken);

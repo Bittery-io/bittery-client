@@ -3,6 +3,7 @@
     <q-uploader
       :label="label"
       @added="getFile"
+      @removed="removedFile"
       bordered
       style="max-width: 100%"
       :filter="checkFileType"
@@ -78,24 +79,12 @@
           console.log('error', evt);
         };
       },
+      removedFile() {
+        this.$emit('onFileUploaded', '');
+      },
       checkFileType(files) {
         let wasError = false;
         let res = files;
-        // const getText = async (file) => {
-        //   return new Promise((resolve, reject) => {
-        //     const reader = new FileReader();
-        //     reader.readAsText(file, 'utf8');
-        //     reader.onload = () => {
-        //       let encoded = reader.result.toString().replace(/^data:(.*,)?/, '');
-        //       if ((encoded.length % 4) > 0) {
-        //         encoded += '='.repeat(4 - (encoded.length % 4));
-        //       }
-        //       resolve(encoded);
-        //     };
-        //     reader.onerror = error => reject(error);
-        //   });
-        // }
-        // const dupa = await (getText(files[0]));
         if (res.length > 1) {
           showNotificationError('Adding file failed', `Please add only single file`);
           let wasError = true;

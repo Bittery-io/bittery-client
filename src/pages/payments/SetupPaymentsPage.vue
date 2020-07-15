@@ -1,15 +1,17 @@
 <template>
   <q-page>
-    <div class="fixed-center">
+    <loader :show="showLoading"></loader>
+    <setup-lnd-before-payments-required-popup :show="showPopup"></setup-lnd-before-payments-required-popup>
+    <div :class="{ 'fixed-center': !$q.platform.is.mobile }">
       <div class="row justify-center">
         <div class="col-lg-12">
-          <h2 class="text-center" style="margin-bottom: 0;">Setup payment services <q-icon name="mdi-contactless-payment-circle"></q-icon></h2>
-          <h5 class="text-center" style="margin-top: 1%;">Initialize services and start accepting Bitcoin payments</h5>
+          <h2 class="text-center" style="margin-bottom: 0;">Setup payments <q-icon name="mdi-contactless-payment-circle"></q-icon></h2>
+          <h5 class="text-center" style="margin-top: 1%;">Initialize BTCPay based services and start accepting Bitcoin payments</h5>
         </div>
       </div>
       <div class="row justify-center">
         <div class="col-lg-6 col-xs-12 q-pa-xs">
-          <clickable-route-card text="I have Electrum Bitcoin wallet" route="/"></clickable-route-card>
+          <clickable-route-card text="I have Electrum Bitcoin wallet" route="/payments/setup/new?electrum=true"></clickable-route-card>
         </div>
         <div class="col-lg-6 col-xs-12 q-pa-xs">
           <clickable-route-card text="I don't have Electrum Bitcoin wallet" route="/payments/setup/new"></clickable-route-card>
@@ -19,7 +21,16 @@
         <div class="col-auto">
           <a target="_blank" href='https://electrum.org/#home'>
             <q-chip clickable class="shadow-10" icon="info" color="grey-8" text-color="white">
-              Electrum Bitcoin Wallet https://electrum.org/#home
+              Electrum <span v-show="!$q.platform.is.mobile">Bitcoin</span> Wallet https://electrum.org/#home
+            </q-chip>
+          </a>
+        </div>
+      </div>
+      <div class="row q-pt-md justify-center">
+        <div class="col-auto">
+          <a target="_blank" href='https://btcpayserver.org/'>
+            <q-chip clickable class="shadow-10" icon="info" color="grey-8" text-color="white">
+              BTCPay https://btcpayserver.org/
             </q-chip>
           </a>
         </div>
@@ -31,14 +42,37 @@
 <script lang="ts">
   import ClickableRouteCard from 'components/utils/ClickableRouteCard.vue';
   import GlobalMixin from "../../mixins/global-mixin";
-
+  import { get } from 'src/api/http-service';
+  import SetupLndBeforePaymentsRequiredPopup from 'pages/payments/SetupLndBeforePaymentsRequiredPopup.vue';
+  import Loader from 'components/utils/Loader.vue';
   export default GlobalMixin.extend({
     name: 'SetupPaymentsPage',
-    components: { ClickableRouteCard },
+    components: { ClickableRouteCard, SetupLndBeforePaymentsRequiredPopup, Loader },
     data() {
       return {
-        step: 1,
+        showPopup: false,
       };
+    },
+    mounted() {
+      this.showLoading = true;
+      get(this.$axios, '/api/lnd/user', async (res: any) => {
+        await this.sleep(200);
+        this.showLoading = false;
+        console.log('User lnd data: ', res.data);
+      }, async (err) => {
+        console.log('User lnd get err: ', err);
+        get(this.$axios, '/api/lnd/custom', async (res: any) => {
+          await this.sleep(200);
+          this.showLoading = false;
+          console.log('Custom lnd data: ', res.data);
+        }, async (err) => {
+          console.log('Custom lnd get err: ', err);
+          await this.sleep(200);
+          this.showLoading = false;
+          await this.sleep(200);
+          this.showPopup = true;
+        });
+      });
     },
   });
 </script>

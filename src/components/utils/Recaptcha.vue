@@ -8,7 +8,7 @@
   export default {
     components: {},
     name: 'Recaptcha',
-    props: ['onCaptchaVerifiedEventName', 'resetRecaptcha'],
+    props: ['resetRecaptcha'],
     data() {
       return {
       };

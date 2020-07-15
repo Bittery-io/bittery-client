@@ -11,6 +11,7 @@
             <div class="col-12">
               <validate>
                 <q-input
+                  autocomplete="false"
                   outlined
                   bg-color="accent"
                   type="number"
@@ -39,9 +40,21 @@
           <div class="row q-pa-xs">
             <div class="col-12">
               <validate>
+                <q-select square outlined bg-color="accent" value="24 days" :options="paymentDates" label="Invoice validity">
+                  <template v-slot:prepend>
+                    <q-icon style="width:50px;" color="primary" name="mdi-calendar-clock"/>
+                  </template>
+                </q-select>
+              </validate>
+            </div>
+          </div>
+          <div class="row q-pa-xs">
+            <div class="col-12">
+              <validate>
                 <q-input
                   square
                   outlined
+                  maxlength="200"
                   bg-color="accent"
                   type="textarea"
                   name="description"
@@ -61,6 +74,7 @@
                 <q-input
                   outlined
                   square
+                  maxlength="150"
                   bg-color="accent"
                   type="textarea"
                   name="buyer"
@@ -93,14 +107,17 @@
   import { SaveInvoiceDto } from 'src/dto/save-invoice-dto';
   import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
   import HeaderQchip from 'components/utils/HeaderQchip.vue';
+
   export default GlobalMixin.extend({
     components: { Loader, HeaderQchip },
     name: 'CreateNewInvoiceFormCard',
+
     data() {
       return {
         amount: 0,
         currency: 'PLN',
         currencies: ['PLN', 'USD', 'EUR'],
+        paymentDates: ['24 days'],
         description: '',
         buyer: '',
         createInvoiceFormState: {},

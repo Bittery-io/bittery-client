@@ -30,7 +30,12 @@
             </validate>
           </div>
         </div>
-        <div class="row">
+        <div class="row justify-center">
+          <div class="col-auto justify-center">
+            <Recaptcha @captchaCode="onCaptchaProvided" :reset-recaptcha="resetRecaptcha"></Recaptcha>
+          </div>
+        </div>
+        <div class="row q-pt-md">
           <div class="col-grow">
             <q-btn type="submit"
                    color="primary"
@@ -38,6 +43,7 @@
                    label="RESET PASSWORD"
                    :disabled="!(resetpasswordformstate.email !== undefined &&
                                  resetpasswordformstate.email.$valid &&
+                                 captchaCode !== '' &&
                                  !resetPasswordButtonLocked)">
             </q-btn>
           </div>
@@ -58,16 +64,14 @@
 
   import ErrorPopup from 'components/utils/ErrorPopup.vue';
   import Loader from 'components/utils/Loader.vue';
-  import { LoginUserDto } from 'src/dto/login-user-dto';
   import { post } from 'src/api/http-service';
-  import { setSessionInStorage } from 'src/api/session-service';
   import GlobalMixin from "../../mixins/global-mixin";
   import PasswordResetSentPopup from 'components/password-reset/PasswordResetSentPopup.vue';
   import { PasswordResetDto } from 'src/dto/password-reset-dto';
   import { showNotificationError } from 'src/api/notificatios-api';
-
+  import Recaptcha from 'components/utils/Recaptcha.vue';
   export default GlobalMixin.extend({
-    components: { ErrorPopup, Loader, PasswordResetSentPopup },
+    components: { ErrorPopup, Loader, PasswordResetSentPopup, Recaptcha },
     name: 'ResetPasswordForm',
     data: () => ({
       resetpasswordformstate: {},
@@ -75,6 +79,8 @@
       resetPasswordButtonLocked: false,
       emailInitialValid: true,
       showPopup: false,
+      captchaCode: '',
+      resetRecaptcha: true,
     }),
     watch: {
       email() {
@@ -82,7 +88,11 @@
       },
     },
     methods: {
+      onCaptchaProvided(captchaCode: string) {
+        this.captchaCode = captchaCode;
+      },
       onSubmit() {
+        this.resetRecaptcha = false;
         this.resetPasswordButtonLocked = true;
         this.showLoading = true;
         this.errorBannerMessage = '';
@@ -90,6 +100,7 @@
           '/api/user/password/reset',
           new PasswordResetDto(
             this.email.trim(),
+            this.captchaCode,
           ),
           async (resp: any) => {
             console.log(resp);
@@ -98,8 +109,9 @@
             this.showPopup = true;
           },
           (err: any) => {
+            this.resetPasswordButtonLocked = false;
+            this.resetRecaptcha = true;
             this.showLoading = false;
-            showNotificationError('Password reset failed', 'Unexpected server error');
             console.log(err);
           });
       },

@@ -99,10 +99,10 @@
         </div>
         <div class="row justify-center">
           <div class="col-auto justify-center">
-            <Recaptcha @captchaCode="onCaptchaProvided"></Recaptcha>
+            <Recaptcha @captchaCode="onCaptchaProvided" :reset-recaptcha="resetRecaptcha"></Recaptcha>
           </div>
         </div>
-        <div class="row" :class="{ 'q-pt-md': !$q.platform.is.mobile }">
+        <div class="row q-pt-md">
           <div class="col-grow">
             <q-btn type="submit"
                    color="primary"
@@ -115,6 +115,7 @@
                                 registerformstate.password2.$valid &&
                                 password.trim() !== '' &&
                                 password2.trim() !== '' &&
+                                password.trim().length >= 6 &&
                                 registerformstate.email.$valid &&
                                 captchaCode !== '' &&
                                 password === password2 &&
@@ -155,6 +156,7 @@
       registerButtonLocked: false,
       isPwd: true,
       isPwd2: true,
+      resetRecaptcha: true,
     }),
     name: 'RegisterForm',
     watch: {
@@ -175,6 +177,7 @@
         this.captchaCode = captchaCode;
       },
       onSubmit() {
+        this.resetRecaptcha = false;
         this.errorBannerMessage = '';
         this.showLoading = true;
         this.registerButtonLocked = true;
@@ -192,6 +195,7 @@
             this.registered = true;
           },
           (err) => {
+            this.resetRecaptcha = true;
             this.handleRequestError(err, (errorCode) => {
               switch (errorCode) {
                 case 0:

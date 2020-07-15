@@ -3,16 +3,16 @@
     <div class="fixed-center">
       <div class="row justify-center">
         <div class="col-lg-12">
-          <h2 class="text-center" style="margin-bottom: 0;">Setup Bitcoin LN <span style="color: gold">&#128498;</span></h2>
+          <h2 class="text-center" style="margin-bottom: 0;">Setup Bitcoin LN <q-icon name="mdi-flash" color="yellow-7"/></h2>
           <h5 class="text-center" style="margin-top: 1%;">Please proceed setting up your Lightning Network node</h5>
         </div>
       </div>
       <div class="row justify-center">
         <div class="col-lg-6 col-xs-12 q-pa-xs">
-          <clickable-route-card text="I have own LND node" route="/lnd/setup/existing"></clickable-route-card>
+          <clickable-route-card text="I have own LN node" route="/lnd/setup/existing"></clickable-route-card>
         </div>
         <div class="col-lg-6 col-xs-12 q-pa-xs">
-          <clickable-route-card text="I don't have LND node" route="/lnd/setup/new"></clickable-route-card>
+          <clickable-route-card text="I don't have LN node" route="/lnd/setup/new"></clickable-route-card>
         </div>
       </div>
       <div class="row q-pt-md justify-center">

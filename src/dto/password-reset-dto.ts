@@ -1,7 +1,9 @@
 export class PasswordResetDto {
-    email: string;
+  email: string;
+  captchaCode: string;
 
-    constructor(email: string) {
-        this.email = email;
-    }
+  constructor(email: string, captchaCode: string) {
+    this.email = email;
+    this.captchaCode = captchaCode;
+  }
 }

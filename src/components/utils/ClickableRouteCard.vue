@@ -1,5 +1,5 @@
 <template>
-  <q-card class="grow shadow-15" @click="$router.push(route)" style="height: 100%;">
+  <q-card class="grow shadow-15 bg-grey-2" @click="$router.push(route)" style="height: 100%;">
     <q-card-section>
       <h5 class="text-center">{{text}}</h5>
     </q-card-section>

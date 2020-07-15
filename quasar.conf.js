@@ -22,6 +22,7 @@ module.exports = configure((ctx) => ({
     'axios',
     'setup-vue-form',
     'setup-mixins',
+    'setup-vue-sticky',
   ],
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -121,7 +122,7 @@ module.exports = configure((ctx) => ({
 
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
-    vueRouterMode: 'hash', // available values: 'hash', 'history'
+    vueRouterMode: 'history', // available values: 'hash', 'history'
 
     // rtl: false, // https://quasar.dev/options/rtl-support
     // preloadChunks: true,
@@ -157,6 +158,7 @@ module.exports = configure((ctx) => ({
     proxy: {
       // proxy all requests starting with /api to jsonplaceholder
       '/api': {
+        // target: 'http://bittery-backend:3001',
         target: 'http://localhost:3001',
         changeOrigin: true,
         pathRewrite: {
