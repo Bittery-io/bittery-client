@@ -59,13 +59,13 @@
         await this.sleep(200);
         this.showLoading = false;
         console.log('User lnd data: ', res.data);
-      }, async (err) => {
+      }, async (err: any) => {
         console.log('User lnd get err: ', err);
         get(this.$axios, '/api/lnd/custom', async (res: any) => {
           await this.sleep(200);
           this.showLoading = false;
           console.log('Custom lnd data: ', res.data);
-        }, async (err) => {
+        }, async (err: any) => {
           console.log('Custom lnd get err: ', err);
           await this.sleep(200);
           this.showLoading = false;

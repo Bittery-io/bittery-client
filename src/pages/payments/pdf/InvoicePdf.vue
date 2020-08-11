@@ -50,6 +50,7 @@
 
   import GlobalMixin from "../../../mixins/global-mixin";
   import { get } from 'src/api/http-service';
+  // @ts-ignore
   import pdf from 'vue-pdf';
   import HeaderQchip from 'components/utils/HeaderQchip.vue';
   import { showNotificationInfo } from 'src/api/notificatios-api';
@@ -75,6 +76,7 @@
     },
     methods: {
       downloadPdf() {
+        // @ts-ignore
         const file = new Blob([this.pdfData.data], { type: 'binary' });
         const fileName: string = `bittery-invoice-${this.$route.params.invoiceId}.pdf`;
         if (window.navigator.msSaveOrOpenBlob) {

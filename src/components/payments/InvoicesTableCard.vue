@@ -190,10 +190,12 @@
         this.loadInvoices();
       },
       invoiceStatus() {
+        // @ts-ignore
         this.filteredData = this.reorderByStatus(this.data);
         this.reorderByDate(this.filteredData);
       },
       orderByDate() {
+        // @ts-ignore
         this.filteredData = this.reorderByStatus(this.data);
         this.reorderByDate(this.filteredData);
       },
@@ -293,6 +295,7 @@
       },
       getPriceFontSize(id: string) {
         if (this.priceFontSizes.length > 0) {
+          // @ts-ignore
           return this.priceFontSizes.filter((priceFontSize: any) => priceFontSize.id === id)[0].fontSize;
         } else {
           return 14;

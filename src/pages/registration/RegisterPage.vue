@@ -5,7 +5,7 @@
         <div class="col-auto">
           <q-card class="shadow-10 bg-grey-2" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.9}px` : `width: ${screenWidth * 0.2}px`">
             <q-card-section :class="{ 'q-pa-lg': !$q.platform.is.mobile }">
-              <bittery-logo></bittery-logo>
+              <bittery-logo-animated></bittery-logo-animated>
               <div class="text-primary q-pt-md text-h5 ">
                 Create your account
               </div>
@@ -22,11 +22,11 @@
 
 <script lang="ts">
   import GlobalMixin from "../../mixins/global-mixin";
-  import BitteryLogo from 'components/utils/BitteryLogo.vue';
+  import BitteryLogoAnimated from 'components/utils/BitteryLogoAnimated.vue';
   import RegisterForm from 'components/register/RegisterForm.vue';
 
   export default GlobalMixin.extend({
     name: 'RegisterPage',
-    components: { BitteryLogo, RegisterForm },
+    components: { BitteryLogoAnimated, RegisterForm },
   });
 </script>

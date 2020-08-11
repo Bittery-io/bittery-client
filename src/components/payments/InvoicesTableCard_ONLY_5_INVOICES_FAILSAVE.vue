@@ -268,6 +268,7 @@
       },
       getPriceFontSize(id: string) {
         if (this.priceFontSizes.length > 0) {
+          // @ts-ignore
           return this.priceFontSizes.filter((priceFontSize: any) => priceFontSize.id === id)[0].fontSize;
         } else {
           return 14;

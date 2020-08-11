@@ -114,7 +114,8 @@ module.exports = configure((ctx) => ({
 
   // https://quasar.dev/quasar-cli/cli-documentation/supporting-ts
   supportTS: {
-    tsCheckerConfig: { eslint: true },
+    // !!!!!!!!!!!!!!!!!!!!!!! UNCOMMENT FOR LINTER ON QUASAR BUILD
+    // tsCheckerConfig: { eslint: true },
   },
 
   // https://quasar.dev/quasar-cli/cli-documentation/prefetch-feature
@@ -137,15 +138,16 @@ module.exports = configure((ctx) => ({
     extendWebpack(cfg) {
       // linting is slow in TS projects, we execute it only for production builds
       if (ctx.prod) {
-        cfg.module.rules.push({
-          enforce: 'pre',
-          test: /\.(js|vue)$/,
-          loader: 'eslint-loader',
-          exclude: /node_modules/,
-          options: {
-            formatter: require('eslint').CLIEngine.getFormatter('stylish'),
-          },
-        });
+        // !!!!!!!!!!!!!!!!!!!!!!! UNCOMMENT FOR LINTER ON QUASAR BUILD
+        // cfg.module.rules.push({
+        //   enforce: 'pre',
+        //   test: /\.(js|vue)$/,
+        //   loader: 'eslint-loader',
+        //   exclude: /node_modules/,
+        //   options: {
+        //     formatter: require('eslint').CLIEngine.getFormatter('stylish'),
+        //   },
+        // });
       }
     },
   },

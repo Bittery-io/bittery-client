@@ -163,11 +163,13 @@
       // These watchers are for password validation, when one changes -> check second.
       password() {
         if (this.password2 !== '') {
+          // @ts-ignore
           this.$refs.password2.validate();
         }
       },
       password2() {
         if (this.password !== '') {
+          // @ts-ignore
           this.$refs.password.validate();
         }
       },
@@ -189,14 +191,14 @@
             email: this.email.trim(),
             captchaCode: this.captchaCode,
           },
-          (resp) => {
+          (resp: any) => {
             console.log(resp);
             this.showLoading = false;
             this.registered = true;
           },
-          (err) => {
+          (err: any) => {
             this.resetRecaptcha = true;
-            this.handleRequestError(err, (errorCode) => {
+            this.handleRequestError(err, (errorCode: any) => {
               switch (errorCode) {
                 case 0:
                   this.errorBannerMessage = 'E-mail is already taken.';

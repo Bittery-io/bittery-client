@@ -14,7 +14,7 @@
 
         <q-toolbar-title class="text-secondary">
           <router-link to="/payments/overview">
-            <bittery-logo style="width:100px; height:100%;"></bittery-logo>
+            <bittery-logo></bittery-logo>
           </router-link>
         </q-toolbar-title>
 

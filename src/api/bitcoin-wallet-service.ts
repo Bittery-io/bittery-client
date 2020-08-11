@@ -1,4 +1,5 @@
 import { generateMnemonic } from 'bip39';
+// @ts-ignore
 import * as Bip84 from 'bip84/src/index';
 
 import { BitcoinWallet } from 'src/model/bitcoin-wallet';

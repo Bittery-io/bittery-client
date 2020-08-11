@@ -2,10 +2,10 @@
   <q-layout view="hHh lpR fFf">
     <q-header elevated class="bg-primary text-white">
       <q-toolbar>
-        <q-toolbar-title>
-          <a class="text-secondary" href="https://bittery.io">
-            Bittery.io
-          </a>
+        <q-toolbar-title class="text-secondary">
+          <router-link to="/payments/overview">
+              <bittery-logo></bittery-logo>
+          </router-link>
         </q-toolbar-title>
       </q-toolbar>
     </q-header>

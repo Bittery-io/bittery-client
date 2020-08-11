@@ -138,11 +138,13 @@
       // These watchers are for password validation, when one changes -> check second.
       password() {
         if (this.password2 !== '') {
+          // @ts-ignore
           this.$refs.password2.validate();
         }
       },
       password2() {
         if (this.password !== '') {
+          // @ts-ignore
           this.$refs.password.validate();
         }
       },

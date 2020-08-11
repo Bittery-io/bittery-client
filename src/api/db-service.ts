@@ -1,4 +1,6 @@
+// @ts-ignore
 import PouchDB from 'pouchdb/dist/pouchdb';
+// @ts-ignore
 import * as plugin from 'pouchdb-find/lib/index';
 PouchDB.plugin(plugin);
 const db = new PouchDB('dbname');

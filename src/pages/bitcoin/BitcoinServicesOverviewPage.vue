@@ -22,7 +22,6 @@
   import UserBtcForm from 'components/btc/UserBtcForm.vue';
   import { get } from 'src/api/http-service';
   import GlobalMixin from "../../mixins/global-mixin";
-  import { showNotificationError } from 'src/api/notificatios-api';
   import Loader from 'components/utils/Loader.vue';
 
   export default GlobalMixin.extend({
@@ -41,13 +40,13 @@
         this.showLoading = false;
         console.log('User lnd data: ', res.data);
         this.userLndDto = res.data;
-      }, async (err) => {
+      }, async (err: any) => {
         console.log('User lnd get err: ', err);
         get(this.$axios, '/api/lnd/custom', async (res: any) => {
           this.showLoading = false;
           console.log('Custom lnd data: ', res.data);
           this.customLndDto = res.data;
-        }, async (err) => {
+        }, async (err: any) => {
           console.log('Custom lnd get err: ', err);
           await this.sleep(200);
           this.showLoading = false;
@@ -58,7 +57,7 @@
       get(this.$axios, '/api/btc/wallet', (res: any) => {
         console.log(res.data);
         this.userBtcWalletDto = res.data;
-      }, (err) => {
+      }, (err: any) => {
         console.log(err);
       });
     },

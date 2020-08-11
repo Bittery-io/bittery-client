@@ -18,6 +18,7 @@
       };
     },
     mounted() {
+      // @ts-ignore
       window.btcpay.showInvoice(this.$route.params.invoiceId);
     },
   });

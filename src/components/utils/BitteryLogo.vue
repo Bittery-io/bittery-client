@@ -11,16 +11,10 @@
 
   export default GlobalMixin.extend({
     name: 'BitteryLogo',
-    props: {
-      inverted: {
-        type: Boolean,
-        required: false,
-        default: false,
-      },
-    },
     computed: {
       path() {
-        return this.inverted ? 'statics/BITTERY.svg' : 'statics/BITTERY.svg';
+        return 'statics/bittery-glow.png';
+        // return 'statics/Bittery.IO.png';
       },
     },
   });

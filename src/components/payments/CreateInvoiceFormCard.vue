@@ -14,7 +14,7 @@
                   autocomplete="false"
                   outlined
                   bg-color="accent"
-                  type="number"
+                  type="text"
                   name="amount"
                   square
                   v-model="amount"
