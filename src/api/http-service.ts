@@ -19,7 +19,7 @@ const urlsWhichHandle401: string[] = ['/api/user/login', '/api/user/password/res
 
 // @ts-ignore
 const handleHttpError = (error, axios, recallFunction, url, payload, successCallback, errorCallback) => {
-  if (error.response.status === 504 || error.response.status === 503) {
+  if (error.response.status === 504 || error.response.status === 503 || error.response.status === 502) {
     showNotificationError('Request failed', 'Server maintenance, please try again later');
     LOADING.hide();
     VUE_ROUTER.push('/login');
