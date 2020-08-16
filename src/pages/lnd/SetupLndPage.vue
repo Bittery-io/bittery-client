@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <div class="fixed-center">
+  <q-page padding>
+    <div :class="{ 'fixed-center': !$q.platform.is.mobile }">
       <div class="row justify-center">
         <div class="col-lg-12">
           <h2 class="text-center" style="margin-bottom: 0;">Setup Bitcoin LN <q-icon name="mdi-flash" color="yellow-7"/></h2>

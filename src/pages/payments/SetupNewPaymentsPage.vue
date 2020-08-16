@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page padding>
     <div class="text-center" :class="{ 'fixed-center': !$q.platform.is.mobile }">
       <div class="row">
         <div class="col-grow">

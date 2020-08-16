@@ -98,7 +98,8 @@ module.exports = configure((ctx) => ({
       'QTd',
       'QLinearProgress',
       'QSelect',
-      'QScrollArea'
+      'QScrollArea',
+      'QTooltip'
     ],
     directives: [],
 

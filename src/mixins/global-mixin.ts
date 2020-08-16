@@ -8,6 +8,8 @@ export default Vue.extend({
       showLoading: false,
       screenWidth: window.innerWidth,
       screenHeight: window.innerHeight,
+      // It's the screen to use so height - topbar - bottom bar
+      innerScreenHeight: window.innerHeight - 100,
     };
   },
   computed: {

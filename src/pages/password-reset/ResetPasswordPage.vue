@@ -1,11 +1,11 @@
 <template>
   <q-page>
-    <div class="fixed-center">
+    <div :class="{ 'fixed-center': !$q.platform.is.mobile }">
       <div class="row justify-center text-center items-center">
         <div class="col-auto">
-          <q-card class="shadow-10 bg-grey-2">
+          <q-card class="shadow-10 bg-grey-2" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.9}px` : `width: ${screenWidth * 0.2}px`">
             <q-card-section :class="{ 'q-pa-lg': !$q.platform.is.mobile }">
-              <bittery-logo></bittery-logo>
+              <bittery-logo-animated></bittery-logo-animated>
               <div class="text-primary q-pt-md text-h5"
                    :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.8}px` : `width: ${screenWidth * 0.18}px`">
                 Reset your password
@@ -25,13 +25,13 @@
 </template>
 
 <script lang="ts">
-  import BitteryLogo from 'components/utils/BitteryLogo.vue';
+  import BitteryLogoAnimated from 'components/utils/BitteryLogoAnimated.vue';
   import LoginForm from 'components/login/LoginForm.vue';
   import GlobalMixin from "../../mixins/global-mixin";
   import ResetPasswordForm from 'components/password-reset/ResetPasswordForm.vue';
 
   export default GlobalMixin.extend({
     name: 'ResetPasswordPage',
-    components: { BitteryLogo, LoginForm, ResetPasswordForm },
+    components: { BitteryLogoAnimated, LoginForm, ResetPasswordForm },
   });
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page padding>
     <loader :show="showLoading"></loader>
     <setup-lnd-before-payments-required-popup :show="showPopup"></setup-lnd-before-payments-required-popup>
     <div :class="{ 'fixed-center': !$q.platform.is.mobile }">

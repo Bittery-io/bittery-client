@@ -1,6 +1,6 @@
 <template>
-  <q-page>
-    <div class="fixed-center">
+  <q-page padding>
+    <div :class="{ 'fixed-center': !$q.platform.is.mobile }">
       <div class="row justify-center text-center items-center">
         <div class="col-auto">
           <q-card class="shadow-10 bg-grey-2">
