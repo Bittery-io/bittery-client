@@ -125,7 +125,9 @@ module.exports = configure((ctx) => ({
   // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
   build: {
     vueRouterMode: 'history', // available values: 'hash', 'history'
-
+    env: {
+      BTCPAY_URL: ctx.prod? 'https://btcpay.bittery.io' : 'http://localhost'
+    },
     // rtl: false, // https://quasar.dev/options/rtl-support
     // preloadChunks: true,
     // showProgress: false,
