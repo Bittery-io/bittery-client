@@ -20,7 +20,6 @@
     mounted() {
       // @ts-ignore
       window.btcpay.setApiUrlPrefix(process.env.BTCPAY_URL);
-      console.log(process.env.BTCPAY_URL);
       // @ts-ignore
       window.btcpay.showInvoice(this.$route.params.invoiceId);
     },

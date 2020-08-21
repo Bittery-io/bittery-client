@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row q-pa-xs">
     <div class="col-grow">
       <loader :show="showLoading"></loader>
       <error-popup header="Login failed"
@@ -7,7 +7,7 @@
                    :show="errorBannerMessage !== ''">
       </error-popup>
       <vue-form :state='loginformstate' @submit.prevent="onSubmit">
-        <div class="row" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
+        <div class="row q-pa-xs" >
           <div class="col-grow">
             <validate>
               <q-input
@@ -29,7 +29,7 @@
             </validate>
           </div>
         </div>
-        <div class="row" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
+        <div class="row q-pa-xs" >
           <div class="col-grow">
             <validate>
               <q-input
@@ -58,7 +58,7 @@
             </validate>
           </div>
         </div>
-        <div class="row">
+        <div class="row q-pa-xs">
           <div class="col-grow">
             <q-btn type="submit"
                    color="primary"
@@ -78,7 +78,7 @@
             </q-chip>
           </div>
         </div>
-        <div class="row">
+        <div class="row q-pa-xs">
           <div class="col-grow">
             <q-chip clickable icon="mdi-account-lock" class="shadow-10" @click="$router.push('/password/reset')" color="grey-8" text-color="white">
               Forgot your password?

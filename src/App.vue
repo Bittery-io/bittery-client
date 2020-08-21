@@ -12,6 +12,7 @@
   export default Vue.extend({
     name: 'App',
     mounted() {
+      console.log('BTCPAY url: ', process.env.BTCPAY_URL);
       setVueRouter(this.$router);
       setRouterNavguard(this.$router);
       setLoading(this.$q.loading);

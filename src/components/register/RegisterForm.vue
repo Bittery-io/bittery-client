@@ -1,5 +1,5 @@
 <template>
-  <div class="row">
+  <div class="row q-pa-xs">
     <div class="col-grow">
       <registered-popup :show="registered"></registered-popup>
       <loader :show="showLoading"></loader>
@@ -8,7 +8,7 @@
                    :show="errorBannerMessage !== ''">
       </error-popup>
       <vue-form :state='registerformstate' @submit.prevent="onSubmit">
-        <div class="row" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
+        <div class="row q-pa-xs" >
           <div class="col-grow">
             <validate>
               <q-input
@@ -30,7 +30,7 @@
             </validate>
           </div>
         </div>
-        <div class="row" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
+        <div class="row q-pa-xs" >
           <div class="col-grow">
             <validate>
               <q-input
@@ -62,7 +62,7 @@
             </validate>
           </div>
         </div>
-        <div class="row" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
+        <div class="row q-pa-xs" >
           <div class="col-grow">
             <validate>
               <q-input
