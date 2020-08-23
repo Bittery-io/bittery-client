@@ -31,7 +31,9 @@
             </template>
             <template v-slot:item="props">
               <div class="q-pa-md col-xs-12 col-sm-6 col-md-4" :class="{ 'noPaddingRightAndLeft': $q.platform.is.mobile }">
-                <q-card class="shadow-10 grow2">
+<!--                <q-card class="shadow-10 grow2 bg-green-2">-->
+                <q-card class="shadow-10 grow2"
+                        :class="getClassDependingOfInvoiceStatus(props.row.status)">
                   <q-card-section>
                     <q-badge :color="getStatusLabelColor(props.row.status)" floating>
                       <div class="text-subtitle1">
@@ -216,6 +218,16 @@
       },
     },
     methods: {
+      getClassDependingOfInvoiceStatus(status: string) {
+        switch (status) {
+          case 'complete':
+            return 'bg-green-2';
+          case 'expired':
+            return 'bg-red-2';
+          default:
+            return '';
+        }
+      },
       reorderByDate(data: any[]) {
         if (this.orderByDate === 'newest first') {
           data = data.sort((a: any, b: any) => b.invoiceTime - a.invoiceTime);
