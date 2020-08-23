@@ -3,6 +3,7 @@ import {
 } from './session-service';
 import { refreshAccessToken } from './refresh-access-token-service';
 import { showNotificationError } from 'src/api/notificatios-api';
+import { sleep } from 'src/api/sleep-service';
 
 let VUE_ROUTER = undefined;
 let LOADING: any = undefined;
@@ -18,7 +19,7 @@ export const setLoading = (loadingPlugin: any) => {
 const urlsWhichHandle401: string[] = ['/api/user/login', '/api/user/password/reset'];
 
 // @ts-ignore
-const handleHttpError = (error, axios, recallFunction, url, payload, successCallback, errorCallback) => {
+const handleHttpError = async (error, axios, recallFunction, url, payload, successCallback, errorCallback) => {
   if (error.response.status === 504 || error.response.status === 503 || error.response.status === 502) {
     showNotificationError('Request failed', 'Server maintenance, please try again later');
     LOADING.hide();
@@ -35,7 +36,9 @@ const handleHttpError = (error, axios, recallFunction, url, payload, successCall
       successCallback,
       errorCallback);
   } else if (error.response.status === 401 && !hasAccessToken() && !urlsWhichHandle401.includes(url)) {
+    await sleep(10);
     LOADING.hide();
+    await sleep(10);
     showNotificationError('User is not logged', 'Please sign in');
     VUE_ROUTER.push('/login');
   } else {
@@ -50,8 +53,8 @@ export const post = (axios, url, payload, successCallback, errorCallback) => {
     // @ts-ignore
     .then((response) => successCallback(response))
     // @ts-ignore
-    .catch((error) => {
-      handleHttpError(error,
+    .catch(async (error) => {
+      await handleHttpError(error,
         axios,
         post,
         url,
@@ -67,7 +70,7 @@ export const get = (axios, url, successCallback, errorCallback, headers?) => {
     headers: headers !== undefined ? headers : {},
   })
     .then((response: any) => successCallback(response))
-    .catch((error: any) => handleHttpError(error,
+    .catch(async (error: any) => await handleHttpError(error,
       axios,
       get,
       url,
@@ -86,7 +89,10 @@ const refreshJWTTokenAndRecallRequest = (axios, recallFunction, url, payload, su
         recallFunction(axios, url, successCallback, errorCallback);
       }
     },
-    (error: any) => {
+    async (error: any) => {
+      await sleep(10);
+      LOADING.hide();
+      await sleep(10);
       console.log('Refreshing user token failed! Push to /login');
       showNotificationError('User is not logged', 'Please sign in');
       VUE_ROUTER.push('/login');

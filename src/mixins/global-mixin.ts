@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { openURL } from 'quasar'
+import { sleep } from 'src/api/sleep-service';
 
 export default Vue.extend({
   data() {
@@ -49,7 +50,7 @@ export default Vue.extend({
       return err.response.data !== undefined && err.response.data.errorMessage !== undefined;
     },
     sleep(ms: number) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
+      return sleep(ms);
     },
   },
 });

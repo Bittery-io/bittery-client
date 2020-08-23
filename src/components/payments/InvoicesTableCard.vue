@@ -81,7 +81,7 @@
                           <q-icon color="primary" name="mdi"/>
                         </q-item-section>
                         <q-item-section>
-                          <q-linear-progress stripe size="10px" :value="props.row.amountPaid / Number(props.row.btcPrice)"/>
+                          <q-linear-progress stripe size="10px" :value="Number(props.row.btcPaid) / Number(props.row.btcPrice)"/>
                           <q-item-label caption>Total paid</q-item-label>
                         </q-item-section>
                       </q-item>
@@ -233,6 +233,7 @@
       loadInvoices() {
         get(this.$axios, '/api/payments/invoices', async (res: any) => {
           await this.sleep(200); // small sleep required
+          console.log('Mam: ', res.data[0].btcPaid, Number(res.data[0].btcPrice));
           this.showLoading = false;
           this.data = res.data;
           this.filteredData = res.data;
