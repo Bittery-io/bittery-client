@@ -232,18 +232,18 @@
     methods: {
       downloadTls() {
         get(this.$axios, '/api/lnd/files/tls', (res: any) => {
-          this.downloadFile(res.data, 'tls.cert');
+          this.downloadFile(res.data.fileBase64, 'tls.cert');
         }, () => {
         });
       },
       downloadMacaroon() {
         get(this.$axios, '/api/lnd/files/macaroon', (res: any) => {
-          this.downloadFile(res.data, 'admin.macaroon');
+          this.downloadFile(res.data.fileBase64, 'admin.macaroon');
         }, () => {
         });
       },
-      downloadFile(fileBlob: any, fileName: string) {
-        const file = new Blob([fileBlob], { type: 'binary' });
+      downloadFile(fileBase64: any, fileName: string) {
+        const file = new Blob([Buffer.from(fileBase64, 'base64')]);
         if (window.navigator.msSaveOrOpenBlob) {
           window.navigator.msSaveOrOpenBlob(file, fileName);
         } else { // Others
