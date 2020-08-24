@@ -22,7 +22,7 @@
       path() {
         // return this.inverted ? 'statics/BITTERY.svg' : 'statics/BITTERY.svg';
         // return 'statics/bittery-glow-last.svg';
-        return 'statics/BITTERY-grey.gif';
+        return 'statics/BITTERY-grey-min.gif';
       },
     },
   });
