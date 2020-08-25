@@ -16,9 +16,10 @@
         <q-toolbar-title class="text-secondary">
           <router-link to="/payments/overview">
             <bittery-logo></bittery-logo>
-            <q-chip color="orange-8" text-color="primary" square class="text-bold"
-                    icon="mdi-bitcoin" size="md" clickable @click="showPopup">TESTNET</q-chip>
           </router-link>
+          <q-chip color="orange-8" text-color="primary" square class="text-bold"
+                  icon="mdi-bitcoin" size="md" clickable @click="showPopup">TESTNET
+          </q-chip>
         </q-toolbar-title>
 
         <q-toolbar-title class="text-bold text-right" v-if="!$q.platform.is.mobile">
