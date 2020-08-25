@@ -56,7 +56,7 @@
           <q-item-section>
             <q-item-label>Homepage</q-item-label>
             <q-item-label caption>
-              Bitter.io homepage
+              Bittery.io homepage
             </q-item-label>
           </q-item-section>
         </q-item>
