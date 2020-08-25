@@ -1,6 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <loader :show="showLoading"></loader>
+    <testnet-popup :show="showTestnetPopup"></testnet-popup>
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -15,11 +16,13 @@
         <q-toolbar-title class="text-secondary">
           <router-link to="/payments/overview">
             <bittery-logo></bittery-logo>
+            <q-chip color="orange-8" text-color="primary" square class="text-bold"
+                    icon="mdi-bitcoin" size="md" clickable @click="showPopup">TESTNET</q-chip>
           </router-link>
         </q-toolbar-title>
 
         <q-toolbar-title class="text-bold text-right" v-if="!$q.platform.is.mobile">
-          <q-chip clickable color="accent" text-color="primary" square
+          <q-chip clickable color="accent" text-color="primary"
                   @click="openUrlTheSameTab('https://bittery.io')"
                   outline icon="mdi-home-circle" size="md">HOMEPAGE</q-chip>
         </q-toolbar-title>
@@ -73,21 +76,26 @@
   import LoginMenuButton from '../components/login/LoginMenuButton';
   import BitteryLogo from '../components/utils/BitteryLogo';
   import Loader from '../components/utils/Loader';
+  import TestnetPopup from '../components/TestnetPopup';
 
   export default GlobalMixin.extend({
     name: 'MainLayout',
 
     components: {
-      EssentialLink, LoginMenuButton, BitteryLogo, Loader
+      EssentialLink, LoginMenuButton, BitteryLogo, Loader, TestnetPopup
     },
     methods: {
       isActive(essentialLink) {
         return this.$route.fullPath === essentialLink.link;
       },
+      showPopup() {
+        this.showTestnetPopup = !this.showTestnetPopup;
+      }
     },
     data() {
       return {
         showLoading: false,
+        showTestnetPopup: false,
         leftDrawerOpen: false,
         essentialLinks: [
           {

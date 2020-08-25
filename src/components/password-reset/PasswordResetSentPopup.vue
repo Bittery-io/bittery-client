@@ -54,7 +54,7 @@
       },
     },
     methods: {
-      closeAndGoToLoginView() {
+      close() {
         this.showPopup = false;
         this.$router.push('/login');
       },

@@ -6,6 +6,7 @@
                    :error-message="errorBannerMessage"
                    :show="errorBannerMessage !== ''">
       </error-popup>
+      <testnet-popup :show="showTestnetPopup" :is-after-login="true"></testnet-popup>
       <vue-form :state='loginformstate' @submit.prevent="onSubmit">
         <div class="row q-pa-xs" >
           <div class="col-grow">
@@ -97,9 +98,10 @@
   import { post } from 'src/api/http-service';
   import { setSessionInStorage } from 'src/api/session-service';
   import GlobalMixin from "../../mixins/global-mixin";
+  import TestnetPopup from 'components/TestnetPopup.vue';
 
   export default GlobalMixin.extend({
-    components: { ErrorPopup, Loader },
+    components: { ErrorPopup, Loader, TestnetPopup },
     data: () => ({
       loginformstate: {},
       email: '',
@@ -108,6 +110,7 @@
       emailInitialValid: true,
       passwordInitialValid: true,
       isPwd: true,
+      showTestnetPopup: false,
     }),
     name: 'LoginForm',
     watch: {
@@ -134,7 +137,9 @@
             this.showLoading = false;
             await this.sleep(200); // small sleep required
             setSessionInStorage(resp.data);
-            await this.$router.push('/payments/overview');
+            this.showTestnetPopup = true;
+            await this.sleep(200); // small sleep required
+            //this is now moved to testnet popup
           },
           (err: any) => {
             this.handleRequestError(err, (errorCode: any) => {
