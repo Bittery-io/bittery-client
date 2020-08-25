@@ -137,8 +137,8 @@
     data() {
       return {
         step: 1,
-        lndRestAddress: 'emergencja:445/lnd-rest/btc',
-        macaroonHex: '0201036c6e64023d030a10aba9f16d82c6fb182f6e802cfd21ef721201301a0c0a04696e666f1204726561641a170a08696e766f6963657312047265616412057772697465000006205de3834d0334a41f200fef0c1bb303b4de98bd4802c84764014a9354025d726a',
+        lndRestAddress: '',
+        macaroonHex: '',
         tlsCertFileText: '',
       };
     },
