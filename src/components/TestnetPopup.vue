@@ -1,6 +1,6 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <q-card class="bg-orange-8">
+    <q-card class="bg-orange-9">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-white">
@@ -9,17 +9,19 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-white text-center">
+            <div class="text-h4 text-white text-center q-pa-xs">
               Bitcoin Testnet
             </div>
             <div class="text-primary text-bold text-white text-center text-subtitle1">
-              Bittery is currently running in Testnet mode. <br> Don't operate with your real mainnet Bitcoins!
+              Bittery.io is under active development and is currently running in Bitcoin Testnet mode. <br>
+              Don't operate with your real mainnet Bitcoins! <br>
+              Bittery doesn't take responsibility of any cryptocurrencies lost due to user actions.
             </div>
           </div>
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn outlined @click="close()" color="white" text-color="orange-8">Close</q-btn>
+            <q-btn outlined @click="close()" color="white" text-color="orange-9">I UNDERSTAND</q-btn>
           </div>
         </div>
       </q-card-section>

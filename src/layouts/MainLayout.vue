@@ -17,7 +17,7 @@
           <router-link to="/payments/overview">
             <bittery-logo></bittery-logo>
           </router-link>
-          <q-chip color="orange-8" text-color="primary" square class="text-bold"
+          <q-chip color="orange-9" text-color="primary" square class="text-bold"
                   icon="mdi-bitcoin" size="md" clickable @click="showPopup">TESTNET
           </q-chip>
         </q-toolbar-title>
