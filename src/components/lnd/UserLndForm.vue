@@ -28,7 +28,7 @@
           </q-field>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input
             type="text"
@@ -46,7 +46,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input
             type="text"
@@ -64,7 +64,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input
             type="text"
@@ -89,7 +89,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input
             type="text"
@@ -114,7 +114,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input
             type="text"
@@ -139,7 +139,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input
             :type="isPwd ? 'password' : 'text'"
@@ -163,7 +163,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input
             type="text"
@@ -181,7 +181,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-field readonly borderless label="Zap QR code" stack-label>
             <template v-slot:before>
@@ -201,6 +201,31 @@
           </q-field>
         </div>
       </div>
+      <div class="row" v-show="!isNotTurnedOff">
+        <div class="col-12">
+          <q-field readonly borderless label="" stack-label>
+            <q-banner  class="text-primary  bg-orange q-mb-xs">
+              <template v-slot:avatar>
+                <q-icon name="error" color="primary" />
+              </template>
+              Due to limited resources your personal LND node is currently turned off. Request turn on and you will queued to turning on soon. We will notify you with e-mail.
+            </q-banner>
+          </q-field>
+        </div>
+      </div>
+      <div class="row" v-show="!isNotTurnedOff">
+        <div class="col-12">
+          <q-field readonly borderless label="" stack-label>
+              <q-btn
+                :disable="requestLndButtonDisabled"
+                label="Request LND turn on"
+                class="full-width"
+                color="primary"
+                icon="alarm_add"
+                @click="requestLndRun"/>
+          </q-field>
+        </div>
+      </div>
     </q-card-section>
   </q-card>
 </template>
@@ -208,8 +233,8 @@
 <script lang="ts">
   import GlobalMixin from "../../mixins/global-mixin";
   import QrCode from 'components/utils/QrCode.vue';
-  import { get } from 'src/api/http-service';
-  import { showNotificationInfo } from 'src/api/notificatios-api';
+  import { get, post } from 'src/api/http-service';
+  import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
   import LndFormMixin from 'components/lnd/mixins/lnd-form-mixin';
   import QrCodePopup from 'components/utils/QrCodePopup.vue';
   import HeaderQchip from 'components/utils/HeaderQchip.vue';
@@ -227,13 +252,28 @@
     data() {
       return {
         isPwd: true,
+        requestLndButtonDisabled: false,
       };
+    },
+    computed: {
+      isNotTurnedOff() {
+        return this.userLndDto.lndStatus !== 'TURNED_OFF';
+      },
     },
     methods: {
       downloadTls() {
         get(this.$axios, '/api/lnd/files/tls', (res: any) => {
           this.downloadFile(res.data.fileBase64, 'tls.cert');
         }, () => {
+        });
+      },
+      requestLndRun() {
+        post(this.$axios, '/api/lnd/request', {}, (res: any) => {
+          this.requestLndButtonDisabled = true;
+          showNotificationInfo('LND turn on requested.', 'You will be notified by e-mail.')
+        }, () => {
+          this.requestLndButtonDisabled = true;
+          showNotificationError('LND turn on request failed.', 'Your request is probably in queue already. Please wait for e-mail notification.');
         });
       },
       downloadMacaroon() {

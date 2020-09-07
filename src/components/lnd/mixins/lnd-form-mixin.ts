@@ -18,6 +18,8 @@ export default Vue.extend({
           return 'primary';
         case 'STOPPED':
           return 'red';
+        case 'TURNED_OFF':
+          return 'orange';
         default:
           return 'grey';
       }
