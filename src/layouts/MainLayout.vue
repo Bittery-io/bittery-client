@@ -36,7 +36,7 @@
       bordered
       content-class="bg-grey-2"
     >
-      <q-list>
+      <q-list class="main-side-menu">
         <q-item-label
           header
           class="text-grey-8 text-bold"

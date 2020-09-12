@@ -57,3 +57,15 @@ body {
 .noPaddingRightAndLeft {
   padding-left: 0; padding-right:0;
 }
+
+/*te boczne menu item pod tytul*/
+div.q-item__label.q-item__label--caption.text-caption {
+  color: #404040;
+  font-weight: normal;
+}
+
+/*te boczne menu pogrubione napisy*/
+.main-side-menu div.q-item__label {
+  color:  #001f10;
+  font-weight: bold;
+}

@@ -35,14 +35,14 @@
                 <q-card class="shadow-10 grow2"
                         :class="getClassDependingOfInvoiceStatus(props.row.status)">
                   <q-card-section>
-                    <q-badge :color="getStatusLabelColor(props.row.status)" floating>
-                      <div class="text-subtitle1">
-                        <q-icon name="info"/> {{props.row.status}}</div>
+                    <q-badge floating>
+                      <div class="text-subtitle1 text-uppercase" :class="getStatusLabelColor(props.row.status)">
+                        <q-icon name="mdi-file" /> {{props.row.status}}</div>
                     </q-badge>
                     <q-list>
-                      <q-item>
+                      <q-item class="q-pt-md" style="padding-left: 3% !important;">
                         <q-item-section avatar>
-                          <q-icon color="primary" name="mdi-cash-multiple"/>
+                          <q-icon color="primary" name="mdi-cash-multiple" size="xl"/>
                         </q-item-section>
                         <q-item-section>
                           <q-item-label><span v-bind:style="{'font-size': `${getPriceFontSize(props.row.id)}px`}">{{props.row.price}}</span>
@@ -317,13 +317,13 @@
       getStatusLabelColor(status: string) {
         switch (status) {
           case 'new':
-            return 'orange';
+            return 'text-white';
           case 'complete':
-            return 'primary';
+            return 'text-lime-5';
           case 'expired':
-            return 'grey';
+            return 'text-orange';
           default:
-            return 'grey';
+            return 'text-white';
         }
       },
     },
