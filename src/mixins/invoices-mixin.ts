@@ -19,9 +19,6 @@ export default GlobalMixin.extend({
   },
 
   watch: {
-    reloadInvoices() {
-      this.loadInvoices();
-    },
     invoiceStatus() {
       // @ts-ignore
       this.filteredData = this.reorderByStatus(this.data);

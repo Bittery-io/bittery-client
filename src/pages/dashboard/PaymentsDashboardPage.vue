@@ -53,7 +53,6 @@ export default GlobalMixin.extend({
       this.showLoading = false;
       this.dashboardInfoDto = res.data;
     }, (err: any) => {
-      this.createInvoiceButtonLocked = false;
       this.showLoading = false;
       console.log(err);
     });

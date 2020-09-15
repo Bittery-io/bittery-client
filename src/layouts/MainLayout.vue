@@ -34,7 +34,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
-      width="270"
+      :width="270"
       content-class="bg-grey-2"
     >
       <q-list class="main-side-menu">

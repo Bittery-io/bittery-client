@@ -70,13 +70,11 @@
 </template>
 <script lang="ts">
 import InvoicesMixin from '../../mixins/invoices-mixin';
-import Loader from '../utils/Loader';
-import HeaderQchip from '../utils/HeaderQchip';
-import { get } from 'src/api/http-service';
-import { formatDate, formatOnlyDate, formatOnlyTime } from 'src/api/date-service';
+import { formatOnlyDate, formatOnlyTime } from 'src/api/date-service';
+import HeaderQchip from 'components/utils/HeaderQchip.vue';
 
 export default InvoicesMixin.extend({
-  components: { Loader, HeaderQchip },
+  components: { HeaderQchip },
   name: 'InvoicesTable',
   props: {
     timeframe: {

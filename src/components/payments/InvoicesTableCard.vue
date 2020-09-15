@@ -10,7 +10,6 @@
           <q-table
             grid
             :data="filteredData"
-            :columns="columns"
             row-key="name"
             hide-header>
             <template v-slot:top-right>
@@ -139,13 +138,12 @@
 </template>
 
 <script lang="ts">
-  import InvoicesMixin from "../../mixins/invoices-mixin";
-  import Loader from 'components/utils/Loader.vue';
-  import { get } from 'src/api/http-service';
-  import { addDaysToDate, formatDate } from "src/api/date-service";
-  import HeaderQchip from 'components/utils/HeaderQchip.vue';
+import InvoicesMixin from "../../mixins/invoices-mixin";
+import Loader from 'components/utils/Loader.vue';
+import { get } from 'src/api/http-service';
+import HeaderQchip from 'components/utils/HeaderQchip.vue';
 
-  export default InvoicesMixin.extend({
+export default InvoicesMixin.extend({
     components: { Loader, HeaderQchip },
     name: 'InvoicesTableCard',
     props: {
@@ -235,6 +233,11 @@
           default:
             return 'text-white';
         }
+      },
+    },
+    watch: {
+      reloadInvoices() {
+        this.loadInvoices();
       },
     },
   });
