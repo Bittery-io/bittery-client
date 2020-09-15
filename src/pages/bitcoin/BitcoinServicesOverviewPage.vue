@@ -3,13 +3,19 @@
     <loader :show="showLoading"></loader>
     <div class="row">
       <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.userLndDto">
-        <user-lnd-form :user-lnd-dto="this.userLndDto"></user-lnd-form>
+        <user-lnd-form
+          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+          :user-lnd-dto="this.userLndDto"></user-lnd-form>
       </div>
       <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.customLndDto">
-        <custom-lnd-form :custom-lnd-dto="this.customLndDto"></custom-lnd-form>
+        <custom-lnd-form
+          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+          :custom-lnd-dto="this.customLndDto"></custom-lnd-form>
       </div>
       <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
-        <user-btc-form :user-btc-wallet-dto="this.userBtcWalletDto" v-if="this.userBtcWalletDto"></user-btc-form>
+        <user-btc-form
+          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+          :user-btc-wallet-dto="this.userBtcWalletDto" v-if="this.userBtcWalletDto"></user-btc-form>
       </div>
     </div>
   </q-page>

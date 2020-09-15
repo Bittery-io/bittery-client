@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-ml-xs q-mr-md shadow-10 bg-grey-2">
+  <q-card class="shadow-10 bg-grey-2">
     <q-card-section>
       <header-qchip :text="`All invoices [${timeframe}]`" icon="mdi-chart-timeline" size="md"></header-qchip>
     </q-card-section>

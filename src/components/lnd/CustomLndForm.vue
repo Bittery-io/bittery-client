@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-ma-md shadow-10 bg-grey-2" v-if="this.customLndDto">
+  <q-card class="shadow-10 bg-grey-2" v-if="this.customLndDto">
     <q-card-section>
       <header-qchip :text="$q.platform.is.mobile ? 'Your LN node' : 'Your Lightning Network node'" icon="mdi-flash"></header-qchip>
     </q-card-section>

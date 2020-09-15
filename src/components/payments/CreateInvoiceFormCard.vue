@@ -1,7 +1,7 @@
 <template>
   <div>
     <loader :show="showLoading"></loader>
-    <q-card class="q-ma-md shadow-10 bg-grey-2">
+    <q-card class="shadow-10 bg-grey-2">
       <q-card-section>
         <header-qchip text="Create invoice" icon="mdi-file-document-edit"></header-qchip>
       </q-card-section>

@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-ml-md q-mr-xs shadow-10 bg-grey-2">
+  <q-card class="shadow-10 bg-grey-2">
     <q-card-section>
       <header-qchip :text="`Received payments [ ${timeframe} ]`"
                     icon="mdi-chart-timeline-variant" size="md"></header-qchip>

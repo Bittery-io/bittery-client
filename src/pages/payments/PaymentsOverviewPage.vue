@@ -2,11 +2,15 @@
   <q-page>
     <div class="row" v-if="hasBtcWallet">
       <loader :show="showLoading"></loader>
-      <div class="col-lg-4 col-xs-grow q-pa-xs">
-        <create-invoice-form-card @invoiceCreated="onInvoiceCreated" v-sticky="{ zIndex: 999, stickyTop: 70}"></create-invoice-form-card>
+      <div class="col-lg-4 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
+        <create-invoice-form-card
+          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+          @invoiceCreated="onInvoiceCreated" v-sticky="{ zIndex: 999, stickyTop: 70}"></create-invoice-form-card>
       </div>
-      <div class="col-lg-8 col-xs-grow q-pa-xs">
-        <invoices-table-card :reload-invoices="someInvoiceWasCreated"></invoices-table-card>
+      <div class="col-lg-8 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
+        <invoices-table-card
+          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+          :reload-invoices="someInvoiceWasCreated"></invoices-table-card>
       </div>
     </div>
   </q-page>

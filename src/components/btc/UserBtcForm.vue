@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-ma-md shadow-10 bg-grey-2" v-if="this.userBtcWalletDto">
+  <q-card class="shadow-10 bg-grey-2" v-if="this.userBtcWalletDto">
     <q-card-section>
       <header-qchip text="Your Bitcoin wallet" icon="mdi-bitcoin"></header-qchip>
     </q-card-section>

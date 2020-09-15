@@ -19,6 +19,18 @@ export default Vue.extend({
     },
   },
   methods: {
+    getStatusLabelColor(status: string) {
+      switch (status) {
+        case 'new':
+          return 'text-primary bg-orange';
+        case 'complete':
+          return 'text-white bg-green';
+        case 'expired':
+          return 'text-primary bg-grey';
+        default:
+          return 'text-white bg-primary';
+      }
+    },
     openUrlNewTab(url: string) {
       openURL(url);
     },

@@ -4,6 +4,7 @@
     <div class="row">
       <div class="col-lg-12 col-xs-grow">
         <payments-amounts-card :timeframe="timeframe" :timeframes="timeframes"
+                               :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
                                :dashboard-info="dashboardInfoDto"
                                v-if="dashboardInfoDto"
                                @timeframeChangedEvent="onTimeframeChangedEvent"></payments-amounts-card>
@@ -11,16 +12,22 @@
     </div>
     <div class="row">
       <div class="col-lg-5 col-xs-grow">
-        <payments-history-chart :timeframe="timeframe" :dashboard-info="dashboardInfoDto" v-if="dashboardInfoDto"></payments-history-chart>
+        <payments-history-chart
+          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ml-md q-mr-xs'"
+          :timeframe="timeframe" :dashboard-info="dashboardInfoDto" v-if="dashboardInfoDto"></payments-history-chart>
       </div>
       <div class="col-lg-7 col-xs-grow">
-        <invoices-distribution-chart :timeframe="timeframe" :dashboard-info="dashboardInfoDto" v-if="dashboardInfoDto"></invoices-distribution-chart>
+        <invoices-distribution-chart
+          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ml-xs q-mr-md'"
+          :timeframe="timeframe" :dashboard-info="dashboardInfoDto"
+          v-if="dashboardInfoDto"></invoices-distribution-chart>
       </div>
     </div>
     <div class="row">
       <div class="col-lg-12 col-xs-grow">
-        <invoices-table :timeframe="timeframe"
-                        :dashboard-info="dashboardInfoDto" v-if="dashboardInfoDto"></invoices-table>
+        <invoices-table
+          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+          :timeframe="timeframe" :dashboard-info="dashboardInfoDto" v-if="dashboardInfoDto"></invoices-table>
       </div>
     </div>
   </q-page>

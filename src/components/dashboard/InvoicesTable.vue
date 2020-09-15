@@ -1,5 +1,5 @@
 <template>
-  <q-card class="q-ma-md shadow-10 bg-grey-2">
+  <q-card class="shadow-10 bg-grey-2">
     <q-card-section>
       <header-qchip :text="`Invoices [ ${timeframe} ]`" icon="mdi-table-large" size="md"></header-qchip>
     </q-card-section>
@@ -57,8 +57,8 @@
                   @click="openInNewTab(props.row.id)"/>
               </q-td>
               <q-td>
-                <q-badge class="float-right">
-                  <div class="text-subtitle2 text-uppercase" :class="getStatusLabelColor(props.row.status)">
+                <q-badge class="float-right" :class="getStatusLabelColor(props.row.status)">
+                  <div class="text-subtitle2 text-uppercase">
                     <q-icon name="mdi-file" /> {{props.row.status}}</div>
                 </q-badge>
               </q-td>

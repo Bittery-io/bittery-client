@@ -87,17 +87,5 @@ export default GlobalMixin.extend({
     saveInvoice() {
       this.showLoading = true;
     },
-    getStatusLabelColor(status: string) {
-      switch (status) {
-        case 'new':
-          return 'text-white';
-        case 'complete':
-          return 'text-lime-5';
-        case 'expired':
-          return 'text-orange';
-        default:
-          return 'text-white';
-      }
-    },
   }
 });

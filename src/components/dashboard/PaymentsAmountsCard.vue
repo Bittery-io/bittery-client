@@ -1,12 +1,12 @@
 <template>
-  <q-card class="q-ma-md shadow-10 bg-grey-2">
+  <q-card class="shadow-10 bg-grey-2">
     <q-card-section>
       <div class="row">
         <div class="col-auto">
           <header-qchip :text="`Your payments details [ ${timeframeValue} ]`" icon="mdi-calculator" size="md"></header-qchip>
         </div>
         <div class="col-grow"></div>
-        <div class="col-auto">
+        <div class="col-lg-auto col-xs-grow" :class="$q.platform.is.mobile ? 'q-pt-md' : ''">
           <q-select square outlined bg-color="accent" v-model="timeframeValue" :options="timeframes" label="Time frame" dense>
             <template v-slot:prepend>
               <q-icon color="primary" name="mdi-calendar"/>
@@ -16,8 +16,8 @@
       </div>
     </q-card-section>
     <q-card-section style="padding-top: 0;margin-top:0;">
-      <div class="row">
-        <div class="col-auto q-pa-lg">
+      <div class="row justify-center">
+        <div class="col-auto" :class="$q.platform.is.mobile ? '' : 'q-pa-lg'">
           <q-list>
             <q-item>
               <q-item-section avatar>
@@ -34,7 +34,7 @@
           </q-list>
         </div>
         <div class="col-grow">  </div>
-        <div class="col-auto">
+        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
           <q-list dense separator class="vertical-align">
             <statistic-item
               icon="mdi-cash-plus"
@@ -61,7 +61,7 @@
             </statistic-item>
           </q-list>
         </div>
-        <div class="col-auto">
+        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-md' : ''">
           <q-list dense separator class="vertical-align">
             <statistic-item
               icon="mdi-file-plus"

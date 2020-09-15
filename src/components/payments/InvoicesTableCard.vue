@@ -1,7 +1,7 @@
 <template>
   <div>
     <loader :show="showLoading"></loader>
-    <q-card class="q-ma-md shadow-10 bg-grey-2">
+    <q-card class="shadow-10 bg-grey-2">
       <q-card-section>
         <header-qchip text="Your invoices" icon="mdi-file-multiple"></header-qchip>
       </q-card-section>
@@ -34,8 +34,8 @@
                 <q-card class="shadow-10 grow2"
                         :class="getClassDependingOfInvoiceStatus(props.row.status)">
                   <q-card-section>
-                    <q-badge floating>
-                      <div class="text-subtitle1 text-uppercase" :class="getStatusLabelColor(props.row.status)">
+                    <q-badge floating :class="getStatusLabelColor(props.row.status)">
+                      <div class="text-subtitle2 text-uppercase">
                         <q-icon name="mdi-file" /> {{props.row.status}}</div>
                     </q-badge>
                     <q-list>
@@ -220,18 +220,6 @@ export default InvoicesMixin.extend({
           return this.priceFontSizes.filter((priceFontSize: any) => priceFontSize.id === id)[0].fontSize;
         } else {
           return 14;
-        }
-      },
-      getStatusLabelColor(status: string) {
-        switch (status) {
-          case 'new':
-            return 'text-white';
-          case 'complete':
-            return 'text-lime-5';
-          case 'expired':
-            return 'text-orange';
-          default:
-            return 'text-white';
         }
       },
     },
