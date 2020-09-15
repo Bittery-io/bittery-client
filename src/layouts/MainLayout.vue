@@ -34,6 +34,7 @@
       v-model="leftDrawerOpen"
       show-if-above
       bordered
+      width="270"
       content-class="bg-grey-2"
     >
       <q-list class="main-side-menu">
@@ -111,6 +112,13 @@
             caption: 'Manage your cryptocurrency payments',
             icon: 'mdi-contactless-payment-circle',
             link: '/payments/overview',
+            active: false,
+          },
+          {
+            title: 'Dashboard',
+            caption: 'Browse your payments details',
+            icon: 'mdi-desktop-mac-dashboard',
+            link: '/dashboard',
             active: false,
           },
         ],

@@ -9,7 +9,8 @@
       </div>
       <div class="row justify-center">
         <div class="col-lg-6 col-xs-12 q-pa-xs">
-          <clickable-route-card text="I have own LN node" route="/lnd/setup/existing"></clickable-route-card>
+          <clickable-route-card text="I have own LN node" route="/lnd/setup/existing"
+                                badge-text="Privacy" badge-icon="mdi-security"></clickable-route-card>
         </div>
         <div class="col-lg-6 col-xs-12 q-pa-xs">
           <clickable-route-card text="I don't have LN node" route="/lnd/setup/new"></clickable-route-card>

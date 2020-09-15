@@ -11,7 +11,8 @@
       </div>
       <div class="row justify-center">
         <div class="col-lg-6 col-xs-12 q-pa-xs">
-          <clickable-route-card text="I have Electrum Bitcoin wallet" route="/payments/setup/new?electrum=true"></clickable-route-card>
+          <clickable-route-card text="I have Electrum Bitcoin wallet" route="/payments/setup/new?electrum=true"
+                                badge-text="Best" badge-icon="mdi-check-bold"></clickable-route-card>
         </div>
         <div class="col-lg-6 col-xs-12 q-pa-xs">
           <clickable-route-card text="I don't have Electrum Bitcoin wallet" route="/payments/setup/new"></clickable-route-card>

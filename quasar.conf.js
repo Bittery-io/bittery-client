@@ -23,6 +23,7 @@ module.exports = configure((ctx) => ({
     'setup-vue-form',
     'setup-mixins',
     'setup-vue-sticky',
+    'apexcharts',
   ],
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

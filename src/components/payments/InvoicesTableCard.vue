@@ -139,12 +139,13 @@
 </template>
 
 <script lang="ts">
-  import GlobalMixin from "../../mixins/global-mixin";
+  import InvoicesMixin from "../../mixins/invoices-mixin";
   import Loader from 'components/utils/Loader.vue';
   import { get } from 'src/api/http-service';
   import { addDaysToDate, formatDate } from "src/api/date-service";
   import HeaderQchip from 'components/utils/HeaderQchip.vue';
-  export default GlobalMixin.extend({
+
+  export default InvoicesMixin.extend({
     components: { Loader, HeaderQchip },
     name: 'InvoicesTableCard',
     props: {
@@ -154,94 +155,10 @@
         default: false,
       },
     },
-    data() {
-      return {
-        filter: '',
-        invoiceStatus: 'all',
-        invoiceStatuses: ['all', 'new', 'expired', 'paid'],
-        orderByDate: 'newest first',
-        orderByDateOptions: ['newest first', 'oldest first'],
-        data: [],
-        filteredData: [],
-        filterSavedData: [],
-        priceFontSizes: [],
-        columns: [
-          {
-            name: 'URL',
-            required: true,
-            label: 'Invoice URL',
-            align: 'left',
-            field: 'url',
-            format: (val: any) => `${val}`,
-            sortable: true,
-          },
-          { name: 'currency', align: 'center', label: 'Currency', field: 'currency' },
-          { name: 'amount', label: 'Amount [currency]', field: 'price', sortable: true },
-          { name: 'amountBtc', label: 'Amount [BTC]', field: 'btcPrice' },
-          { name: 'invoiceDate', label: 'Invoice date', field: 'invoiceTime', sortable: true },
-          { name: 'status', label: 'Status', field: 'status' },
-        ],
-        createInvoiceButtonLocked: false,
-      };
-    },
     mounted() {
       this.loadInvoices();
     },
-    watch: {
-      reloadInvoices() {
-        this.loadInvoices();
-      },
-      invoiceStatus() {
-        // @ts-ignore
-        this.filteredData = this.reorderByStatus(this.data);
-        this.reorderByDate(this.filteredData);
-      },
-      orderByDate() {
-        // @ts-ignore
-        this.filteredData = this.reorderByStatus(this.data);
-        this.reorderByDate(this.filteredData);
-      },
-      filter() {
-        if (this.filter === '') {
-          this.filteredData = this.data;
-        } else {
-          const filter: string = this.filter.toLowerCase();
-          this.filteredData = this.data.filter((invoice: any) =>
-            invoice.currency.toLowerCase().includes(filter) ||
-            String(invoice.price).toLowerCase().includes(filter) ||
-            invoice.btcPrice.toLowerCase().includes(filter) ||
-            invoice.status.toLowerCase().includes(filter) ||
-            invoice.itemDesc.toLowerCase().includes(filter) ||
-            invoice.id.toLowerCase().includes(filter) ||
-            (invoice.buyer.name && invoice.buyer.name.toLowerCase().includes(filter)));
-        }
-      },
-    },
     methods: {
-      getClassDependingOfInvoiceStatus(status: string) {
-        switch (status) {
-          case 'complete':
-            return 'bg-green-2';
-          case 'expired':
-            return 'bg-red-2';
-          default:
-            return '';
-        }
-      },
-      reorderByDate(data: any[]) {
-        if (this.orderByDate === 'newest first') {
-          data = data.sort((a: any, b: any) => b.invoiceTime - a.invoiceTime);
-        } else {
-          data = data.sort((a: any, b: any) => a.invoiceTime - b.invoiceTime);
-        }
-      },
-      reorderByStatus(data: any[]): any[] {
-        if (this.invoiceStatus !== 'all') {
-          return data.filter((invoice: any) => invoice.status.toLowerCase() === this.invoiceStatus.toLowerCase());
-        } else {
-          return this.data;
-        }
-      },
       loadInvoices() {
         get(this.$axios, '/api/payments/invoices', async (res: any) => {
           await this.sleep(200); // small sleep required
@@ -259,22 +176,15 @@
           console.log(err);
         });
       },
-      dateFormatted(date: number) {
-        return formatDate(date);
-      },
-      addDueTimeToDate(date: number) {
-        return addDaysToDate(date, 24);
-      },
-      openInNewTab(invoiceId: string) {
-        if (this.$q.platform.is.mobile) {
-          this.$router.push(`/invoices/${invoiceId}`);
-        } else {
-          const route = this.$router.resolve({ path: `/invoices/${invoiceId}` });
-          window.open(route.href, '_blank');
+      getClassDependingOfInvoiceStatus(status: string) {
+        switch (status) {
+          case 'complete':
+            return 'bg-green-2';
+          case 'expired':
+            return 'bg-red-2';
+          default:
+            return '';
         }
-      },
-      saveInvoice() {
-        this.showLoading = true;
       },
       // min 14px, max 50px
       setPriceFontSizes() {
