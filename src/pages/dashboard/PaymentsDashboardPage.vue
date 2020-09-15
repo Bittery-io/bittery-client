@@ -58,7 +58,7 @@ export default GlobalMixin.extend({
     });
   },
   methods: {
-    onTimeframeChangedEvent(newTimeframe) {
+    onTimeframeChangedEvent(newTimeframe: any) {
       this.timeframe = newTimeframe;
     }
   }
