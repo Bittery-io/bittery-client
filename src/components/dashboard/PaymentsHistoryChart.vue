@@ -70,7 +70,7 @@ export default GlobalMixin.extend({
           },
           formatter: function (val, opts) {
             if (val > 0) {
-              return value.toFixed(5);
+              return val.toFixed(5);
             } else {
               return '';
             }
