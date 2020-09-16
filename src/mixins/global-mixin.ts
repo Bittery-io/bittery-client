@@ -24,6 +24,8 @@ export default Vue.extend({
         case 'new':
           return 'text-primary bg-orange';
         case 'complete':
+        case 'paid':
+        case 'confirmed':
           return 'text-white bg-green';
         case 'expired':
           return 'text-primary bg-grey';
