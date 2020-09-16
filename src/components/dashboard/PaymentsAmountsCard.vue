@@ -126,7 +126,7 @@ export default GlobalMixin.extend({
     await this.sleep(200); // small sleep required
     this.timeframeValue = this.timeframe;
     const countUp = new CountUp('totalReceivedPaymentsBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
-      decimalPlaces: 3,
+      decimalPlaces: 5,
     });
     if (!countUp.error) {
       countUp.start();
