@@ -61,7 +61,7 @@
             </statistic-item>
           </q-list>
         </div>
-        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-md' : ''">
+        <div class="col-auto justify-center">
           <q-list dense separator class="vertical-align">
             <statistic-item
               icon="mdi-file-plus"

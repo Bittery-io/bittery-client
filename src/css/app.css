@@ -9,8 +9,8 @@ html {
   /*-webkit-transform: translateZ(0) !important;*/
   /*transform: translateZ(0) !important;*/
   /*transform: perspective(1px) scale(1.0)*/
+  /*font-family: 'Inter', sans-serif !important;;*/
 }
-
 a {text-decoration: none;}
 
 .grow, .grow2 {

@@ -33,7 +33,6 @@ export default GlobalMixin.extend({
         chart: {
           id: 'payments-history-chart',
           type: 'area',
-
         },
         colors: ['#001f10'],
         yaxis: {

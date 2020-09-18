@@ -4,9 +4,34 @@
       <header-qchip :text="`Invoices [ ${timeframe} ]`" icon="mdi-table-large" size="md"></header-qchip>
     </q-card-section>
     <q-card-section style="padding-top: 0;margin-top:0;">
+      <div class="row q-pb-lg q-pl-md">
+        <div class="col-lg-auto col-xs-grow">
+          <q-input dense debounce="800" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : ''"
+                   v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search"/>
+            </template>
+          </q-input>
+        </div>
+        <div class="col-grow"></div>
+        <div class="col-lg-auto col-xs-grow">
+          <div class="q-pa-xs"
+               :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'"
+               debounce="400">
+            <q-select v-model="invoiceStatus" dense :options="invoiceStatuses" label="Invoice status"/>
+          </div>
+        </div>
+        <div class="col-lg-auto col-xs-grow">
+          <div class="q-pa-xs"
+               :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'"
+               debounce="400">
+            <q-select v-model="orderByDate" dense :options="orderByDateOptions" label="Order by date"/>
+          </div>
+        </div>
+      </div>
         <q-table
           class="shadow-0"
-          style="background-color: transparent"
+          style=" background-color: transparent"
           dense
           :data="filteredData"
           :columns="columns"
@@ -113,7 +138,8 @@ export default InvoicesMixin.extend({
       return formatOnlyDate(date);
     },
     loadInvoices() {
-      this.filteredData = this.dashboardInfo.invoices;
+      this.data = this.dashboardInfo.invoices;
+      this.filteredData = this.data;
       console.log(this.filteredData);
       this.filteredData.sort((a: any, b: any) => b.invoiceTime - a.invoiceTime);
       this.filterSavedData = this.filteredData;

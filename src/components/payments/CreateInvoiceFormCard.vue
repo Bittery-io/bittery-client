@@ -29,7 +29,7 @@
           <div class="row q-pa-xs">
             <div class="col-12">
               <validate>
-                <q-select square outlined bg-color="accent" v-model="currency" :options="currencies" label="Currency">
+                <q-select square outlined dense bg-color="accent" v-model="currency" :options="currencies" label="Currency">
                   <template v-slot:prepend>
                       <q-icon style="width:50px;" color="primary" name="mdi-cash-usd-outline"/>
                     </template>
@@ -40,7 +40,7 @@
           <div class="row q-pa-xs">
             <div class="col-12">
               <validate>
-                <q-select square outlined bg-color="accent" value="24 days" :options="paymentDates" label="Invoice validity">
+                <q-select dense square outlined bg-color="accent" value="24 days" :options="paymentDates" label="Invoice validity">
                   <template v-slot:prepend>
                     <q-icon style="width:50px;" color="primary" name="mdi-calendar-clock"/>
                   </template>
@@ -52,6 +52,7 @@
             <div class="col-12">
               <validate>
                 <q-input
+                  dense
                   square
                   outlined
                   maxlength="200"
@@ -74,6 +75,7 @@
                 <q-input
                   outlined
                   square
+                  dense
                   maxlength="150"
                   bg-color="accent"
                   type="textarea"

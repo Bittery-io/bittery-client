@@ -14,15 +14,14 @@
             hide-header>
             <template v-slot:top-right>
               <div class="q-pa-xs" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'" debounce="300">
-                <q-select v-model="invoiceStatus" :options="invoiceStatuses" label="Invoice status"/>
+                <q-select dense v-model="invoiceStatus" :options="invoiceStatuses" label="Invoice status"/>
               </div>
               <div class="q-pa-xs" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'" debounce="300">
-                <q-select v-model="orderByDate" :options="orderByDateOptions" label="Order by date"/>
+                <q-select dense v-model="orderByDate" :options="orderByDateOptions" label="Order by date"/>
               </div>
             </template>
             <template v-slot:top-left>
-              <q-input dense debounce="300" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : ''"
-                       v-model="filter" placeholder="Search">
+              <q-input dense debounce="800" dense v-model="filter" placeholder="Search">
                 <template v-slot:append>
                   <q-icon name="search"/>
                 </template>
