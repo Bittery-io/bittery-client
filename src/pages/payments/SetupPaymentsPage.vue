@@ -12,7 +12,7 @@
       <div class="row justify-center">
         <div class="col-lg-6 col-xs-12 q-pa-xs">
           <clickable-route-card text="I have Electrum Bitcoin wallet" route="/payments/setup/new?electrum=true"
-                                badge-text="Best" badge-icon="mdi-check-bold"></clickable-route-card>
+                                badge-text="Recommended" badge-icon="mdi-check-bold"></clickable-route-card>
         </div>
         <div class="col-lg-6 col-xs-12 q-pa-xs">
           <clickable-route-card text="I don't have Electrum Bitcoin wallet" route="/payments/setup/new"></clickable-route-card>
@@ -22,7 +22,8 @@
         <div class="col-auto">
           <a target="_blank" href='https://electrum.org/#home'>
             <q-chip clickable class="shadow-10" icon="info" color="grey-8" text-color="white">
-              Electrum <span v-show="!$q.platform.is.mobile">Bitcoin</span> Wallet https://electrum.org/#home
+              <span v-if="!$q.platform.is.mobile"> Electrum Bitcoin Wallet https://electrum.org/#home</span>
+              <span v-else> Electrum Wallet https://electrum.org/#home</span>
             </q-chip>
           </a>
         </div>

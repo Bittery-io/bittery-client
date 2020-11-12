@@ -10,7 +10,7 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h5 text-primary text-center">
-              Registration confirmed
+              Registration succeed
             </div>
             <div class="text-primary text-primary text-center text-subtitle1">
               We've sent you account activation e-mail. Please check your inbox.
