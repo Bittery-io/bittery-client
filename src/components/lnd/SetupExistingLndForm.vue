@@ -149,7 +149,7 @@
       setupExistingLndNode() {
         this.errorBannerMessage = '';
         this.showLoading = true;
-        post(this.$axios, '/api/lnd/existing', {
+        post(this.$axios, '/api/lnd/external', {
           macaroonHex: this.macaroonHex,
           tlsCertFileText: this.tlsCertFileText,
           lndRestAddress: `https://${this.lndRestAddress}`,

@@ -121,6 +121,13 @@
             link: '/dashboard',
             active: false,
           },
+          {
+            title: 'Integrations',
+            caption: 'Third party payments integrations',
+            icon: 'mdi-merge',
+            link: '/integrations',
+            active: false,
+          },
         ],
       };
     },

@@ -45,6 +45,7 @@
           <div class="col-12">
             <q-input
               outlined
+              dense
               bg-color="accent"
               type="string"
               name="electrumMasterPublicKey"

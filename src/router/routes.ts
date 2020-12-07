@@ -16,8 +16,10 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: 'setup', component: () => import('pages/lnd/SetupLndPage.vue') },
-      { path: 'setup/new', component: () => import('pages/lnd/SetupNewLndPage.vue') },
       { path: 'setup/existing', component: () => import('pages/lnd/SetupExistingLndPage.vue') },
+      { path: 'setup/new', component: () => import('pages/lnd/new/SetupNewLndPage.vue') },
+      { path: 'setup/new/customize/:lndType', component: () => import('pages/lnd/new/CustomizeNewLndPage.vue') },
+      { path: 'setup/:lndId/init/wallet', component: () => import('pages/lnd/init/InitializeLndWalletPage.vue') },
     ],
   },
   {
@@ -72,6 +74,13 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/dashboard/PaymentsDashboardPage.vue') },
+    ],
+  },
+  {
+    path: '/integrations',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/integrations/IntegrationsPage.vue') },
     ],
   },
 ];

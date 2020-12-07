@@ -33,32 +33,32 @@
         <div class="row q-pa-xs" >
           <div class="col-grow">
             <validate>
-              <q-input
-                outlined
-                square
-                bg-color="accent"
-                name="password"
-                ref="password"
-                v-model="password"
-                label="Password"
-                :type="isPwd ? 'password' : 'text'"
-                :rules="[ val => (
-                        registerformstate.password !== undefined &&
-                        registerformstate.password.$valid) || 'Password is required',
-                        val => (password.trim().length >= 6) || 'Password must have at least 6 characters',
-                        val => (password.trim() !== '') || 'Password cannot be empty',]"
-                required>
-                <template v-slot:prepend>
-                  <q-icon color="primary" name="mdi-lock"/>
-                </template>
-                <template v-slot:append>
-                  <q-icon
-                    :name="isPwd ? 'visibility_off' : 'visibility'"
-                    class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
-                </template>
-              </q-input>
+                <q-input
+                  outlined
+                  square
+                  bg-color="accent"
+                  name="password"
+                  ref="password"
+                  v-model="password"
+                  label="Password"
+                  :type="isPwd ? 'password' : 'text'"
+                  :rules="[ val => (
+                          registerformstate.password !== undefined &&
+                          registerformstate.password.$valid) || 'Password is required',
+                          val => (password.trim().length >= 6) || 'Password must have at least 6 characters',
+                          val => (password.trim() !== '') || 'Password cannot be empty',]"
+                  required>
+                  <template v-slot:prepend>
+                    <q-icon color="primary" name="mdi-lock"/>
+                  </template>
+                  <template v-slot:append>
+                    <q-icon
+                      :name="isPwd ? 'visibility_off' : 'visibility'"
+                      class="cursor-pointer"
+                      @click="isPwd = !isPwd"
+                    />
+                  </template>
+                </q-input>
             </validate>
           </div>
         </div>

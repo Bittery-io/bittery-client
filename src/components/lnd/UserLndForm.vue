@@ -1,5 +1,6 @@
 <template>
   <q-card class="shadow-10 bg-grey-2" v-if="this.userLndDto">
+    <unlock-lnd-popup :show="showLndUnlockPopup" :lnd-id="userLndDto.lndId"></unlock-lnd-popup>
     <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUrl"></qr-code-popup>
     <q-card-section>
     <header-qchip :text="$q.platform.is.mobile ? 'Your LN node' : 'Your Lightning Network node'" icon="mdi-flash"></header-qchip>
@@ -21,7 +22,7 @@
       <div class="row">
         <div class="col-12">
           <q-field label="Type" stack-label borderless>
-            <q-chip square color="primary" outline style="margin-left: 0;" text-color="white">BITTERY HOSTED</q-chip>
+            <q-chip square color="primary" outline style="margin-left: 0;" text-color="white">{{ this.userLndDto.hostedLndType }}</q-chip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-order-bool-descending"/>
             </template>
@@ -35,7 +36,7 @@
             onkeypress="return false;"
             name="email"
             square
-            :value="this.userLndDto.lndUrl"
+            :value="this.userLndDto.lndAddress"
             label="LND address">
             <q-tooltip>
               The public address of your personal LN node.
@@ -145,7 +146,7 @@
             :type="isPwd ? 'password' : 'text'"
             square
             onkeypress="return false;"
-            v-model="this.userLndDto.rtlInitPassword"
+            v-model="this.userLndDto.rtlOneTimeInitPassword"
             label="RTL initital password">
             <q-tooltip>
               Unique initial password for logging in RTL. Change the password as soon as possible directly in RTL.
@@ -201,28 +202,50 @@
           </q-field>
         </div>
       </div>
-      <div class="row" v-show="!isNotTurnedOff">
+<!--      <div class="row" v-show="!isNotTurnedOff">-->
+<!--        <div class="col-12">-->
+<!--          <q-field readonly borderless label="" stack-label>-->
+<!--            <q-banner  class="text-primary  bg-orange q-mb-xs">-->
+<!--              <template v-slot:avatar>-->
+<!--                <q-icon name="error" color="primary" />-->
+<!--              </template>-->
+<!--              Due to limited resources your personal LND node is currently turned off. Request turn on and you will queued to turning on soon. We will notify you with e-mail.-->
+<!--            </q-banner>-->
+<!--          </q-field>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row" v-show="!isNotTurnedOff">-->
+<!--        <div class="col-12">-->
+<!--          <q-field readonly borderless label="" stack-label>-->
+<!--              <q-btn-->
+<!--                :disable="requestLndButtonDisabled"-->
+<!--                label="Request LND turn on"-->
+<!--                class="full-width"-->
+<!--                color="primary"-->
+<!--                icon="alarm_add"-->
+<!--                @click="requestLndRun"/>-->
+<!--          </q-field>-->
+<!--        </div>-->
+<!--      </div>-->
+      <div class="row">
         <div class="col-12">
-          <q-field readonly borderless label="" stack-label>
-            <q-banner  class="text-primary  bg-orange q-mb-xs">
-              <template v-slot:avatar>
-                <q-icon name="error" color="primary" />
-              </template>
-              Due to limited resources your personal LND node is currently turned off. Request turn on and you will queued to turning on soon. We will notify you with e-mail.
-            </q-banner>
+          <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'INIT_REQUIRED'">
+            <q-btn
+              :disable="userLndDto && !userLndDto.lndId"
+              label="INITIALIZE WALLET"
+              class="full-width"
+              color="primary"
+              icon="lock"
+              @click="$router.push(`/lnd/setup/${userLndDto.lndId}/init/wallet`)"/>
           </q-field>
-        </div>
-      </div>
-      <div class="row" v-show="!isNotTurnedOff">
-        <div class="col-12">
-          <q-field readonly borderless label="" stack-label>
-              <q-btn
-                :disable="requestLndButtonDisabled"
-                label="Request LND turn on"
-                class="full-width"
-                color="primary"
-                icon="alarm_add"
-                @click="requestLndRun"/>
+          <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'UNLOCK_REQUIRED'">
+            <q-btn
+              :disable="userLndDto && !userLndDto.lndId"
+              label="UNLOCK WALLET"
+              class="full-width"
+              color="primary"
+              icon="lock"
+              @click="showLndUnlockPopup = !showLndUnlockPopup"/>
           </q-field>
         </div>
       </div>
@@ -238,9 +261,10 @@
   import LndFormMixin from 'components/lnd/mixins/lnd-form-mixin';
   import QrCodePopup from 'components/utils/QrCodePopup.vue';
   import HeaderQchip from 'components/utils/HeaderQchip.vue';
+  import UnlockLndPopup from 'components/lnd/UnlockLndPopup.vue';
 
   export default GlobalMixin.extend({
-    components: { QrCode, QrCodePopup, HeaderQchip },
+    components: { QrCode, QrCodePopup, HeaderQchip, UnlockLndPopup },
     name: 'UserLndForm',
     mixins: [ LndFormMixin ],
     props: {
@@ -252,8 +276,16 @@
     data() {
       return {
         isPwd: true,
+        showLndUnlockPopup: false,
         requestLndButtonDisabled: false,
       };
+    },
+    mounted() {
+      get(this.$axios, 'https://emergencja:8081/v1/genseed', (res: any) => {
+        console.log('res', res);
+      }, (err: any) => {
+        console.log('err', err);
+      });
     },
     computed: {
       isNotTurnedOff() {
