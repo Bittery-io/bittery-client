@@ -197,7 +197,7 @@ export default GlobalMixin.extend({
         this.showLoading = false;
         await this.sleep(200); // small sleep required
         showNotificationInfo('LN init succeed', 'Your personal Lightning Network is not initialized');
-        await this.$router.push('/payments/overview');
+        await this.$router.push('/bitcoin/overview');
       }, (err: any) => {
         this.showLoading = false;
         this.errorBannerMessage = 'Internal server error occurred. Please try again later.';

@@ -1,5 +1,6 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+    <loader :show="showLoading"></loader>
     <q-card>
       <q-card-section>
         <div class="row justify-center">
@@ -35,15 +36,11 @@
             </q-input>
           </div>
         </div>
-        <div class="row justify-center q-pt-md">
-          <div class="col-auto text-primary q-pa-xs">
-            <q-btn outlined @click="unlockLnd" color="primary">Unlock</q-btn>
-          </div>
-          <div class="col-auto text-primary q-pa-xs">
-            <q-btn outlined @click="close()" color="primary">Close</q-btn>
-          </div>
-        </div>
       </q-card-section>
+      <q-card-actions align="center" class="text-primary">
+        <q-btn @click="unlockLnd" color="primary" :disable="unlockButtonDisabled">Unlock</q-btn>
+        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
+      </q-card-actions>
     </q-card>
   </q-dialog>
 </template>
@@ -55,8 +52,12 @@
 import Vue from 'vue';
 import { post } from 'src/api/http-service';
 import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
+import { sleep } from 'src/api/sleep-service';
+import Loader from 'components/utils/Loader.vue';
+
 export default Vue.extend({
   name: 'UnlockLndPopup',
+  components: { Loader },
   props: {
     show: {
       type: Boolean,
@@ -72,6 +73,7 @@ export default Vue.extend({
       isPwd: true,
       showPopup: false,
       password: '',
+      unlockButtonDisabled: false,
     };
   },
   watch: {
@@ -83,14 +85,22 @@ export default Vue.extend({
     close() {
       this.showPopup = false;
     },
-    unlockLnd() {
-      post(this.$axios, `/api/lnd/${this.lndId}/unlock`, { password: this.password }, (res: any) => {
-        this.requestLndButtonDisabled = true;
+    async unlockLnd() {
+      this.showLoading = true;
+      await sleep(100);
+      this.unlockButtonDisabled = true;
+      post(this.$axios, `/api/lnd/${this.lndId}/unlock`, { password: this.password }, async (res: any) => {
+        this.unlockButtonDisabled = false;
         showNotificationInfo('LND successfully unlocked.', 'LND is now ready to use.')
-        this.close();
-      }, () => {
-        this.requestLndButtonDisabled = true;
+        await sleep(3000);
+        this.showLoading = false;
+        await sleep(100);
+        this.$router.go('/bitcoin/overview');
+      }, async () => {
         showNotificationError('LND unlocking failed!', 'Unlocking LND failed, probably because of wrong password.');
+        await sleep(100);
+        this.showLoading = false;
+        this.unlockButtonDisabled = false;
       })
     },
   },

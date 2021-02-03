@@ -1,6 +1,6 @@
 <template>
   <div class="q-pa-xs">
-    <loader :show="showLoading"></loader>
+    <loader :show="true" message="Please waittttt"></loader>
     <error-popup header="LND setup failed"
                  :error-message="errorBannerMessage"
                  :show="errorBannerMessage !== ''">
@@ -65,7 +65,7 @@
           </q-item>
         </q-list>
         <q-stepper-navigation>
-          <q-btn @click="setupNewLndNode" color="primary" icon="mdi-flash" label="Start new LND"/>
+          <q-btn @click="setupNewLndNode" color="primary" icon="mdi-flash" label="Setup new LND"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>

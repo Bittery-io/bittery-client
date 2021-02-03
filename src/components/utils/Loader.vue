@@ -12,12 +12,18 @@
         required: true,
         default: false,
       },
+      message: {
+        type: String,
+        required: false,
+        default: 'Please wasssit'
+      }
     },
     watch: {
       show() {
         if (this.show) {
           this.$q.loading.show({
-            message: 'Please wait',
+            message: this.message,
+            backgroundColor: '#01ff90',
           });
         } else if (this.$q.loading.isActive) {
           this.$q.loading.hide();

@@ -19,7 +19,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn outlined @click="close()" color="primary" text-color="white">SETUP LND</q-btn>
+            <q-btn @click="close()" color="primary" text-color="white">SETUP LND</q-btn>
           </div>
         </div>
       </q-card-section>

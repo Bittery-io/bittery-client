@@ -19,7 +19,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn outlined @click="closeAndGoToLoginView()" color="primary" text-color="white">Sign in</q-btn>
+            <q-btn outline @click="closeAndGoToLoginView()" color="primary" text-color="white">Sign in</q-btn>
           </div>
         </div>
       </q-card-section>
@@ -54,7 +54,7 @@
       },
     },
     methods: {
-      closeAndGoToLoginView() {
+      close() {
         this.showPopup = false;
         this.$router.push('/login');
       },

@@ -3,14 +3,45 @@
     <loader :show="showLoading"></loader>
     <div class="row">
       <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.userLndDto">
-        <user-lnd-form
-          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
-          :user-lnd-dto="this.userLndDto"></user-lnd-form>
+        <div class="row">
+          <div class="col-12">
+            <lnd-summary-form
+              :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+              :user-lnd-dto="this.userLndDto">
+            </lnd-summary-form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <lnd-connectivity-form
+              :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+              :user-lnd-dto="this.userLndDto">
+            </lnd-connectivity-form>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.userLndDto && this.userLndDto.lndInfo">
+        <div class="row">
+          <div class="col-12">
+            <lnd-details-form
+              :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+              :lnd-info="this.userLndDto.lndInfo">
+            </lnd-details-form>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <lnd-backup-table
+              :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+            ></lnd-backup-table>
+          </div>
+        </div>
       </div>
       <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.customLndDto">
         <custom-lnd-form
           :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
-          :custom-lnd-dto="this.customLndDto"></custom-lnd-form>
+          :custom-lnd-dto="this.customLndDto">
+        </custom-lnd-form>
       </div>
       <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
         <user-btc-form
@@ -23,16 +54,19 @@
 
 <script lang="ts">
 
-  import UserLndForm from 'components/lnd/UserLndForm.vue';
+  import LndSummaryForm from 'components/lnd/LndSummaryForm.vue';
+  import LndConnectivityForm from 'components/lnd/LndConnectivityForm.vue';
+  import LndDetailsForm from 'components/lnd/LndDetailsForm.vue';
   import CustomLndForm from 'components/lnd/CustomLndForm.vue';
   import UserBtcForm from 'components/btc/UserBtcForm.vue';
   import { get } from 'src/api/http-service';
   import GlobalMixin from "../../mixins/global-mixin";
   import Loader from 'components/utils/Loader.vue';
+  import LndBackupTable from 'components/lnd/LndBackupTable.vue';
 
   export default GlobalMixin.extend({
     name: 'BitcoinOverviewPage',
-    components: { UserLndForm, UserBtcForm, CustomLndForm, Loader },
+    components: { LndSummaryForm, UserBtcForm, LndDetailsForm, CustomLndForm, Loader, LndConnectivityForm, LndBackupTable },
     data() {
       return {
         userLndDto: undefined,

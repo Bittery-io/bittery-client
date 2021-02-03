@@ -3,10 +3,10 @@
     <div class="text-center" :class="{ 'fixed-center': !$q.platform.is.mobile }">
       <div class="row">
         <div class="col-12">
-          <h2 class="text-center" style="margin-bottom: 0;">Start your LN node
+          <h2 class="text-center" style="margin-bottom: 0;">Setup your LN node
           </h2>
           <h5 class="text-center" style="margin-top: 1%;">
-            <b>Lightning Network</b> node.<br>
+            <b>LN</b> is <b>Lightning Network</b> node.<br>
             Accept instant and super cheap Bitcoin payments.</h5>
         </div>
       </div>

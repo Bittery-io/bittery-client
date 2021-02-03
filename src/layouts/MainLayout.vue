@@ -17,8 +17,8 @@
           <router-link to="/payments/overview">
             <bittery-logo></bittery-logo>
           </router-link>
-          <q-chip color="orange-9" text-color="primary" square class="text-bold"
-                  icon="mdi-bitcoin" size="md" clickable @click="showPopup">TESTNET
+          <q-chip color="lime-3" text-color="primary" square class="text-bold"
+                  icon="mdi-bitcoin" size="md" clickable @click="showPopup">Mainnet
           </q-chip>
         </q-toolbar-title>
 
@@ -119,13 +119,6 @@
             caption: 'Browse your payments details',
             icon: 'mdi-desktop-mac-dashboard',
             link: '/dashboard',
-            active: false,
-          },
-          {
-            title: 'Integrations',
-            caption: 'Third party payments integrations',
-            icon: 'mdi-merge',
-            link: '/integrations',
             active: false,
           },
         ],

@@ -14,7 +14,7 @@ export default Vue.extend({
   methods: {
     getColorDependingOfStatus(lndStatus: string) {
       switch(lndStatus) {
-        case 'WORKING':
+        case 'RUNNING':
           return 'primary';
         case 'STOPPED':
           return 'red';
@@ -24,5 +24,19 @@ export default Vue.extend({
           return 'grey';
       }
     },
+    getLabelDependingOfStatus(lndStatus: string) {
+      if (lndStatus === 'INIT_REQUIRED') {
+        return 'INIT REQUIRED';
+      } else {
+        return lndStatus;
+      }
+    },
+    getColorDependingOfBooleanStatus(status: boolean) {
+      if (status) {
+        return 'primary';
+      } else {
+        return 'grey';
+      }
+    }
   },
 });
