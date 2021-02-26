@@ -3,13 +3,13 @@
     <div class="text-center" :class="{ 'fixed-center': !$q.platform.is.mobile }">
       <div class="row">
         <div class="col-12">
-          <h2 class="text-center" style="margin-bottom: 0;">Bittery LN hosting
+          <h2 class="text-center" style="margin-bottom: 0;">LN Node hosting
             <q-img
               src="statics/lnd.png" :style="$q.platform.is.mobile ? 'width: 20%' : 'width: 8%'">
             </q-img>
           </h2>
-          <h5 class="text-center" style="margin-top: 1%;">Setup your personal, private <b>Lightning Network</b> node.<br>
-            Accept instant and super cheap Bitcoin payments.</h5>
+          <h5 class="text-center" style="margin-top: 1%;">Choose your personal, private <b>Lightning Network Node</b> hosting plan.<br>
+            Use Bitcoin second layer - <span class="text-bold">instant and super cheap</span> off-chain transactions.</h5>
         </div>
       </div>
       <div class="row">
@@ -26,8 +26,12 @@
           ></ln-node-buy-card>
         </div>
       </div>
+      <div class="row q-pt-md justify-center">
+        <div class="col-auto">
+          <ln-info-chip></ln-info-chip>
+        </div>
+      </div>
     </div>
-
   </q-page>
 </template>
 
@@ -35,10 +39,11 @@
 import GlobalMixin from "../../../mixins/global-mixin";
 import SetupNewLndForm from 'components/lnd/new/SetupNewLndForm.vue';
 import LnNodeBuyCard from 'components/lnd/new/LnNodeBuyCard.vue';
+import LnInfoChip from 'pages/lnd/LnInfoChip.vue';
 
 export default GlobalMixin.extend({
   name: 'SetupNewLndPage',
-  components: { SetupNewLndForm, LnNodeBuyCard },
+  components: { LnInfoChip, SetupNewLndForm, LnNodeBuyCard },
   data() {
     return {
       step: 1,

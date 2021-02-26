@@ -12,7 +12,7 @@
             <div class="text-h5 text-primary text-center">
               Registration confirmed
             </div>
-            <div class="text-primary text-primary text-center text-subtitle1">
+            <div class="text-primary text-primary text-center text-body1">
               Your registration is now confirmed and account is activated.  <br> You can sign in.
             </div>
           </div>

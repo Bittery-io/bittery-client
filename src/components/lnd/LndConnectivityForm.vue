@@ -2,7 +2,7 @@
   <q-card class="shadow-10 bg-grey-2" v-if="this.userLndDto.lndStatus === 'RUNNING'">
     <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUri"></qr-code-popup>
     <q-card-section>
-      <header-qchip text="LND Connectivity" icon="mdi-contactless-payment"></header-qchip>
+      <header-qchip text="LN Node Connectivity" icon="mdi-contactless-payment"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row" v-if="this.userLndDto.lndInfo && this.userLndDto.lndInfo.uri">
@@ -15,7 +15,7 @@
             :value="this.userLndDto.lndInfo.uri"
             label="Lightning Address">
             <q-tooltip>
-              The public address of your personal LN node.
+              The public address of your personal LN Node.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px; color: gold" name="mdi-flash"/>
@@ -31,9 +31,9 @@
             name="email"
             square
             :value="this.userLndDto.lndRestAddress"
-            label="LND node address (REST)">
+            label="LN Node address (REST)">
             <q-tooltip>
-              Your personal LN node REST API url.
+              Your personal LN Node REST API url.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-api"/>
@@ -49,12 +49,12 @@
             square
             onkeypress="return false;"
             value="tls.cert"
-            label="LND node TLS certificate">
+            label="LN Node TLS certificate">
             <template v-slot:before>
               <q-icon color="primary" style="width:50px" name="mdi-attachment" />
             </template>
             <q-tooltip>
-              TLS certificate for secure connection with your LN node.
+              TLS certificate for secure connection with your LND.
             </q-tooltip>
             <template v-slot:after>
               <q-btn
@@ -74,7 +74,7 @@
             square
             onkeypress="return false;"
             value="admin.macaroon"
-            label="LND node admin macaroon">
+            label="LN Node admin macaroon">
             <template v-slot:before>
               <q-icon color="primary" style="width:50px" name="mdi-attachment" />
             </template>
@@ -99,7 +99,7 @@
             square
             onkeypress="return false;"
             v-model="this.userLndDto.lndConnectUri"
-            label="LND Connect URI">
+            label="LN Node` Connect URI">
             <q-tooltip>
               ZAP wallet connection URI.
             </q-tooltip>
@@ -166,18 +166,18 @@ export default GlobalMixin.extend({
   methods: {
     downloadTls() {
       get(this.$axios, '/api/lnd/files/tls', (res: any) => {
-        this.downloadFile(res.data.fileBase64, 'tls.cert');
+        this.downloadFile(res.data, 'tls.cert', 'binary');
       }, () => {
       });
     },
     downloadMacaroon() {
       get(this.$axios, '/api/lnd/files/macaroon', (res: any) => {
-        this.downloadFile(res.data.fileBase64, 'admin.macaroon');
+        this.downloadFile(res.data.fileBase64, 'admin.macaroon', 'base64');
       }, () => {
       });
     },
-    downloadFile(fileBase64: any, fileName: string) {
-      const file = new Blob([Buffer.from(fileBase64, 'base64')]);
+    downloadFile(fileBase64: any, fileName: string, fileType: string) {
+      const file = new Blob([Buffer.from(fileBase64, fileType)]);
       if (window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveOrOpenBlob(file, fileName);
       } else { // Others

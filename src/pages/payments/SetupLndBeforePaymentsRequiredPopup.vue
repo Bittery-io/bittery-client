@@ -10,16 +10,16 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h5 text-primary text-center">
-              Lightning Network Node (LND) is required for payments
+              Lightning Network (LN) is required for payments
             </div>
-            <div class="text-primary text-primary text-center text-subtitle1">
-              You must setup your personal LND before payments can be activated.
+            <div class="text-primary text-primary text-center text-body1">
+              You must setup Lightning Network before you will start accepting Bitcoin payments.
             </div>
           </div>
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn @click="close()" color="primary" text-color="white">SETUP LND</q-btn>
+            <q-btn @click="close()" color="primary" text-color="white">SETUP LIGHTNING NETWORK</q-btn>
           </div>
         </div>
       </q-card-section>

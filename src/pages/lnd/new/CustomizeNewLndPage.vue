@@ -3,11 +3,11 @@
     <div class="text-center" :class="{ 'fixed-center': !$q.platform.is.mobile }">
       <div class="row">
         <div class="col-12">
-          <h2 class="text-center" style="margin-bottom: 0;">Setup your LN node
-          </h2>
+          <h2 class="text-center" style="margin-bottom: 0;">Setup your LN Node <q-icon name="mdi-flash" color="yellow-7"/></h2>
+          <h4 style="margin-top:0;margin-bottom:0;">Selected plan: <b>{{selectedPlan}}</b></h4>
           <h5 class="text-center" style="margin-top: 1%;">
-            <b>LN</b> is <b>Lightning Network</b> node.<br>
-            Accept instant and super cheap Bitcoin payments.</h5>
+            <b>Optionally</b> customize node settings before setup.<br>
+            Your node will be <b>ready to use</b> just after setup.</h5>
         </div>
       </div>
       <div class="row">
@@ -33,6 +33,15 @@ export default GlobalMixin.extend({
     return {
       step: 1,
     };
+  },
+  computed: {
+    selectedPlan() {
+      if (this.$route.params.lndType === 'STANDARD') {
+        return 'Standard Lightning Node';
+      } else {
+        return 'Encrypted Lightning Node';
+      }
+    },
   },
 });
 </script>

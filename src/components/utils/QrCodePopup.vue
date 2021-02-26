@@ -48,7 +48,7 @@
     data() {
       return {
         showPopup: false,
-        header: 'LND connect Qr Code',
+        header: 'LN Node connect Qr Code',
       };
     },
     watch: {

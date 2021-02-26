@@ -18,7 +18,7 @@
                 type="text"
                 name="email"
                 v-model="email"
-                label="Adres e-mail"
+                label="E-mail address"
                 required
                 :rules="[ val => (
                         loginformstate.email !== undefined &&
@@ -39,7 +39,7 @@
                 square
                 name="password"
                 v-model="password"
-                label="Hasło"
+                label="Password"
                 :type="isPwd ? 'password' : 'text'"
                 :rules="[ val => (
                         loginformstate.password !== undefined &&
@@ -52,8 +52,7 @@
                   <q-icon
                     :name="isPwd ? 'visibility_off' : 'visibility'"
                     class="cursor-pointer"
-                    @click="isPwd = !isPwd"
-                  />
+                    @click="isPwd = !isPwd"/>
                 </template>
               </q-input>
             </validate>
@@ -99,6 +98,7 @@
   import { setSessionInStorage } from 'src/api/session-service';
   import GlobalMixin from "../../mixins/global-mixin";
   import TestnetPopup from 'components/TestnetPopup.vue';
+  import sha256 from 'js-sha256';
 
   export default GlobalMixin.extend({
     components: { ErrorPopup, Loader, TestnetPopup },
@@ -130,7 +130,7 @@
           '/api/user/login',
           new LoginUserDto(
             this.email.trim(),
-            this.password,
+            sha256(this.password),
           ),
           async (resp: any) => {
             console.log(resp);

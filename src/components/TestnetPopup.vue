@@ -12,7 +12,7 @@
             <div class="text-h4 text-primary text-center q-pa-xs">
               Bitcoin Mainnet
             </div>
-            <div class="text-primary text-bold text-primary text-center text-subtitle1">
+            <div class="text-primary text-bold text-primary text-center text-body1">
               Bittery.io is under active development and is currently running in Bitcoin Testnet mode. <br>
               Don't operate with your real mainnet Bitcoins! <br>
               Bittery doesn't take responsibility of any cryptocurrencies lost due to user actions.
@@ -35,6 +35,7 @@
 <script lang="ts">
 
 import GlobalMixin from 'src/mixins/global-mixin';
+import { getPasswordProof } from 'src/api/session-service';
 
 export default GlobalMixin.extend({
   name: 'TestnetPopup',
@@ -64,7 +65,12 @@ export default GlobalMixin.extend({
     close() {
       this.showPopup = false;
       if (this.isAfterLogin) {
-         this.$router.push('/payments/overview');
+        if (getPasswordProof() === '') {
+          console.log('No master password set, pushing to /welcome');
+          this.$router.push('/welcome');
+        } else {
+          this.$router.push('/payments/overview');
+        }
       }
     },
   },

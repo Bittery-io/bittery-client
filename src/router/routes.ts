@@ -12,6 +12,14 @@ const routes: RouteConfig[] = [
     }
   },
   {
+    path: '/welcome',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/welcome/WelcomeToBittery.vue') },
+      { path: 'password', component: () => import('pages/welcome/SetupMasterPasswordPage.vue') },
+    ],
+  },
+  {
     path: '/lnd',
     component: () => import('layouts/MainLayout.vue'),
     children: [

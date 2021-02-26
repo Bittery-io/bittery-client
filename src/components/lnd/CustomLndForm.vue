@@ -50,7 +50,7 @@
             name="email"
             square
             :value="this.customLndDto.lndRestAddress"
-            label="LND node address (REST)">
+            label="LN Node address (REST)">
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-api" />
             </template>
@@ -65,7 +65,7 @@
             square
             onkeypress="return false;"
             value="tls.cert"
-            label="LND node TLS certificate">
+            label="LN Node TLS certificate">
             <template v-slot:before>
               <q-icon color="primary" style="width:50px" name="mdi-attachment" />
             </template>

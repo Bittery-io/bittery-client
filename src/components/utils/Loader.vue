@@ -15,16 +15,24 @@
       message: {
         type: String,
         required: false,
-        default: 'Please wasssit'
+        default: 'Please wait'
       }
     },
     watch: {
       show() {
         if (this.show) {
-          this.$q.loading.show({
-            message: this.message,
-            backgroundColor: '#01ff90',
-          });
+          const config = this.isMobile ?
+            {
+              spinnerColor: 'primary',
+              message: `<div class="text-subtitle2 bg-primary" style="padding: 3%; border: 1px solid white">${this.message}</div>`,
+              backgroundColor: 'primary',
+            } :
+            {
+              spinnerColor: 'primary',
+              message: `<div class="text-h6 bg-primary"style="padding: 3%;border: 1px solid white;">${this.message}</div>`,
+              backgroundColor: 'primary',
+            };
+          this.$q.loading.show(config);
         } else if (this.$q.loading.isActive) {
           this.$q.loading.hide();
         }

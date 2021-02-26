@@ -40,7 +40,7 @@
                 <q-card class="shadow-10 grow2">
                   <q-card-section>
                     <q-badge :color="getStatusLabelColor(props.row.status)" floating>
-                      <div class="text-subtitle1">
+                      <div class="text-body1">
                         <q-icon name="mdi-information"/> {{props.row.status}}</div>
                     </q-badge>
                     <q-list>

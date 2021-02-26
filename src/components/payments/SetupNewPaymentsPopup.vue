@@ -1,30 +1,35 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <loader :show="showLoading"></loader>
     <q-card>
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
-            <q-icon size="xl" name="mdi-restart" color="primary"/>
+            <q-icon size="xl" name="mdi-head-question-outline" color="primary"/>
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h5 text-primary text-bold text-center">
-             Do you really want to restart your LN Node?
+             How do I receive Bitcoin payments?
+            </div>
+            <div class="text-h5 text-primary text-orange-9 text-uppercase text-bold text-center q-pt-xs q-pb-xs" v-if="userHasElectrum">
+              LN Node wallet + Electrum wallet
+            </div>
+            <div class="text-h5 text-primary text-orange-9 text-uppercase text-bold text-center q-pt-xs q-pb-xs" v-else>
+              LN Node wallet + standard wallet
             </div>
             <div class="text-primary text-center text-subtitle2 q-pt-xs">
-              <span class="text-red">• It will require unlocking with password after restart. </span><br>
-              • It will be unusable and offline for few minutes. <br>
-              • It will disable your off-chain payment services. <br>
+              • <span class="text-bold">off-chain</span> payments are received to the LN NODE WALLET<br>
+              <span v-if="userHasElectrum">• <span class="text-bold">on-chain</span> (transactions) payments are received to your ELECTRUM WALLET<br></span>
+              <span v-else>• <span class="text-bold">on-chain</span> (transactions) payments are received on the STANDARD WALLET <br></span>
+              <span v-if="userHasElectrum">• Bittery cannot move funds controlled by your Electrum wallet</span>
+              <span v-else>• STANDARD WALLET seed is encoded public/private key pair. <span class="text-red text-bold">You must keep it.</span></span>
             </div>
           </div>
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
         <q-btn outline @click="close()" text-color="primary">Close</q-btn>
-        <q-btn @click="restartClicked=true" v-if="!restartClicked" color="primary" text-color="white" :disable="restartButtonDisabled">Restart</q-btn>
-        <q-btn @click="restartLnd()" v-else color="red" text-color="white" :disable="restartButtonDisabled">Confirm</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -42,17 +47,17 @@
   import { sleep } from 'src/api/sleep-service';
 
   export default GlobalMixin.extend({
-    name: 'ConfirmLndRestartPopup',
+    name: 'SetupNewPaymentsPopup',
     components: { Loader },
     props: {
       show: {
         type: Boolean,
         required: true,
       },
-      lndId: {
-        type: String,
-        required: true,
-        default: undefined,
+      userHasElectrum: {
+        type: Boolean,
+        required: false,
+        default: false,
       },
     },
     data() {
@@ -66,31 +71,12 @@
     watch: {
       show() {
         this.showPopup = true;
-        this.restartClicked = false;
       },
     },
     methods: {
       close() {
         this.showPopup = false;
       },
-      async restartLnd() {
-        this.restartButtonDisabled = true;
-        this.showLoading = true;
-        await sleep(100);
-        get(this.$axios, `/api/lnd/${this.lndId}/restart`, async (res: any) => {
-          showNotificationInfo('LND successfully restarted.', 'Unlock is now required.')
-          await sleep(2000);
-          this.showLoading = false;
-          await sleep(100);
-          this.$router.go('/bitcoin/overview');
-        }, async () => {
-          showNotificationError('LND unlock failed!', 'Error occurred on LND restarting');
-          await sleep(100);
-          this.showLoading = false;
-          await sleep(100);
-          this.close();
-        })
-      }
     },
   });
 </script>

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import { openURL } from 'quasar'
 import { sleep } from 'src/api/sleep-service';
+import { hasPasswordProofSet } from 'src/api/session-service';
 
 export default Vue.extend({
   data() {
@@ -11,6 +12,13 @@ export default Vue.extend({
       screenHeight: window.innerHeight,
       // It's the screen to use so height - topbar - bottom bar
       innerScreenHeight: window.innerHeight - 100,
+    };
+  },
+  mounted() {
+    window.onresize = () => {
+      this.screenWidth = window.innerWidth;
+      this.screenHeight = window.innerHeight;
+      this.innerScreenHeight = window.innerHeight - 100;
     };
   },
   computed: {

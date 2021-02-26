@@ -2,7 +2,7 @@
   <div class="q-pa-xs">
     <loader :show="showLoading"></loader>
     <q-stepper
-      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.35}px`"
+      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.45}px`"
       v-model="step"
       vertical
       color="primary"
@@ -14,44 +14,49 @@
         :name="1"
         title="Overview"
         icon="info"
-        class="text-left text-subtitle1"
+        class="text-left text-body1"
         :done="step > 1">
-        Bitcoin LN node is a single user dedicated service which allows <br> to send/receive
-        Bitcoin payments using Lightning Network. <br>
-        Bittery communicates with LN node during Bitcoin payments processing this is why you must provide your node information. <br>
+        Bittery allows you to accept Lightning Network payments. <br>
+        This is why you need to provide general information about your LN node.<br>
         <div class="text-bold">
           Bittery has no possibility to access your LN funds. It's technically impossible.
         </div>
-        Your own Lightning Network must be accessible through the internet in order to be used with Bittery.<br>
+        Your LN node must be accessible through the internet in order to be used with Bittery.<br>
         <q-stepper-navigation>
-          <q-btn @click="step = 2" color="primary" label="PROCEED"/>
+          <q-btn @click="step = 2" color="primary" label="SETUP"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
         :name="2"
-        title="Provide LND address"
+        title="Provide LN node REST API address"
         icon="info"
-        class="text-left text-subtitle1"
+        class="text-left text-body1"
         :done="step > 2">
-        Provide your LND REST address (e.g. mycustomnode:8080 or 78.8.236.172:8080). <br>
-        Your node must support encrypted communication (TLS).
-        <div class="text-subtitle1 q-pt-md q-pb-md text-bold text-center">
-          Step 1/3: Provide your LND REST address.
-        </div>
-        <div class="row">
+        Provide your LN node REST API address <br>(e.g. mycustomnode:8080 or 78.8.236.172:8080). <br>
+        Your node <b>must support</b> encrypted communication (TLS).
+        <div class="row q-pt-xs">
           <div class="col-12">
-              <q-input
-                outlined
-                bg-color="accent"
-                type="string"
-                name="amount"
-                square
-                v-model="lndRestAddress"
-                label="LND REST address">
-                <template v-slot:before>
-                  https://
-                </template>
-              </q-input>
+            <vue-form :state='lnRestState' @submit.prevent="() => {}">
+              <validate>
+                <q-input
+                  outlined
+                  bg-color="accent"
+                  type="string"
+                  ref="lndRestAddress"
+                  name="lndRestAddress"
+                  square
+                  v-model="lndRestAddress"
+                  required
+                  label="Your LN node REST API address"
+                  :rules="[ val => (
+                            lnRestState.lndRestAddress !== undefined &&
+                            lnRestState.lndRestAddress.$valid) || 'REST API address is required']">
+                  <template v-slot:before>
+                    https://
+                  </template>
+                </q-input>
+              </validate>
+            </vue-form>
           </div>
         </div>
         <q-stepper-navigation>
@@ -61,11 +66,12 @@
       </q-step>
       <q-step
         :name="3"
-        title="Generate custom macaroon"
+        title="Bake custom macaroon"
         icon="info"
-        class="text-left text-subtitle1"
+        class="text-left text-body1"
         :done="step > 3">
-        Generate custom macaroon for Bittery. Required macaroon is minimum in order to give Bittery ability to generate new invoices (required by BTCPay).
+        Generate <b>custom macaroon file</b>.<br>
+        The macaroon gives Bittery minimum permissions to create payment invoices (read and create invoices permissions <b>only</b>).
         <q-banner rounded class="text-white text-bold bg-primary q-mt-lg">
           <q-icon name="info" size="lg" color="white" />
           Run below command with lncli (Lightning Network cli) and copy the result.
@@ -77,46 +83,58 @@
             type="text"
             onkeypress="return false;"
             value="lncli bakemacaroon info:read invoices:read invoices:write"
-            label="Macaroon generation command">
+            label="Macaroon bake command">
           </q-input>
+          <div class="text-bold text-red q-pt-xs text-body2">
+            NOTE: This macaroon doesn't give permissions to withdraw any funds from your LN node.
+          </div>
         </q-banner>
-        <div class="text-subtitle1 q-pt-md q-pb-md text-bold text-center">
-          Step 2/3: Provide generated macaroon encoded (hex) value.
-        </div>
-        <div class="row">
+        <div class="row q-pt-md">
           <div class="col-12">
-            <q-input
-              outlined
-              bg-color="accent"
-              type="string"
-              name="macaroon"
-              square
-              v-model="macaroonHex"
-              label="Macaroon value">
-            </q-input>
+            <vue-form :state='macaroonHexState' @submit.prevent="() => {}">
+              <validate>
+                <q-input
+                  outlined
+                  bg-color="accent"
+                  type="string"
+                  name="macaroonHex"
+                  ref="macaroonHex"
+                  square
+                  v-model="macaroonHex"
+                  label="Macaroon value"
+                  required
+                  :rules="[ val => (
+                            macaroonHexState.macaroonHex !== undefined &&
+                            macaroonHexState.macaroonHex.$valid) || 'Baked macaroon is required' ,
+                            val => isMacaroonHex || 'Given macaroon is not correctly HEX encoded'
+                            ]">
+                  <template v-slot:prepend>
+                    <q-icon color="primary" name="mdi-card-text-outline"/>
+                  </template>
+                </q-input>
+              </validate>
+            </vue-form>
           </div>
         </div>
         <q-stepper-navigation>
           <q-btn outline @click="step = 2" color="primary" label="Previous step"/>
-          <q-btn @click="step = 4" color="primary" :disabled="macaroonHex === ''" label="NEXT STEP" class="q-ml-sm"/>
+          <q-btn @click="step = 4" color="primary" :disabled="!(macaroonHex !== '' && isMacaroonHex)" label="NEXT STEP" class="q-ml-sm"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
         :name="4"
         title="Upload LND tls.cert"
         icon="info"
-        class="text-left text-subtitle1"
+        class="text-left text-body1"
         :done="step > 4">
+        Upload your LN node <b>tls.cert</b> file.<br>
         TLS certificate is required in order to connect securely to your Lightning Network node. <br>
-        <div class="text-subtitle1 q-pt-md q-pb-md text-bold text-center">
-          Step 3/3: Upload your LND tls.cert file.
-        </div>
-        <file-reader label="Upload tls.cert file" file-name-filter="tls.cert"
+        <file-reader label="Upload LN node tls.cert file" file-name-filter="tls.cert"
                      file-type-filter="application/pkix-cert" size-kb-limit="2" class="q-pt-md"
                      @onFileUploaded="tlsCertFileUploaded"></file-reader>
         <q-stepper-navigation>
           <q-btn outline @click="step = 3" color="primary" label="Previous step"/>
-          <q-btn @click="setupExistingLndNode" color="primary" label="SAVE" :disabled="tlsCertFileText === ''" class="q-ml-sm"/>
+          <q-btn @click="setupExistingLndNode" color="primary" label="SETUP YOUR LN NODE" :disabled="tlsCertFileText === ''" class="q-ml-sm"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
@@ -140,7 +158,16 @@
         lndRestAddress: '',
         macaroonHex: '',
         tlsCertFileText: '',
+        lnRestState: {},
+        macaroonHexState: {},
       };
+    },
+    computed: {
+      isMacaroonHex() {
+        console.log(this.macaroonHex);
+        console.log(/^[a-fA-F0-9]+$/.test(this.macaroonHex));
+        return /^[a-fA-F0-9]+$/.test(this.macaroonHex);
+      },
     },
     methods: {
       tlsCertFileUploaded(fileTextData: string) {

@@ -1,5 +1,5 @@
 <template>
-  <q-item :to="link" clickable active-class="bg-accent">
+  <q-item :to="link" :disable="isDisabled" clickable active-class="bg-accent">
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" size="md" color="primary"/>
     </q-item-section>
@@ -44,6 +44,14 @@
         required: true,
         default: false,
       },
+      isDisabled: {
+        type: Boolean,
+        required: true,
+        default: false,
+      },
     },
+    mounted() {
+      console.log('dupa', this.isDisabled);
+    }
   });
 </script>

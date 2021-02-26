@@ -12,7 +12,7 @@
             <div class="text-h5 text-primary text-center">
               Password reset succeed
             </div>
-            <div class="text-primary text-primary text-center text-subtitle1">
+            <div class="text-primary text-primary text-center text-body1">
               You can sign in using your new password
             </div>
           </div>

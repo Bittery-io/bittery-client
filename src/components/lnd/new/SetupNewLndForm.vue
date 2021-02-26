@@ -18,7 +18,7 @@
         :name="1"
         title="Overview"
         icon="info"
-        class="text-center text-subtitle1"
+        class="text-center text-body1"
         :done="step > 1">
           Bitcoin LN node is a single user dedicated service which allows <br> to send/receive
           Bitcoin payments using Lightning Network. <br>

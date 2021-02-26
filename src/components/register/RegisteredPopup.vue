@@ -12,14 +12,14 @@
             <div class="text-h5 text-primary text-center">
               Registration succeed
             </div>
-            <div class="text-primary text-primary text-center text-subtitle1">
+            <div class="text-primary text-primary text-center text-body1">
               We've sent you account activation e-mail. Please check your inbox.
             </div>
           </div>
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn outlined @click="closeAndGoToLoginView()" color="primary" text-color="white">Sign in</q-btn>
+            <q-btn outlined @click="close()" color="primary" text-color="white">Sign in</q-btn>
           </div>
         </div>
       </q-card-section>

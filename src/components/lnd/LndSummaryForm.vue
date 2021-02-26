@@ -20,6 +20,9 @@
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-lightbulb-on"/>
             </template>
+            <q-tooltip>
+              Your LN Node working status.
+            </q-tooltip>
           </q-field>
         </div>
       </div>
@@ -31,6 +34,9 @@
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-order-bool-descending"/>
             </template>
+            <q-tooltip>
+              Your LN Node type.
+            </q-tooltip>
           </q-field>
         </div>
       </div>
@@ -47,7 +53,7 @@
               <q-icon style="width:50px;" color="primary" name="mdi-web"/>
             </template>
             <q-tooltip>
-              Lightning Network node management console. Manage your node funds, channels and settings.
+              Ride The Lightning is the LN Node management tool. Manage your node funds, channels and settings.
             </q-tooltip>
             <template v-slot:after>
               <q-btn
@@ -68,7 +74,7 @@
             v-model="this.userLndDto.rtlOneTimeInitPassword"
             label="RTL initital password">
             <q-tooltip>
-              Unique initial password for logging in RTL. Change the password as soon as possible directly in RTL.
+              Unique initial password for logging to RTL. Change the password as soon as possible directly in RTL.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-lock"/>
@@ -99,19 +105,19 @@
           <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'INIT_REQUIRED'">
             <q-btn
               :disable="userLndDto && !userLndDto.lndId"
-              label="INITIALIZE WALLET"
+              label="INITIALIZE LN WALLET"
               class="full-width"
               color="primary"
-              icon="lock"
+              icon="mdi-lock-open"
               @click="$router.push(`/lnd/setup/${userLndDto.lndId}/init/wallet`)"/>
           </q-field>
           <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'UNLOCK_REQUIRED'">
             <q-btn
               :disable="userLndDto && !userLndDto.lndId"
-              label="UNLOCK WALLET"
+              label="UNLOCK LN NODE"
               class="full-width"
               color="primary"
-              icon="lock"
+              icon="mdi-lock-open"
               @click="showLndUnlockPopup = !showLndUnlockPopup"/>
           </q-field>
         </div>

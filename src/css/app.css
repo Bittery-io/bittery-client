@@ -25,6 +25,7 @@ body {
 .grow:hover {
   transform: scale(0.95);
   cursor: pointer;
+  box-shadow: 0px 0px 15px #001f10;
   /*box-shadow: 0px 0px 15px gold;*/
 }
 .cursor-pointer:hover {
@@ -76,4 +77,8 @@ div.q-item__label.q-item__label--caption.text-caption {
   color: #001f10;
   border-radius: 0px !important;
   border: 1px solid #001f10;
+}
+
+.bigger-text {
+  font-size: 1.05rem;
 }

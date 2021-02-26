@@ -7,8 +7,8 @@
             <q-icon name="mdi-flash" color="yellow-7" size="xl"/>
             <div class="text-h5">{{ title }}</div>
           </q-item-label>
-          <q-item-label caption v-if="type === 'encrypted'">Best privacy but no tools included</q-item-label>
-          <q-item-label caption v-if="type === 'standard'">Tools included</q-item-label>
+          <q-item-label caption v-if="type === 'ENCRYPTED'">Best privacy but no tools included</q-item-label>
+          <q-item-label caption v-if="type === 'STANDARD'">Tools included</q-item-label>
         </q-item-section>
       </q-item>
       <q-item>
@@ -21,14 +21,14 @@
           </q-item-section>
       </q-item>
       <q-separator spaced inset />
-      <q-list>
+      <q-list class="">
         <q-item >
           <q-item-section avatar>
             <q-icon color="primary" name="mdi-flash-circle"/>
           </q-item-section>
           <q-item-section class="text-left">
             <q-item-label>
-              Personal Lightning Network node
+              Personal Lightning Network Node
             </q-item-label>
             <q-item-label caption>Bitcoin Mainnet network</q-item-label>
           </q-item-section>
@@ -61,31 +61,31 @@
           </q-item-section>
           <q-item-section class="text-left">
             <q-item-label>
-              TLS encrypted REST, GRPC API
+              TLS secured REST, GRPC API
             </q-item-label>
             <q-item-label caption>Connect to your node 24/7</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item :class="type === 'encrypted' ? 'text-strike': ''">
+        <q-item :class="type === 'ENCRYPTED' ? 'text-strike': ''">
           <q-item-section avatar>
             <q-icon color="primary" name="mdi-flash-circle"/>
           </q-item-section>
           <q-item-section class="text-left">
             <q-item-label>
-              RTL tool hosting
+              Personal RTL
             </q-item-label>
-            <q-item-label caption>Have access to your own Bittery hosted Ride The Lightning tool</q-item-label>
+            <q-item-label caption>Ride The Lightning LN Node management tool access</q-item-label>
           </q-item-section>
         </q-item>
-        <q-item :class="type === 'standard' ? 'text-strike': ''">
+        <q-item :class="type === 'STANDARD' ? 'text-strike': ''">
           <q-item-section avatar>
             <q-icon color="primary" name="mdi-flash-circle"/>
           </q-item-section>
           <q-item-section class="text-left">
             <q-item-label>
-              Macaroon encryption
+              Stateless initialization
             </q-item-label>
-            <q-item-label caption>Macaroon encryption ensures that none except you have the access to LN</q-item-label>
+            <q-item-label caption>LN node does not store admin macaroon file. Bittery hosts only client side encrypted admin macaroons.</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>

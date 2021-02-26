@@ -1,7 +1,7 @@
 <template>
   <q-card class="shadow-10 bg-grey-2" v-if="this.userBtcWalletDto">
     <q-card-section>
-      <header-qchip text="Your Bitcoin wallet" icon="mdi-bitcoin"></header-qchip>
+      <header-qchip text="Your Bitcoin standard wallet" icon="mdi-bitcoin"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row q-pa-xs">
@@ -17,6 +17,9 @@
               <q-icon style="width:50px;" color="primary" name="mdi-key" />
             </template>
           </q-input>
+          <q-tooltip>
+            Your standard wallet BIP-49 root public key.
+          </q-tooltip>
         </div>
       </div>
     </q-card-section>

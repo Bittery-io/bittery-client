@@ -10,7 +10,7 @@
                    :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.8}px` : `width: ${screenWidth * 0.18}px`">
                 Reset your password
               </div>
-              <div class="text-primary text-subtitle1">
+              <div class="text-primary text-body1">
                 Please provide new password for your account
               </div>
             </q-card-section>

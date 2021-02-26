@@ -26,7 +26,9 @@ export default Vue.extend({
     },
     getLabelDependingOfStatus(lndStatus: string) {
       if (lndStatus === 'INIT_REQUIRED') {
-        return 'INIT REQUIRED';
+        return 'LN WALLET INITIALIZATION REQUIRED';
+      } else if (lndStatus === 'UNLOCK_REQUIRED') {
+        return 'UNLOCK REQUIRED';
       } else {
         return lndStatus;
       }

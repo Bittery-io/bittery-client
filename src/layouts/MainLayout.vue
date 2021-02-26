@@ -48,6 +48,7 @@
           v-for="link in essentialLinks"
           :key="link.title"
           v-bind="link"
+          :is-disabled="link.disabled"
           :active="isActive(link)"
         />
         <q-item clickable active-class="bg-accent" @click="openUrlTheSameTab('https://bittery.io')" v-if="$q.platform.is.mobile">
@@ -79,6 +80,7 @@
   import BitteryLogo from '../components/utils/BitteryLogo';
   import Loader from '../components/utils/Loader';
   import TestnetPopup from '../components/TestnetPopup';
+  import { hasPasswordProofSet } from '../api/session-service';
 
   export default GlobalMixin.extend({
     name: 'MainLayout',
@@ -94,6 +96,9 @@
         this.showTestnetPopup = !this.showTestnetPopup;
       }
     },
+    mounted() {
+      console.log(hasPasswordProofSet());
+    },
     data() {
       return {
         showLoading: false,
@@ -101,18 +106,20 @@
         leftDrawerOpen: false,
         essentialLinks: [
           {
-            title: 'Services',
-            caption: 'Configure your Bitcoin services',
-            icon: 'mdi-bitcoin',
+            title: 'Lightning Network',
+            caption: 'Manage your LN',
+            icon: 'mdi-flash',
             link: '/bitcoin/overview',
             active: true,
+            disabled: !hasPasswordProofSet(),
           },
           {
             title: 'Payments',
-            caption: 'Manage your cryptocurrency payments',
+            caption: 'Manage your Bitcoin payments',
             icon: 'mdi-contactless-payment-circle',
             link: '/payments/overview',
             active: false,
+            disabled: !hasPasswordProofSet(),
           },
           {
             title: 'Dashboard',
@@ -120,6 +127,7 @@
             icon: 'mdi-desktop-mac-dashboard',
             link: '/dashboard',
             active: false,
+            disabled: !hasPasswordProofSet(),
           },
         ],
       };

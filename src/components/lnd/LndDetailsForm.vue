@@ -1,7 +1,7 @@
 <template>
   <q-card class="shadow-10 bg-grey-2" v-if="this.lndInfo">
     <q-card-section>
-      <header-qchip text="LND Details" icon="mdi-book-open"></header-qchip>
+      <header-qchip text="LN Node Details" icon="mdi-book-open"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row">
@@ -30,7 +30,7 @@
             :value="this.lndInfo.alias"
             label="Alias">
             <q-tooltip>
-              The public address of your personal LN node.
+              Alias of your public LN Node.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px" color="primary" name="mdi-card-bulleted-outline"/>
@@ -73,7 +73,7 @@
             :value="this.lndInfo.numPeers"
             label="Connected peers">
             <q-tooltip>
-              The public address of your personal LN node.
+              Number of other LN nodes connected to your node.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-lan"/>
@@ -88,7 +88,7 @@
                    :value="this.lndInfo.numActiveChannels"
                    label="Active channels">
             <q-tooltip>
-              The public address of your personal LN node.
+              Number of open, active lightning channels of your LN Node.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px" color="primary" name="mdi-lan-connect"/>
@@ -103,7 +103,7 @@
                    :value="this.lndInfo.numInactiveChannels"
                    label="Inactive channels">
             <q-tooltip>
-              The public address of your personal LN node.
+              Number of inactive, closed lightning channels of your LN Node.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px" color="primary" name="mdi-lan-disconnect"/>
@@ -118,7 +118,7 @@
                    :value="this.lndInfo.numPendingChannels"
                    label="Pending channels">
             <q-tooltip>
-              The public address of your personal LN node.
+              Number of waiting to be opened lightning channels of your LN Node.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px" color="primary" name="mdi-lan-pending"/>
@@ -135,7 +135,7 @@
             :value="this.lndInfo.version"
             label="Version">
             <q-tooltip>
-              The public address of your personal LN node.
+              LND Lightning Network Node version.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-information-outline"/>

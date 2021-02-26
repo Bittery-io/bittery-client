@@ -4,7 +4,7 @@
       <div class="text-subtitle2">
         <q-icon :name="badgeIcon" v-if="badgeIcon !== ''"/> {{badgeText}}</div>
     </q-badge>
-    <q-card-section>
+    <q-card-section class="vertical-align">
       <h5 class="text-center">{{text}}</h5>
     </q-card-section>
   </q-card>

@@ -6,7 +6,7 @@
       <div class="row justify-center">
         <div class="col-lg-12">
           <h2 class="text-center" style="margin-bottom: 0;">Setup payments <q-icon name="mdi-contactless-payment-circle"></q-icon></h2>
-          <h5 class="text-center" style="margin-top: 1%;">Initialize BTCPay based services and start accepting Bitcoin payments</h5>
+          <h5 class="text-center" style="margin-top: 1%;">Initialize BTCPay based services and <span class="text-bold">start accepting</span> <span class="text-bold text-orange-8"> Bitcoin</span> payments</h5>
         </div>
       </div>
       <div class="row justify-center">
@@ -47,6 +47,7 @@
   import { get } from 'src/api/http-service';
   import SetupLndBeforePaymentsRequiredPopup from 'pages/payments/SetupLndBeforePaymentsRequiredPopup.vue';
   import Loader from 'components/utils/Loader.vue';
+  import { getPasswordProof } from 'src/api/session-service';
   export default GlobalMixin.extend({
     name: 'SetupPaymentsPage',
     components: { ClickableRouteCard, SetupLndBeforePaymentsRequiredPopup, Loader },

@@ -4,22 +4,22 @@
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
-            <q-icon size="xl" name="mdi-email-check" color="primary"/>
+            <q-icon size="xl" name="mdi-key-plus" color="primary"/>
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h5 text-primary text-center">
-              Reset password e-mail sent
+              Your master password is set
             </div>
             <div class="text-primary text-primary text-center text-body1">
-              We've sent you reset password instructions on your e-mail. Please check your inbox.
+              Now you are ready to start accepting Bitcoin payments with Bittery.
             </div>
           </div>
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn @click="closeAndGoToLoginView()" color="primary" text-color="white">Sign in</q-btn>
+            <q-btn outlined @click="close()" text-color="primary" outline>Close</q-btn>
           </div>
         </div>
       </q-card-section>
@@ -32,32 +32,32 @@
 
 <script lang="ts">
 
-  import GlobalMixin from 'src/mixins/global-mixin';
+import GlobalMixin from 'src/mixins/global-mixin';
 
-  export default GlobalMixin.extend({
-    name: 'PasswordResetSentPopup',
-    components: {},
-    props: {
-      show: {
-        type: Boolean,
-        required: true,
-      },
+export default GlobalMixin.extend({
+  name: 'MasterPasswordSuccessfullySetPopup',
+  components: {},
+  props: {
+    show: {
+      type: Boolean,
+      required: true,
     },
-    data() {
-      return {
-        showPopup: false,
-      };
+  },
+  data() {
+    return {
+      showPopup: false,
+    };
+  },
+  watch: {
+    show() {
+      this.showPopup = true;
     },
-    watch: {
-      show() {
-        this.showPopup = true;
-      },
+  },
+  methods: {
+    close() {
+      this.showPopup = false;
+      this.$router.go();
     },
-    methods: {
-      close() {
-        this.showPopup = false;
-        this.$router.push('/login');
-      },
-    },
-  });
+  },
+});
 </script>

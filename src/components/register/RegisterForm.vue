@@ -143,6 +143,7 @@
   import ErrorPopup from 'components/utils/ErrorPopup.vue';
   import RegisteredPopup from 'components/register/RegisteredPopup.vue';
   import Recaptcha from 'components/utils/Recaptcha.vue';
+  import sha256 from 'js-sha256';
 
   export default GlobalMixin.extend({
     components: { Loader, ErrorPopup, RegisteredPopup, Recaptcha },
@@ -186,8 +187,8 @@
         post(this.$axios,
           '/api/user/register',
           {
-            password: this.password,
-            repeatPassword: this.password2,
+            password: sha256(this.password),
+            repeatPassword: sha256(this.password2),
             email: this.email.trim(),
             captchaCode: this.captchaCode,
           },
