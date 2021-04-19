@@ -28,7 +28,7 @@ export default Vue.extend({
       if (lndStatus === 'INIT_REQUIRED') {
         return 'LN WALLET INITIALIZATION REQUIRED';
       } else if (lndStatus === 'UNLOCK_REQUIRED') {
-        return 'UNLOCK REQUIRED';
+        return 'NOT RUNNING - UNLOCK REQUIRED';
       } else {
         return lndStatus;
       }

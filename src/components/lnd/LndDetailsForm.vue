@@ -41,7 +41,7 @@
       <div class="row">
         <div class="col-12">
           <q-field dense label="Chain synced" stack-label borderless>
-            <q-chip dense :color="getColorDependingOfBooleanStatus(this.lndInfo.syncedToChain)" style="margin-left: 0;"
+            <q-chip dense class="text-subtitle2" :color="getColorDependingOfBooleanStatus(this.lndInfo.syncedToChain)" style="margin-left: 0;"
                     square text-color="white">
               {{this.lndInfo.syncedToChain.toString().toUpperCase()}}
             </q-chip>
@@ -54,7 +54,7 @@
       <div class="row">
         <div class="col-12">
           <q-field dense label="Graph synced" stack-label borderless>
-            <q-chip dense square :color="getColorDependingOfBooleanStatus(this.lndInfo.syncedToGraph)" style="margin-left: 0;"
+            <q-chip dense square class="text-subtitle2" :color="getColorDependingOfBooleanStatus(this.lndInfo.syncedToGraph)" style="margin-left: 0;"
                     text-color="white">
               {{this.lndInfo.syncedToGraph.toString().toUpperCase()}}
             </q-chip>

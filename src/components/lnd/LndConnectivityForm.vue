@@ -1,18 +1,23 @@
 <template>
   <q-card class="shadow-10 bg-grey-2" v-if="this.userLndDto.lndStatus === 'RUNNING'">
+    <provide-master-password-popup :show="showMasterPasswordPopup"
+                                   subheader="Password will be used for your data decryption"
+                                   :loader-header="provideMasterPasswordPopupLoaderHeader"
+                                   @passwordConfirmed="onMasterPasswordConfirmed">
+    </provide-master-password-popup>
     <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUri"></qr-code-popup>
     <q-card-section>
       <header-qchip text="LN Node Connectivity" icon="mdi-contactless-payment"></header-qchip>
     </q-card-section>
     <q-card-section>
-      <div class="row" v-if="this.userLndDto.lndInfo && this.userLndDto.lndInfo.uri">
+      <div class="row" v-if="this.userLndDto.lndUri">
         <div class="col-12">
           <q-input dense
             type="text"
             onkeypress="return false;"
             name="email"
             square
-            :value="this.userLndDto.lndInfo.uri"
+            :value="this.userLndDto.lndUri"
             label="Lightning Address">
             <q-tooltip>
               The public address of your personal LN Node.
@@ -74,7 +79,7 @@
             square
             onkeypress="return false;"
             value="admin.macaroon"
-            label="LN Node admin macaroon">
+            label="LN Node admin macaroon [ENCRYPTED]">
             <template v-slot:before>
               <q-icon color="primary" style="width:50px" name="mdi-attachment" />
             </template>
@@ -91,6 +96,30 @@
           </q-input>
         </div>
       </div>
+      <div class="row" v-show="this.userLndDto.lndRestAddress">
+        <div class="col-12">
+          <q-input dense
+                   onkeypress="return false;"
+                   square
+                   :type="lnPassword === 'initial_value' ? 'password' : 'text'"
+                   :value="lnPassword"
+                   label="LN Node password [ENCRYPTED]">
+            <q-tooltip>
+              Your personal LN Node unlocking password.
+            </q-tooltip>
+            <template v-slot:before>
+              <q-icon style="width:50px;" color="primary" name="mdi-key"/>
+            </template>
+            <template v-slot:after>
+              <q-btn
+                flat
+                color="primary"
+                icon="mdi-eye"
+                @click="showLnPassword"/>
+            </template>
+          </q-input>
+        </div>
+      </div>
       <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input dense
@@ -99,7 +128,7 @@
             square
             onkeypress="return false;"
             v-model="this.userLndDto.lndConnectUri"
-            label="LN Node` Connect URI">
+            label="LN Node Connect URI">
             <q-tooltip>
               ZAP wallet connection URI.
             </q-tooltip>
@@ -141,10 +170,11 @@ import { showNotificationError, showNotificationInfo } from 'src/api/notificatio
 import LndFormMixin from 'components/lnd/mixins/lnd-form-mixin';
 import QrCodePopup from 'components/utils/QrCodePopup.vue';
 import HeaderQchip from 'components/utils/HeaderQchip.vue';
-import UnlockLndPopup from 'components/lnd/UnlockLndPopup.vue';
+import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
+import { decryptSymmetricCtr } from 'src/api/encryption-service';
 
 export default GlobalMixin.extend({
-  components: { QrCode, QrCodePopup, HeaderQchip, UnlockLndPopup },
+  components: { ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip },
   name: 'LndConnectivityForm',
   mixins: [ LndFormMixin ],
   props: {
@@ -156,6 +186,10 @@ export default GlobalMixin.extend({
   data() {
     return {
       requestLndButtonDisabled: false,
+      showMasterPasswordPopup: false,
+      provideMasterPasswordPopupLoaderHeader: '',
+      encryptedAction: '',
+      lnPassword: 'initial_value',
     };
   },
   computed: {
@@ -164,17 +198,38 @@ export default GlobalMixin.extend({
     },
   },
   methods: {
+    onMasterPasswordConfirmed(masterPassword: string) {
+      if (this.encryptedAction === 'macaroon') {
+        get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/files//macaroon`, (res: any) => {
+          const encryptedMacaroon: string = res.data.encryptedArtefact;
+          const decryptedMacaroonFile: string = decryptSymmetricCtr(encryptedMacaroon, masterPassword);
+          this.downloadFile(decryptedMacaroonFile, 'admin.macaroon', 'base64');
+        }, () => {
+          showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');
+        });
+      } else if (this.encryptedAction === 'password') {
+        get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/password`, (res: any) => {
+          this.lnPassword = decryptSymmetricCtr(res.data.encryptedArtefact, masterPassword);
+        }, () => {
+          showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');
+        });
+      }
+    },
     downloadTls() {
-      get(this.$axios, '/api/lnd/files/tls', (res: any) => {
+      get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/files//tls`, (res: any) => {
         this.downloadFile(res.data, 'tls.cert', 'binary');
       }, () => {
       });
     },
     downloadMacaroon() {
-      get(this.$axios, '/api/lnd/files/macaroon', (res: any) => {
-        this.downloadFile(res.data.fileBase64, 'admin.macaroon', 'base64');
-      }, () => {
-      });
+      this.provideMasterPasswordPopupLoaderHeader = 'Decrypting admin.macaroon file';
+      this.showMasterPasswordPopup = !this.showMasterPasswordPopup;
+      this.encryptedAction = 'macaroon';
+    },
+    showLnPassword() {
+      this.provideMasterPasswordPopupLoaderHeader = 'Decrypting your LN Node password';
+      this.showMasterPasswordPopup = !this.showMasterPasswordPopup;
+      this.encryptedAction = 'password';
     },
     downloadFile(fileBase64: any, fileName: string, fileType: string) {
       const file = new Blob([Buffer.from(fileBase64, fileType)]);

@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-grow">
           <h2 class="text-center" style="margin-bottom: 0;">Setup payments <q-icon name="mdi-contactless-payment-circle"></q-icon></h2>
-          <h5 v-if="userHasElectrum" class="text-center" style="margin-top: 1%;">Provide your <b>Electrum wallet</b> information and initialize your personal <span class="text-bold text-orange-8">Bitcoin</span> payment services.</h5>
+          <h5 v-if="userHasElectrum" class="text-center" style="margin-top: 1%;">Provide your <b>Electrum wallet</b> master public key details <br> and initialize your personal <span class="text-bold text-orange-8">Bitcoin</span> payment services.</h5>
           <h5 v-else class="text-center" style="margin-top: 1%;">Create <b>standard wallet</b> and initialize your personal <span class="text-bold text-orange-8">Bitcoin</span> payment services.</h5>
         </div>
       </div>

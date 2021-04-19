@@ -14,7 +14,7 @@
              Do you really want to restart your LN Node?
             </div>
             <div class="text-primary text-center text-subtitle2 q-pt-xs">
-              <span class="text-red">• It will require unlocking with password after restart. </span><br>
+              <span class="text-red">• It will require unlocking with master password after restart.</span><br>
               • It will be unusable and offline for few minutes. <br>
               • It will disable your off-chain payment services. <br>
             </div>
@@ -82,7 +82,7 @@
           await sleep(2000);
           this.showLoading = false;
           await sleep(100);
-          this.$router.go('/bitcoin/overview');
+          this.$router.go('/ln/overview');
         }, async () => {
           showNotificationError('LND unlock failed!', 'Error occurred on LND restarting');
           await sleep(100);

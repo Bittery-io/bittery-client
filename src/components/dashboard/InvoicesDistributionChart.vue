@@ -36,7 +36,7 @@ export default GlobalMixin.extend({
         colors: ['#FF9800', '#4CAF50', '#9E9E9E'],
         yaxis: {
           title: {
-            text: 'Paid invoices',
+            text: 'All invoices',
           },
           labels: {
             formatter: (value) => { return value.toFixed(0) },

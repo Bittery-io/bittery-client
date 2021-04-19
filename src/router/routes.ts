@@ -5,7 +5,7 @@ const routes: RouteConfig[] = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: '', component: () => import('pages/bitcoin/BitcoinServicesOverviewPage.vue') },
+      { path: '', component: () => import('pages/lnd/LnOverviewPage.vue') },
     ],
     beforeEnter: (to, from, next) => {
       next('/payments/overview');
@@ -20,7 +20,14 @@ const routes: RouteConfig[] = [
     ],
   },
   {
-    path: '/lnd',
+    path: '/account',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: '', component: () => import('pages/account/AccountDetailsPage.vue') },
+    ],
+  },
+  {
+    path: '/ln',
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: 'setup', component: () => import('pages/lnd/SetupLndPage.vue') },
@@ -28,13 +35,7 @@ const routes: RouteConfig[] = [
       { path: 'setup/new', component: () => import('pages/lnd/new/SetupNewLndPage.vue') },
       { path: 'setup/new/customize/:lndType', component: () => import('pages/lnd/new/CustomizeNewLndPage.vue') },
       { path: 'setup/:lndId/init/wallet', component: () => import('pages/lnd/init/InitializeLndWalletPage.vue') },
-    ],
-  },
-  {
-    path: '/bitcoin',
-    component: () => import('layouts/MainLayout.vue'),
-    children: [
-      { path: 'overview', component: () => import('pages/bitcoin/BitcoinServicesOverviewPage.vue') },
+      { path: 'overview', component: () => import('pages/lnd/LnOverviewPage.vue') },
     ],
   },
   {

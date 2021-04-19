@@ -24,6 +24,7 @@ module.exports = configure((ctx) => ({
     'setup-mixins',
     'setup-vue-sticky',
     'apexcharts',
+    'countdown',
   ],
 
   // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css

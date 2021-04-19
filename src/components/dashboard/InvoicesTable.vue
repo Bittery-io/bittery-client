@@ -45,6 +45,7 @@
               </q-td>
               <q-td>
                 <q-input
+                  v-if="props.row.itemDesc"
                   dense
                   type="text"
                   square
@@ -54,6 +55,7 @@
               </q-td>
               <q-td>
                 <q-input
+                  v-if="props.row.buyer.name"
                   dense
                   type="text"
                   square
@@ -61,9 +63,25 @@
                   :value="props.row.buyer.name">
                 </q-input>
               </q-td>
-              <q-td >{{ props.row.price.toFixed(2) }}</q-td>
-              <q-td >{{ props.row.currency }}</q-td>
-              <q-td >{{ props.row.btcPrice }} </q-td>
+<!--              <q-td >{{ props.row.price.toFixed(2) }}</q-td>-->
+<!--              <q-td >{{ props.row.currency }}</q-td>-->
+<!--              <q-td >{{ props.row.btcPrice }} </q-td>-->
+
+              <q-td >
+                <q-chip dense square color="primary" class="text-subtitle2" outline text-color="white">
+                  {{ props.row.price.toFixed(2) }}
+                </q-chip>
+              </q-td>
+              <q-td >
+                <q-chip dense square color="grey" class="text-subtitle2" text-color="white">
+                  {{ props.row.currency }}
+                </q-chip>
+              </q-td>
+              <q-td >
+                <q-chip dense square color="primary" class="text-subtitle2" outline text-color="white">
+                  {{ props.row.btcPrice }}
+                </q-chip>
+              </q-td>
               <q-td >
                 <q-linear-progress stripe size="10px" :value="Number(props.row.btcPaid) / Number(props.row.btcPrice)"/>
               </q-td>
@@ -82,7 +100,7 @@
                   @click="openInNewTab(props.row.id)"/>
               </q-td>
               <q-td>
-                <q-badge class="float-right" :class="getStatusLabelColor(props.row.status)">
+                <q-badge class="float-right" outline :class="getStatusLabelColor(props.row.status)">
                   <div class="text-subtitle2 text-uppercase">
                     <q-icon name="mdi-file" /> {{props.row.status}}</div>
                 </q-badge>

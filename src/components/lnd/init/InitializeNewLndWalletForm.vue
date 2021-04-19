@@ -23,9 +23,9 @@
         class="text-left"
         :done="step > 1">
         <div class="text-body1">
-          LN Node wallet <b>manages funds</b> of your Lightning Network Node. <br>
-          24 words mnemonic seed is a human friendly, readable, cryptographically secure form of LN Node wallet.<br>
-          This mnemonic allows you <b>to restore</b> your LN Node wallet any time in the future (using any LN node). <br>
+          LN Node wallet <b>manages funds</b> of your Lightning Network Node.
+          24 words mnemonic seed is a human friendly, readable, cryptographically secure form of LN Node wallet.
+          This mnemonic allows you <b>to restore</b> your LN Node wallet any time in the future (using any LN node).
         </div>
         <q-stepper-navigation>
           <q-btn @click="generateSeedMnemonic" color="primary" label="Generate LN Node mnemonic"/>
@@ -53,7 +53,7 @@
               <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>
             </template>
           </q-input>
-          <div class="text-bold text-red q-pt-xs text-body1">
+          <div class="text-bold text-red q-pt-xs text-body2">
             REMEMBER: Knowing the seed equals having Bitcoin. Don't share this seed to anyone.
           </div>
         </q-banner>
@@ -72,7 +72,7 @@
         class="text-left"
         :done="step > 3">
         <div class="text-body1 q-pb-md">
-           Please provide generated 24 words mnemonic in order to confirm you saved it correctly.
+          Please provide generated 24 words mnemonic in order <b>to confirm</b> you saved it correctly.
         </div>
         <div class="row">
           <div class="col-12">
@@ -102,7 +102,7 @@
         </div>
         <q-stepper-navigation>
           <q-btn outline @click="step = 2" color="primary" label="Previous step"/>
-          <q-btn @click="step = 4" color="primary"
+          <q-btn @click="generateLnPassword" color="primary"
                  :disable="seedMnemonicText.trim() !== seedMnemonicConfirmationText.trim()"
                  label="NEXT STEP" class="q-ml-sm"/>
         </q-stepper-navigation>
@@ -115,110 +115,113 @@
         :done="step > 4">
         <div class="text-body1 q-pb-md">
           LN Node password <b>protects</b> access to your node including the wallet.<br>
-          Please set <b>strong</b> password. This will be required to unlock the node.
+          Password will be generated automatically (in your browser) to ensure it's secure enough.
         </div>
-        <vue-form :state='lnPasswordState' @submit.prevent="() => {}">
-          <div class="row q-pt-xs">
-            <div class="col-12">
-              <validate>
-                <q-input
-                  outlined
-                  square
-                  bg-color="accent"
-                  name="lnPassword"
-                  ref="lnPassword"
-                  v-model="lnPassword"
-                  label="LN Password"
-                  :type="isPwd ? 'password' : 'text'"
-                  :rules="[ val => (
-                            lnPasswordState.lnPassword !== undefined &&
-                            lnPasswordState.lnPassword.$valid) || 'Password is required',
-                            val => (lnPassword.trim().length >= 6) || 'Password must have at least 6 characters',
-                            val => (lnPassword.trim() !== '') || 'Password cannot be empty',]"
-                  required>
-                  <template v-slot:prepend>
-                    <q-icon color="primary" name="mdi-lock"/>
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
-                  </template>
-                </q-input>
-              </validate>
-            </div>
+        <div class="row q-pt-xs">
+          <div class="col-12">
+            <q-banner rounded class="text-white text-bold bg-primary">
+              <q-icon name="info" size="lg" color="white"/>
+              Your LN Node password.<br><span class="text-bold text-red"> Save it and keep private.</span>
+              <q-input
+                outlined
+                class="q-mt-xs"
+                bg-color="grey-3"
+                :type="isMnemonicPwd ? 'password' : 'text'"
+                onkeypress="return false;"
+                square
+                :value="lnPassword"
+                label="LN Node password">
+                <template v-slot:prepend>
+                  <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>
+                </template>
+              </q-input>
+              <div class="text-bold text-red q-pt-xs text-body2">
+                REMEMBER: Password allows to interact with your LN Node. Don't share this password to anyone.
+              </div>
+            </q-banner>
           </div>
-          <div class="row q-pt-xs">
-            <div class="col-12">
-              <validate>
-                <q-input
-                  outlined
-                  square
-                  bg-color="accent"
-                  name="lnPasswordRepeat"
-                  ref="lnPasswordRepeat"
-                  v-model="lnPasswordRepeat"
-                  label="LN Password repeat"
-                  :type="isPwd ? 'password' : 'text'"
-                  :rules="[ val => (
-                        lnPasswordState.lnPasswordRepeat !== undefined &&
-                        lnPasswordState.lnPasswordRepeat.$valid) || 'Please repeat your password',
-                         val => (
-                        lnPasswordState.lnPasswordRepeat !== undefined &&
-                        lnPasswordState.lnPassword !== undefined &&
-                        lnPassword === lnPasswordRepeat) || 'Passwords don\'t match',
-                        val => (lnPasswordRepeat.trim() !== '') || 'Password cannot be empty']"
-                  required>
-                  <template v-slot:prepend>
-                    <q-icon color="primary" name="mdi-lock"/>
-                  </template>
-                  <template v-slot:append>
-                    <q-icon
-                      :name="isPwd ? 'visibility_off' : 'visibility'"
-                      class="cursor-pointer"
-                      @click="isPwd = !isPwd"
-                    />
-                  </template>
-                </q-input>
-              </validate>
-            </div>
-          </div>
-        </vue-form>
+        </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3;lnPassword = ''; lnPasswordRepeat = ''" color="primary" label="Previous step"/>
-          <q-btn @click="step = 5" :disable="lnPassword !== '' && (lnPassword !== lnPasswordRepeat)" color="primary" label="Next step" class="q-ml-sm"/>
+          <q-btn outline @click="step = 3;lnPassword = '';" color="primary" label="Previous step"/>
+          <q-btn @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
+                 :label="isMnemonicPwd ? 'Show password' : 'Hide password'"
+                 :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" class="q-ml-sm"/>
+          <q-btn @click="generateLnPassword" color="grey-7" label="Regenerate" class="q-ml-sm"/>
+          <q-btn @click="step = 5;lnPasswordConfirmation=''" color="primary" label="Next step" class="q-ml-sm"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
         :name="5"
-        title="Encrypt your data"
+        title="Confirm LN Node wallet mnemonic seed"
         icon="info"
         class="text-left"
         :done="step > 5">
         <div class="text-body1 q-pb-md">
-          Your <b>seed</b> and <b>node password</b> will be now encrypted in your browser using your <b>master password</b>.<br>
-          Bittery will store the data encrypted and will be able to restore it to you when needed. <br>
+          Please provide generate LN Node password in order <b>to confirm</b> you saved it correctly.
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <vue-form :state='lnPasswordState' @submit.prevent="() => {}">
+              <validate>
+                <q-input
+                  v-model="lnPasswordConfirmation"
+                  outlined
+                  square
+                  name="lnPasswordConfirmation"
+                  ref="lnPasswordConfirmation"
+                  bg-color="accent"
+                  label="LN Node password"
+                  required
+                  :rules="[ val => (
+                              lnPasswordState.lnPasswordConfirmation !== undefined &&
+                              lnPasswordState.lnPasswordConfirmation.$valid) || 'Please confirm your LN Node password',
+                              val => (lnPassword.trim() === lnPasswordConfirmation.trim()) || 'Given password does not match generated!']"
+                  type='text'>
+                  <template v-slot:prepend>
+                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>
+                  </template>
+                </q-input>
+              </validate>
+            </vue-form>
+          </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 4;lnPassword = ''; lnPasswordRepeat = ''" color="primary" label="Previous step"/>
-          <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup" color="grey-7" label="Encrypt data" icon="mdi-lock" class="q-ml-sm"/>
-          <q-btn @click="step = 6" :disable="masterPassword === ''" color="primary" label="Next step" class="q-ml-sm"/>
+          <q-btn outline @click="step = 4" color="primary" label="Previous step"/>
+          <q-btn @click="step = 6" color="primary"
+                 :disable="lnPassword.trim() !== lnPasswordConfirmation.trim()"
+                 label="NEXT STEP" class="q-ml-sm"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
         :name="6"
-        title="Initialize LN Node wallet"
+        title="Encrypt your data"
         icon="info"
         class="text-left"
         :done="step > 6">
-        <div class="text-body1 q-pb-xs">
-          Initializing your LN Node wallet can take up to 30 seconds. <br>
-          Please don't close the browser and wait until finish.
+        <div class="text-body1 q-pb-md">
+          Your LN Node <b>seed</b> and <b>password</b> will be now encrypted in your browser using your <b>master password</b>.<br>
+          Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 4" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 5;masterPassword='';" color="primary" label="Previous step"/>
+          <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
+                 :disable="masterPassword !== ''"
+                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock" class="q-ml-sm"/>
+          <q-btn @click="step = 7" :disable="masterPassword === ''" color="primary" label="Next step" class="q-ml-sm"/>
+        </q-stepper-navigation>
+      </q-step>
+      <q-step
+        :name="7"
+        title="Initialize LN Node wallet"
+        icon="info"
+        class="text-left"
+        :done="step > 7">
+        <div class="text-body1 q-pb-xs">
+          Initializing your LN Node wallet can take up to 30 seconds. <br>
+          Please don't close the browser and wait until the finish.
+        </div>
+        <q-stepper-navigation>
+          <q-btn outline @click="step = 6" color="primary" label="Previous step"/>
           <q-btn @click="initializeLnd" icon="mdi-wallet-plus" color="primary" label="Initialize LND wallet" class="q-ml-sm"/>
         </q-stepper-navigation>
       </q-step>
@@ -239,15 +242,16 @@ import sha256 from 'js-sha256';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
 import { encryptSymmetricCtr } from 'src/api/encryption-service';
 import { SaveEncryptedAdminMacaroonDto } from 'src/dto/lnd/save-encrypted-admin-macaroon-dto';
-
+import { v4 as uuidv4 } from 'uuid';
+// 20ee27cd-5368-4a74-9390-004ff229858c
 export default GlobalMixin.extend({
   name: 'InitializeNewLndWalletForm',
   components: { ProvideMasterPasswordPopup, WarningInfoBanner, ErrorPopup, Loader },
   data() {
     return {
       showMasterPasswordPopup: false,
-      lnPasswordState: {},
       lnSeedState: {},
+      lnPasswordState: {},
       isPwd: true,
       isMnemonicPwd: true,
       bitcoinWallet: <BitcoinWallet> {},
@@ -261,7 +265,7 @@ export default GlobalMixin.extend({
       userHasElectrum: false,
       electrumMasterPublicKey: '',
       lnPassword: '',
-      lnPasswordRepeat: '',
+      lnPasswordConfirmation: '',
       masterPassword: '',
     };
   },
@@ -297,7 +301,9 @@ export default GlobalMixin.extend({
     initializeLnd() {
       this.errorBannerMessage = '';
       this.showLoading = true;
-      console.log((this.seedMnemonic.toString()));
+      console.log(`'${this.lnPassword}'`);
+      console.log(sha256(this.lnPassword));
+      console.log(sha256(this.lnPassword));
       const lndInitWalletDto: LndInitWalletDto = new LndInitWalletDto(
         sha256(this.lnPassword),
         this.seedMnemonic,
@@ -310,7 +316,7 @@ export default GlobalMixin.extend({
           this.showLoading = false;
           await this.sleep(200); // small sleep required
           showNotificationInfo('LN Node wallet init succeed', 'Your LN Node is now ready to use');
-          await this.$router.push('/bitcoin/overview');
+          await this.$router.push('/ln/overview');
         }, (err: any) => {
           this.showLoading = false;
           this.errorBannerMessage = 'Internal server error occurred. Please try again later.';
@@ -322,6 +328,14 @@ export default GlobalMixin.extend({
         console.log(err);
       });
     },
+    generateLnPassword() {
+      if (this.lnPassword !== '') {
+        showNotificationInfo('LN Node password regenerated', 'New random password was generated');
+      }
+      this.isMnemonicPwd = true;
+      this.lnPassword = uuidv4();
+      this.step = 4;
+    }
   },
 });
 

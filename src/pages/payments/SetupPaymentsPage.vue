@@ -28,7 +28,7 @@
           </a>
         </div>
       </div>
-      <div class="row q-pt-md justify-center">
+      <div class="row q-pt-xs justify-center">
         <div class="col-auto">
           <a target="_blank" href='https://btcpayserver.org/'>
             <q-chip clickable class="shadow-10" icon="info" color="grey-8" text-color="white">

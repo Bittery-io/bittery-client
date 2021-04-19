@@ -1,5 +1,7 @@
 <template>
   <q-card class="shadow-10 bg-grey-2">
+    <standard-wallet-info-popup :show="showStandardWalletInfoPopup"></standard-wallet-info-popup>
+    <ln-wallet-info-popup :show="showLndWalleInfoPopup" ></ln-wallet-info-popup>
     <q-card-section>
       <div class="row">
         <div class="col-auto">
@@ -33,7 +35,36 @@
             </q-item>
           </q-list>
         </div>
-        <div class="col-grow">  </div>
+        <div class="col-auto" :class="$q.platform.is.mobile ? '' : 'q-pa-lg'">
+          <q-list>
+            <q-item style="margin: 0; padding: 0;">
+              <q-item-section>
+                <q-item-label>
+                  <span class="text-h5 vertical-middle" id="totalReceivedPaymentsStandardWalletBtc"></span>
+                  <span class="text-subtitle2"> BTC </span>
+                  <q-chip outline color="primary" text-color="white" square
+                          icon="mdi-wallet" icon-right="mdi-bitcoin" clickable @click="showStandardWalletInfoPopup = !showStandardWalletInfoPopup">
+                    Standard wallet
+                  </q-chip>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+            <q-item style="margin: 0; padding: 0;">
+              <q-item-section>
+                <q-item-label>
+                  <span class="text-h5 vertical-middle" id="totalReceivedPaymentsLnNodeWalletBtc"></span>
+                  <span class="text-subtitle2"> BTC </span>
+                  <q-chip outline color="primary" text-color="white" square
+                          icon="mdi-wallet" icon-right="mdi-flash" clickable @click="showLndWalleInfoPopup = !showLndWalleInfoPopup">
+                    LN Node wallet
+                  </q-chip>
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
+        </div>
+        <div class="col-grow"></div>
+
         <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
           <q-list dense separator class="vertical-align">
             <statistic-item
@@ -99,9 +130,11 @@ import QrCode from 'components/utils/QrCode.vue';
 import HeaderQchip from 'components/utils/HeaderQchip.vue';
 import { CountUp } from 'countup.js';
 import StatisticItem from 'components/dashboard/StatisticItem.vue';
+import StandardWalletInfoPopup from 'components/dashboard/StandardWalletInfoPopup.vue';
+import LnWalletInfoPopup from 'components/dashboard/LnWalletInfoPopup.vue';
 
 export default GlobalMixin.extend({
-  components: { QrCode, HeaderQchip, StatisticItem },
+  components: { LnWalletInfoPopup, StandardWalletInfoPopup, QrCode, HeaderQchip, StatisticItem },
   name: 'PaymentsAmountsCard',
   props: {
     timeframe: {
@@ -119,17 +152,29 @@ export default GlobalMixin.extend({
   },
   data() {
     return {
+      showStandardWalletInfoPopup: false,
+      showLndWalleInfoPopup: false,
       timeframeValue: ''
     };
   },
   async mounted() {
+    console.log(this.dashboardInfo);
     await this.sleep(200); // small sleep required
     this.timeframeValue = this.timeframe;
     const countUp = new CountUp('totalReceivedPaymentsBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
       decimalPlaces: 5,
     });
-    if (!countUp.error) {
+    const countUp2 = new CountUp('totalReceivedPaymentsStandardWalletBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
+      decimalPlaces: 5,
+    });
+    const countUp3 = new CountUp('totalReceivedPaymentsLnNodeWalletBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
+      decimalPlaces: 5,
+    });
+
+    if (!countUp.error && !countUp2.error && !countUp3.error) {
       countUp.start();
+      countUp2.start();
+      countUp3.start();
     } else {
       console.error(countUp.error);
     }

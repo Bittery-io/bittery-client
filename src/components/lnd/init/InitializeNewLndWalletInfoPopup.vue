@@ -18,7 +18,7 @@
             <div class="text-primary text-center text-subtitle2 q-pt-xs">
               • LN Node wallet manages funds of Bitcoin Lightning Network. It is required.<br>
               • 24 words mnemonic seed is encoded public/private key pair. <span class="text-red text-bold">You must keep it.</span><br>
-              • Password protects access to your LN Node. <span class="text-red text-bold">You must keep it.</span>
+              • Password protects access to your LN Node.
             </div>
           </div>
         </div>

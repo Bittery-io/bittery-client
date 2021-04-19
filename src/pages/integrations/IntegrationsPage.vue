@@ -9,13 +9,13 @@
       </div>
       <div class="row justify-center">
         <div class="col-lg-6 col-xs-12 q-pa-xs">
-          <clickable-route-card text="Custom website" route="/lnd/setup/existing"
+          <clickable-route-card text="Custom website" route="/ln/setup/existing"
                                 badge-text="Payment button"
                                 badge-icon="mdi-gesture-tap-button">
           </clickable-route-card>
         </div>
         <div class="col-lg-6 col-xs-12 q-pa-xs">
-          <clickable-route-card text="Shopify" route="/lnd/setup/new"></clickable-route-card>
+          <clickable-route-card text="Shopify" route="/ln/setup/new"></clickable-route-card>
         </div>
       </div>
     </div>

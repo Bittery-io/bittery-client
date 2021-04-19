@@ -184,7 +184,7 @@
           this.showLoading = false;
           await this.sleep(200); // small sleep required
           showNotificationInfo('Custom LND node added', 'Your node information successfully saved');
-          await this.$router.push('/bitcoin/overview');
+          await this.$router.push('/ln/overview');
         }, (err: any) => {
           let caption: string = 'Internal server error.';
           switch (err.response.data.errorCode) {

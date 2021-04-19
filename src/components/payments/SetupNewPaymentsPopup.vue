@@ -21,7 +21,7 @@
             <div class="text-primary text-center text-subtitle2 q-pt-xs">
               • <span class="text-bold">off-chain</span> payments are received to the LN NODE WALLET<br>
               <span v-if="userHasElectrum">• <span class="text-bold">on-chain</span> (transactions) payments are received to your ELECTRUM WALLET<br></span>
-              <span v-else>• <span class="text-bold">on-chain</span> (transactions) payments are received on the STANDARD WALLET <br></span>
+              <span v-else>• <span class="text-bold">on-chain</span> (transactions) payments are received to the STANDARD WALLET<br></span>
               <span v-if="userHasElectrum">• Bittery cannot move funds controlled by your Electrum wallet</span>
               <span v-else>• STANDARD WALLET seed is encoded public/private key pair. <span class="text-red text-bold">You must keep it.</span></span>
             </div>

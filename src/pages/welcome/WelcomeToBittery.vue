@@ -8,7 +8,7 @@
           <h2 class="text-center" style="margin-bottom: 0;">Welcome to <b>Bittery.io</b></h2>
           <h5 class="text-center" style="margin-top: 1%;">
             We are glad that you joined. <br>
-            We want enable everyone to start accepting <span class="text-bold text-orange-8">Bitcoin</span> payments easily. <br>
+            We want enable everyone to accept <span class="text-bold text-orange-8">Bitcoin</span> payments easily. <br>
             Please start by setting your master password.
           </h5>
         </div>

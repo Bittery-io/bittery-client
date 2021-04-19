@@ -1,5 +1,5 @@
 <template>
-  <q-banner class="text-grey-2 text-bold bg-red q-mb-xs">
+  <q-banner class="text-grey-2 text-bold bg-red-8 q-mb-xs">
     <template v-slot:avatar>
       <q-icon name="error" color="white" />
     </template>

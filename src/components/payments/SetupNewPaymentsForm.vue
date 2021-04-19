@@ -5,6 +5,10 @@
                  :error-message="errorBannerMessage"
                  :show="errorBannerMessage !== ''">
     </error-popup>
+    <provide-master-password-popup :show="showMasterPasswordPopup" subheader="Password will be used for data encryption"
+                                   @passwordConfirmed="onMasterPasswordConfirmed">
+    </provide-master-password-popup>
+
     <q-stepper
       v-model="step"
       bordered
@@ -22,12 +26,12 @@
         <div class="text-body1 q-pb-xs">
           You will be able to receive Bitcoin payments:
         </div>
-        <q-checkbox :value="bitcoinLndCheckbox" label="off-chain (fast and cheap) via Lightning Network" >
-          <q-badge class="q-ml-xs">payments go to LN Node wallet</q-badge>
+        <q-checkbox :value="bitcoinLndCheckbox" label="off-chain (fast and cheap) via Lightning Network" class="nocursor">
+          <q-badge class="q-ml-xs">payments go to LN NODE WALLET</q-badge>
         </q-checkbox> <br>
-        <q-checkbox :value="bitcoinLndCheckbox" label="on-chain (blockchain transactions)">
+        <q-checkbox :value="bitcoinLndCheckbox" label="on-chain (blockchain transactions)" class="nocursor">
           <q-badge class="q-ml-xs" v-if="userHasElectrum">payments go to your Electrum wallet</q-badge>
-          <q-badge class="q-ml-xs" v-else>payments go to standard wallet</q-badge>
+          <q-badge class="q-ml-xs" v-else>payments go to STANDARD WALLET</q-badge>
         </q-checkbox>
         <q-stepper-navigation>
           <q-btn @click="step = 2;bitcoinWallet.seed = ''" color="primary" label="Next step"/>
@@ -40,8 +44,10 @@
         icon="info"
         class="text-left text-body1"
         :done="step > 2">
-        Please provide your Electrum Wallet Master Public Key (can be found under <span class="text-italic">Wallet->Information)</span>. <br>
-        <warning-info-banner text="Bittery cannot move funds under your Electrum wallet. All your private keys stay safe and private."></warning-info-banner>
+        Please provide your <b>Electrum Wallet Master Public Key</b> (can be found under <span class="text-italic">Wallet->Information)</span>. <br>
+        <warning-info-banner
+          class="q-mt-xs"
+          text="Bittery cannot move funds under your Electrum wallet. All your private keys stay safe and private."></warning-info-banner>
         <div class="row q-pt-xs">
           <div class="col-12">
             <vue-form :state='electrumPublicKeyState' @submit.prevent="() => {}">
@@ -75,12 +81,12 @@
       <q-step
         v-else
         :name="2"
-        title="Generate Bitcoin standard wallet seed"
+        title="Generate Bitcoin STANDARD WALLET seed"
         icon="info"
         class="text-left"
         :done="step > 2">
         <div class="text-body1 q-pb-xs">
-          Generate new <b>BIP-39</b> Bitcoin seed which will be used to create your Bitcoin standard wallet.<br>
+          Generate new <b>BIP-39</b> Bitcoin seed which will be used to create your Bitcoin <b> standard wallet</b>.<br>
           The seed can be easily imported by most open-source Bitcoin wallets (e.g. Electrum wallet).<br>
           <span class="text-bold">Bittery will not be able to move funds of this wallet.</span>
         </div>
@@ -89,7 +95,8 @@
         </warning-info-banner>
         <q-banner rounded v-show="bitcoinWallet.seed" class="text-white text-bold bg-primary">
           <q-icon name="info" size="lg" color="white" />
-          Your Bitcoin standard wallet seed (BIP-39). Save it and keep private.
+          Your Bitcoin standard wallet seed (BIP-39).
+          <br><span class="text-bold text-red"> Save it and keep private.</span>
           <q-input
             outlined
             class="q-mt-xs"
@@ -98,13 +105,13 @@
             onkeypress="return false;"
             square
             :value="bitcoinWallet.seed"
-            label="Your seed (12 words)">
+            label="Your mnemonic seed (12 words)">
             <template v-slot:prepend>
               <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>
             </template>
           </q-input>
-          <div class="text-bold text-red q-pt-xs text-body1" v-show="bitcoinWallet.seed">
-            REMEMBER: LOOSING THE SEED EQUALS LOOSING BITCOIN!
+          <div class="text-bold text-red q-pt-xs text-body2" v-show="bitcoinWallet.seed">
+            REMEMBER: Knowing the seed equals having Bitcoin. Don't share this seed to anyone.
           </div>
         </q-banner>
         <q-stepper-navigation>
@@ -124,7 +131,7 @@
         class="text-left"
         :done="step > 3">
         <div class="text-body1 q-pb-md">
-          Please provide your 12 words mnemonic seed in order to confirm you saved your Bitcoin standard wallet seed correctly.
+          Please provide your 12 words mnemonic seed in order <b>to confirm</b> you saved your Bitcoin standard wallet seed correctly.
         </div>
         <div class="row">
           <div class="col-12">
@@ -160,15 +167,33 @@
         </q-stepper-navigation>
       </q-step>
       <q-step
-        :name="userHasElectrum? 3 : 4"
+        v-if="!userHasElectrum"
+        :name="4"
+        title="Encrypt your data"
+        icon="info"
+        class="text-left"
+        :done="step > 4">
+        <div class="text-body1 q-pb-md">
+          Your <b>seed</b> will be now encrypted in your browser using your <b>master password</b>.<br>
+          Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
+        </div>
+        <q-stepper-navigation>
+          <q-btn outline @click="step = 3;lnPassword = ''; lnPasswordRepeat = ''" color="primary" label="Previous step"/>
+          <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
+                 :disable="masterPassword !== ''"
+                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock" class="q-ml-sm"/>
+          <q-btn @click="step = 5" :disable="masterPassword === ''" color="primary" label="Next step" class="q-ml-sm"/>
+        </q-stepper-navigation>
+      </q-step>
+      <q-step
+        :name="userHasElectrum? 3 : 5"
         title="Initialize payment services"
         icon="info"
         class="text-left"
-        :done="userHasElectrum? (step > 3) : (step > 4)">
+        :done="userHasElectrum? (step > 3) : (step > 5)">
         <div class="text-body1 q-pb-xs">
-          Please assure you saved your mnemonic correctly. <br>
           Initializing your personal Bitcoin payments services can take up to 30 seconds. <br>
-          Please don't close the browser and wait until finish.
+          Please don't close the browser and wait until the finish.
         </div>
         <q-stepper-navigation>
           <q-btn outline @click="goToPreviousStep" color="primary" label="Previous step"/>
@@ -189,10 +214,12 @@
   import { showNotificationInfo } from 'src/api/notificatios-api';
   import { BitcoinWallet } from 'src/model/bitcoin-wallet';
   import WarningInfoBanner from 'components/utils/WarningInfoBanner.vue';
+  import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
+  import { encryptSymmetricCtr } from 'src/api/encryption-service';
 
   export default GlobalMixin.extend({
     name: 'SetupNewPayments',
-    components: { WarningInfoBanner, ErrorPopup, Loader },
+    components: { ProvideMasterPasswordPopup, WarningInfoBanner, ErrorPopup, Loader },
     props: {
       userHasElectrum: {
         type: Boolean,
@@ -212,9 +239,14 @@
         userHasElectrum: false,
         electrumMasterPublicKey: '',
         isMnemonicPwd: true,
+        masterPassword: '',
+        showMasterPasswordPopup: false,
       };
     },
     methods: {
+      onMasterPasswordConfirmed(masterPassword: string) {
+        this.masterPassword = masterPassword;
+      },
       generateBtcWallet() {
         this.showLoading = true;
         setTimeout((() => {
@@ -234,9 +266,12 @@
         this.showLoading = true;
         let createUserBtcpayDto: CreateUserBtcpayDto;
         if (this.userHasElectrum) {
-          createUserBtcpayDto = new CreateUserBtcpayDto(undefined, this.electrumMasterPublicKey);
+          createUserBtcpayDto = new CreateUserBtcpayDto(undefined, undefined, this.electrumMasterPublicKey);
         } else {
-          createUserBtcpayDto = new CreateUserBtcpayDto(this.bitcoinWallet.rootPublicKey, undefined);
+          createUserBtcpayDto = new CreateUserBtcpayDto(
+            this.bitcoinWallet.rootPublicKey,
+            encryptSymmetricCtr(this.bitcoinWallet.rootPublicKey, this.masterPassword),
+            undefined);
         }
         post(this.$axios, '/api/btcpay', createUserBtcpayDto, async () => {
           this.showLoading = false;

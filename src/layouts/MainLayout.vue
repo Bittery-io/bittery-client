@@ -22,11 +22,11 @@
           </q-chip>
         </q-toolbar-title>
 
-        <q-toolbar-title class="text-bold text-right" v-if="!$q.platform.is.mobile">
-          <q-chip clickable color="accent" text-color="primary"
-                  @click="openUrlTheSameTab('https://bittery.io')"
-                  outline icon="mdi-home-circle" size="md">HOMEPAGE</q-chip>
-        </q-toolbar-title>
+<!--        <q-toolbar-title class="text-bold text-right" v-if="!$q.platform.is.mobile">-->
+<!--          <q-chip clickable color="accent" text-color="primary"-->
+<!--                  @click="openUrlTheSameTab('https://bittery.io')"-->
+<!--                  outline icon="mdi-home-circle" size="md">HOMEPAGE</q-chip>-->
+<!--        </q-toolbar-title>-->
       </q-toolbar>
     </q-header>
 
@@ -106,14 +106,6 @@
         leftDrawerOpen: false,
         essentialLinks: [
           {
-            title: 'Lightning Network',
-            caption: 'Manage your LN',
-            icon: 'mdi-flash',
-            link: '/bitcoin/overview',
-            active: true,
-            disabled: !hasPasswordProofSet(),
-          },
-          {
             title: 'Payments',
             caption: 'Manage your Bitcoin payments',
             icon: 'mdi-contactless-payment-circle',
@@ -129,6 +121,22 @@
             active: false,
             disabled: !hasPasswordProofSet(),
           },
+          {
+            title: 'Lightning Network',
+            caption: 'Manage your LN',
+            icon: 'mdi-flash',
+            link: '/ln/overview',
+            active: true,
+            disabled: !hasPasswordProofSet(),
+          },
+          {
+            title: 'Account',
+            caption: 'Your account details',
+            icon: 'mdi-account-box-outline',
+            link: '/account',
+            active: false,
+            disabled: false,
+          }
         ],
       };
     },

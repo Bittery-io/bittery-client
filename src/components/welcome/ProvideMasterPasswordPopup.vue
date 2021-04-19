@@ -1,8 +1,8 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <loader :show="showLoading"></loader>
+    <loader :show="showLoading" :message="loaderHeader"></loader>
     <q-card>
-      <q-card-section>
+      <q-card-section style="padding-bottom: 0 !important;">
         <div class="row justify-center">
           <div class="col-auto text-primary">
             <q-icon size="xl" name="mdi-key" color="primary"/>
@@ -49,8 +49,8 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
         <q-btn @click="confirmPassword" color="primary" :disable="!passwordMatchingPasswordProof">Submit</q-btn>
+        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -78,6 +78,11 @@ export default GlobalMixin.extend({
       required: false,
       default: '',
     },
+    loaderHeader: {
+      type: String,
+      required: false,
+      default: 'Encrypting data',
+    },
   },
   data() {
     return {
@@ -103,7 +108,11 @@ export default GlobalMixin.extend({
       this.password = '';
       this.showPopup = false;
     },
-    confirmPassword() {
+    async confirmPassword() {
+      this.showLoading = true;
+      await this.sleep(1500);
+      this.showLoading = false;
+      await this.sleep(100);
       this.$emit('passwordConfirmed', this.password);
       this.close();
     },

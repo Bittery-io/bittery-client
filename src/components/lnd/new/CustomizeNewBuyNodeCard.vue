@@ -119,7 +119,7 @@ export default GlobalMixin.extend({
         this.showLoading = false;
         await this.sleep(200); // small sleep required
         showNotificationInfo('LN Node setup succeed', 'Your personal Lightning Network Node is now online');
-        await this.$router.push('/bitcoin/overview');
+        await this.$router.push('/ln/overview');
       }, (err: any) => {
         showNotificationError('LN Node setup failed', 'Your personal Lightning Network Node is online');
         this.showLoading = false;

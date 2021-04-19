@@ -1,10 +1,12 @@
 <template>
-  <div></div>
+  <div>
+  </div>
 </template>
 <script lang="ts">
-  import Vue from 'vue';
+import GlobalMixin from 'src/mixins/global-mixin';
+import { QSpinnerPie } from 'quasar'
 
-  export default Vue.extend({
+  export default GlobalMixin.extend({
     name: 'Loader',
     props: {
       show: {
@@ -23,13 +25,15 @@
         if (this.show) {
           const config = this.isMobile ?
             {
+              spinner: QSpinnerPie,
               spinnerColor: 'primary',
               message: `<div class="text-subtitle2 bg-primary" style="padding: 3%; border: 1px solid white">${this.message}</div>`,
               backgroundColor: 'primary',
             } :
             {
               spinnerColor: 'primary',
-              message: `<div class="text-h6 bg-primary"style="padding: 3%;border: 1px solid white;">${this.message}</div>`,
+              spinner: QSpinnerPie,
+              message: `<div class="text-h6 bg-primary" style="padding: 3%;border: 1px solid white;">${this.message}</div>`,
               backgroundColor: 'primary',
             };
           this.$q.loading.show(config);

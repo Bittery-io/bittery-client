@@ -56,7 +56,7 @@
     methods: {
       close() {
         this.showPopup = false;
-        this.$router.push('/lnd/setup');
+        this.$router.push('/ln/setup');
       },
     },
   });

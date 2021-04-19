@@ -14,7 +14,7 @@
               Confirm your <b>master password</b>
             </div>
             <div class="text-subtitle2 text-primary text-center">
-              Last check before going forward
+              Remember: <span class="text-red">don't lose this password</span>
             </div>
             <q-input
               class="q-pt-md"

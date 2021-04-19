@@ -38,7 +38,7 @@
     },
     mounted() {
       this.showLoading = true;
-      get(this.$axios, '/api/btc/wallet', async (res: any) => {
+      get(this.$axios, '/api/wallet', async (res: any) => {
         await this.sleep(200);
         this.hasBtcWallet = true;
         this.showLoading = false;

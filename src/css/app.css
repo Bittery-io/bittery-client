@@ -82,3 +82,11 @@ div.q-item__label.q-item__label--caption.text-caption {
 .bigger-text {
   font-size: 1.05rem;
 }
+
+.q-field__label.no-pointer-events.absolute.ellipsis {
+  padding-bottom: 0.8% !important;
+}
+
+.nocursor {
+  cursor: default !important;
+}

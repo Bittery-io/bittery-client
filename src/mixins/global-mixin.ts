@@ -30,7 +30,7 @@ export default Vue.extend({
     getStatusLabelColor(status: string) {
       switch (status) {
         case 'new':
-          return 'text-primary bg-orange';
+          return 'bg-orange text-primary';
         case 'complete':
         case 'paid':
         case 'confirmed':

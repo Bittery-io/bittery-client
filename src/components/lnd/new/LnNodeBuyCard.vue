@@ -1,5 +1,5 @@
 <template>
-  <q-card class="grow shadow-10 bg-grey-2" @click="$router.push(`/lnd/setup/new/customize/${type}`)">
+  <q-card class="grow shadow-10 bg-grey-2" @click="$router.push(`/ln/setup/new/customize/${type}`)">
     <q-card-section>
       <q-item>
         <q-item-section>
@@ -17,7 +17,7 @@
               <span class="text-h2" :id="type"></span>
               <span class="text-h4"> $</span>
             </q-item-label>
-          <q-item-label caption>monthly</q-item-label>
+          <q-item-label caption>monthly, paid in Bitcoin</q-item-label>
           </q-item-section>
       </q-item>
       <q-separator spaced inset />
@@ -131,8 +131,8 @@ export default GlobalMixin.extend({
     };
   },
   mounted() {
-    const countUp1 = new CountUp(this.type, 10, {
-      decimalPlaces: 0,
+    const countUp1 = new CountUp(this.type, 29.99, {
+      decimalPlaces: 2,
     });
     if (!countUp1.error) {
       countUp1.start();
