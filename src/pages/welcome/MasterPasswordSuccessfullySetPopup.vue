@@ -1,25 +1,26 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <q-card>
+    <q-card class="bg-primary text-white">
       <q-card-section>
         <div class="row justify-center">
-          <div class="col-auto text-primary">
-            <q-icon size="xl" name="mdi-key-plus" color="primary"/>
+          <div class="col-auto">
+            <q-icon size="xl" name="mdi-key-plus"/>
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-center">
+            <div class="text-h5 text-center">
               Your master password is set
             </div>
-            <div class="text-primary text-primary text-center text-body1">
+            <div class="text-center text-body1">
+              <span class="text-red text-bold">Don't lose this password.</span><br>
               Now you are ready to start accepting Bitcoin payments with Bittery.
             </div>
           </div>
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn @click="close()" text-color="white" color="primary">GOT IT</q-btn>
+            <q-btn @click="close()" text-color="white" outline>GOT IT</q-btn>
           </div>
         </div>
       </q-card-section>

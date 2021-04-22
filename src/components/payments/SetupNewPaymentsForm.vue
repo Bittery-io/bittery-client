@@ -270,7 +270,7 @@
         } else {
           createUserBtcpayDto = new CreateUserBtcpayDto(
             this.bitcoinWallet.rootPublicKey,
-            encryptSymmetricCtr(this.bitcoinWallet.rootPublicKey, this.masterPassword),
+            encryptSymmetricCtr(this.bitcoinWallet.seed, this.masterPassword),
             undefined);
         }
         post(this.$axios, '/api/btcpay', createUserBtcpayDto, async () => {

@@ -20,12 +20,12 @@
         </div>
         <div class="row q-pt-md q-pl-lg q-pr-lg">
           <div class="col-auto">
-            <q-checkbox dense v-model="lnSeedBackup" label="Node password"></q-checkbox>
+            <q-checkbox dense v-model="lnSeedBackup" label="LN Node password"></q-checkbox>
           </div>
         </div>
         <div class="row q-pl-lg q-pr-lg q-pt-xs">
           <div class="col-auto">
-            <q-checkbox dense v-model="lnNodePasswordBackup" label="Node seed"></q-checkbox>
+            <q-checkbox dense v-model="lnNodePasswordBackup" label="LN Node wallet seed"></q-checkbox>
           </div>
         </div>
         <div class="row q-pl-lg q-pr-lg q-pt-xs">

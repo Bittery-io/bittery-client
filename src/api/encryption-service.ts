@@ -16,5 +16,6 @@ export const decryptSymmetricCtr = (encryptedPayloadHex: string, key: string): s
   // eslint-disable-next-line
   const aesCtr2 = new aesjs.ModeOfOperation.ctr(Buffer.from(key));
   const decryptedBytes = aesCtr2.decrypt(encryptedBytes);
-  return aesjs.utils.utf8.fromBytes(decryptedBytes).trim();
+  const strippedDecryptedBytes = aesjs.padding.pkcs7.strip(decryptedBytes);
+  return aesjs.utils.utf8.fromBytes(strippedDecryptedBytes).trim();
 };

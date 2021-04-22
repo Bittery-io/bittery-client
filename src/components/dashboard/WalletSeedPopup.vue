@@ -10,11 +10,10 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h5 text-white text-bold text-center">
-              <span class="vertical-middle">Your standard wallet seed</span>
+              <span class="vertical-middle">{{header}}</span>
             </div>
             <q-banner rounded class="text-white text-bold bg-primary q-mt-md">
-              <q-icon name="info" size="lg" color="white" />
-              Your LN Node wallet 24 words mnemonic seed.<br>
+              <q-icon name="info" size="lg" color="white" />{{subheader}}<br>
               <q-input
                 outlined
                 class="q-mt-xs"
@@ -63,7 +62,7 @@ import { sleep } from 'src/api/sleep-service';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
 
 export default GlobalMixin.extend({
-  name: 'StandardWalletSeedPopup',
+  name: 'WalletSeedPopup',
   components: { Loader },
   props: {
     show: {
@@ -74,6 +73,14 @@ export default GlobalMixin.extend({
       type: String,
       required: true,
     },
+    header: {
+      type: String,
+      required: true,
+    },
+    subheader: {
+      type: String,
+      required: true,
+    }
   },
   data() {
     return {
@@ -93,7 +100,7 @@ export default GlobalMixin.extend({
   },
   methods: {
     close() {
-      this.showPopup = false;
+      this.$router.go('/dashboard');
     },
   },
 });

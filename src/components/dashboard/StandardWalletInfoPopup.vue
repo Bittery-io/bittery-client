@@ -5,7 +5,10 @@
                                    @passwordConfirmed="onPasswordConfirmed"
                                    loader-header="Decrypting seed">
     </provide-master-password-popup>
-    <standard-wallet-seed-popup :show="showSeedPopup" :seed="standardWalletSeed"></standard-wallet-seed-popup>
+    <wallet-seed-popup :show="showSeedPopup" :seed="standardWalletSeed"
+                       header="Your standard wallet seed"
+                       subheader="Your standard wallet 12 words mnemonic seed.">
+    </wallet-seed-popup>
     <q-card>
       <q-card-section v-if="this.userBtcWalletDto">
         <div class="row justify-center">
@@ -46,7 +49,7 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup" outline text-color="orange-8">
+        <q-btn @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup" color="orange-8" text-color="white">
           <q-icon left name="mdi-eye" />
           Show seed
         </q-btn>
@@ -63,15 +66,15 @@
 
 import GlobalMixin from 'src/mixins/global-mixin';
 import { get } from 'src/api/http-service';
-import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
+import { showNotificationError } from 'src/api/notificatios-api';
 import Loader from 'components/utils/Loader.vue';
-import { sleep } from 'src/api/sleep-service';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
-import StandardWalletSeedPopup from 'components/dashboard/StandardWalletSeedPopup.vue';
+import { decryptSymmetricCtr } from 'src/api/encryption-service';
+import WalletSeedPopup from 'components/dashboard/WalletSeedPopup.vue';
 
 export default GlobalMixin.extend({
   name: 'StandardWalletInfoPopup',
-  components: { StandardWalletSeedPopup, ProvideMasterPasswordPopup, Loader },
+  components: { WalletSeedPopup, ProvideMasterPasswordPopup, Loader },
   props: {
     show: {
       type: Boolean,
@@ -124,7 +127,7 @@ export default GlobalMixin.extend({
     async onPasswordConfirmed(password: string) {
       get(this.$axios, '/api/wallet/seed', (res: any) => {
         this.showSeedPopup = !this.showSeedPopup;
-        this.standardWalletSeed = res.data.seed;
+        this.standardWalletSeed = decryptSymmetricCtr(res.data.seed, password);
       }, (err: any) => {
         showNotificationError('Getting standard wallet seed failed', 'Unexpected error occurred');
         console.log(err);

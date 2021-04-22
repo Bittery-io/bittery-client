@@ -1,5 +1,13 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+    <provide-master-password-popup :show="showConfirmMasterPasswordPopup"
+                                   subheader="It is required for decrypting your LN Node wallet seed"
+                                   @passwordConfirmed="onPasswordConfirmed"
+                                   loader-header="Decrypting seed">
+    </provide-master-password-popup>
+    <wallet-seed-popup :show="showSeedPopup" :seed="lnWalletSeed"
+                       header="Your LN Node wallet seed"
+                       subheader="Your LN Node wallet 24 words mnemonic seed."></wallet-seed-popup>
     <q-card>
       <q-card-section>
         <div class="row justify-center">
@@ -22,7 +30,7 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn @click="close()" outline text-color="orange-8">
+        <q-btn @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup" color="orange-8" text-color="white">
           <q-icon left name="mdi-eye" />
           Show seed
         </q-btn>
@@ -39,13 +47,15 @@
 
 import GlobalMixin from 'src/mixins/global-mixin';
 import { get } from 'src/api/http-service';
-import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
+import { showNotificationError } from 'src/api/notificatios-api';
 import Loader from 'components/utils/Loader.vue';
-import { sleep } from 'src/api/sleep-service';
+import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
+import { decryptSymmetricCtr } from 'src/api/encryption-service';
+import WalletSeedPopup from 'components/dashboard/WalletSeedPopup.vue';
 
 export default GlobalMixin.extend({
   name: 'LnWalletInfoPopup',
-  components: { Loader },
+  components: { WalletSeedPopup, ProvideMasterPasswordPopup, Loader },
   props: {
     show: {
       type: Boolean,
@@ -57,6 +67,9 @@ export default GlobalMixin.extend({
       showPopup: false,
       showLoading: false,
       userBtcWalletDto: null,
+      showConfirmMasterPasswordPopup: false,
+      lnWalletSeed: null,
+      showSeedPopup: false,
     };
   },
   watch: {
@@ -65,6 +78,15 @@ export default GlobalMixin.extend({
     },
   },
   methods: {
+    async onPasswordConfirmed(password: string) {
+      get(this.$axios, '/api/lnd/seed', (res: any) => {
+        this.showSeedPopup = !this.showSeedPopup;
+        this.lnWalletSeed = decryptSymmetricCtr(res.data.encryptedArtefact, password);
+      }, (err: any) => {
+        showNotificationError('Getting LN node wallet seed failed', 'Unexpected error occurred');
+        console.log(err);
+      });
+    },
     close() {
       this.showPopup = false;
     },
