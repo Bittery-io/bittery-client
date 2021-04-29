@@ -13,7 +13,7 @@
       bordered
       class="bg-grey-2"
       vertical
-      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.45}px`"
+      :style="$q.platform.is.mobile ? `` : `width: ${screenWidth * 0.45}px`"
       color="primary"
       animated>
       <q-step
@@ -28,7 +28,8 @@
           This mnemonic allows you <b>to restore</b> your LN Node wallet any time in the future (using any LN node).
         </div>
         <q-stepper-navigation>
-          <q-btn @click="generateSeedMnemonic" color="primary" label="Generate LN Node mnemonic"/>
+          <q-btn @click="generateSeedMnemonic" color="primary" label="Generate LN Node mnemonic"
+                 :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -58,11 +59,12 @@
           </div>
         </q-banner>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1;" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 1;" color="primary" label="Previous step" :class="isMobile ? 'full-width' : ''"/>
           <q-btn @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
                  :label="isMnemonicPwd ? 'Show mnemonic' : 'Hide mnemonic'"
-                 :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" class="q-ml-sm"/>
-          <q-btn @click="step = 3;seedMnemonicConfirmationText = ''" color="primary" v-show="seedMnemonicText" label="NEXT STEP" class="q-ml-sm"/>
+                 :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="step = 3;seedMnemonicConfirmationText = ''" color="primary" v-show="seedMnemonicText" label="NEXT STEP"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -101,10 +103,10 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 2" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
           <q-btn @click="generateLnPassword" color="primary"
                  :disable="seedMnemonicText.trim() !== seedMnemonicConfirmationText.trim()"
-                 label="NEXT STEP" class="q-ml-sm"/>
+                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -142,12 +144,12 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3;lnPassword = '';" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 3;lnPassword = '';" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
           <q-btn @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
                  :label="isMnemonicPwd ? 'Show password' : 'Hide password'"
-                 :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" class="q-ml-sm"/>
-          <q-btn @click="generateLnPassword" color="grey-7" label="Regenerate" class="q-ml-sm"/>
-          <q-btn @click="step = 5;lnPasswordConfirmation=''" color="primary" label="Next step" class="q-ml-sm"/>
+                 :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="generateLnPassword" color="grey-7" label="Regenerate" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="step = 5;lnPasswordConfirmation=''" color="primary" label="Next step" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -186,10 +188,10 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 4" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 4" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
           <q-btn @click="step = 6" color="primary"
                  :disable="lnPassword.trim() !== lnPasswordConfirmation.trim()"
-                 label="NEXT STEP" class="q-ml-sm"/>
+                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -203,11 +205,12 @@
           Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 5;masterPassword='';" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 5;masterPassword='';" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
           <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
-                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock" class="q-ml-sm"/>
-          <q-btn @click="step = 7" :disable="masterPassword === ''" color="primary" label="Next step" class="q-ml-sm"/>
+                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="step = 7" :disable="masterPassword === ''" color="primary" label="Next step" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -221,8 +224,8 @@
           Please don't close the browser and wait until the finish.
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 6" color="primary" label="Previous step"/>
-          <q-btn @click="initializeLnd" icon="mdi-wallet-plus" color="primary" label="Initialize LND wallet" class="q-ml-sm"/>
+          <q-btn outline @click="step = 6" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn @click="initializeLnd" icon="mdi-wallet-plus" color="primary" label="Initialize LND wallet" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>

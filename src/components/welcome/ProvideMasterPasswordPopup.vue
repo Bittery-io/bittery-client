@@ -1,19 +1,19 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
     <loader :show="showLoading" :message="loaderHeader"></loader>
-    <q-card>
+    <q-card class="bg-primary">
       <q-card-section style="padding-bottom: 0 !important;">
         <div class="row justify-center">
-          <div class="col-auto text-primary">
-            <q-icon size="xl" name="mdi-key" color="primary"/>
+          <div class="col-auto">
+            <q-icon size="xl" name="mdi-key" color="white"/>
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-center">
+            <div class="text-h5 text-white text-center">
               Provide your <b>master password</b>
             </div>
-            <div class="text-subtitle2 text-primary text-center">
+            <div class="text-subtitle2 text-white text-center">
               {{subheader}}
             </div>
             <vue-form :state='masterPasswordState' @submit.prevent="() => {}">
@@ -49,8 +49,8 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn @click="confirmPassword" color="primary" :disable="!passwordMatchingPasswordProof">Submit</q-btn>
-        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
+        <q-btn @click="confirmPassword" color="white" text-color="primary" :disable="!passwordMatchingPasswordProof">Submit</q-btn>
+        <q-btn outline @click="close()" color="white">Close</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

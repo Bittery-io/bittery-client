@@ -1,11 +1,12 @@
 <template>
-  <q-card class="grow shadow-10 bg-grey-2" @click="$router.push(`/ln/setup/new/customize/${type}`)">
+  <q-card class="grow text-center shadow-10 bg-grey-2" @click="$router.push(`/ln/setup/new/customize/${type}`)">
     <q-card-section>
       <q-item>
         <q-item-section>
           <q-item-label>
-            <q-icon name="mdi-flash" color="yellow-7" size="xl"/>
-            <div class="text-h5">{{ title }}</div>
+            <div class="text-h5">
+              <q-icon name="mdi-flash" :color="type === 'ENCRYPTED' ? 'yellow-10': 'yellow-7'" size="xl"/>{{ title }}
+            </div>
           </q-item-label>
           <q-item-label caption v-if="type === 'ENCRYPTED'">Best privacy but no tools included</q-item-label>
           <q-item-label caption v-if="type === 'STANDARD'">Tools included</q-item-label>
@@ -14,15 +15,26 @@
       <q-item>
           <q-item-section>
             <q-item-label>
-              <span class="text-h2" :id="type"></span>
-              <span class="text-h4"> $</span>
+              <span class="text-h3" :id="type"></span>
+              <span class="text-h5"> $</span>
             </q-item-label>
-          <q-item-label caption>monthly, paid in Bitcoin</q-item-label>
+          <q-item-label caption>monthly, paid in Bitcoin only</q-item-label>
           </q-item-section>
       </q-item>
-      <q-separator spaced inset />
-      <q-list class="">
-        <q-item >
+      <q-separator spaced inset/>
+      <q-list>
+        <q-item class="text-bold text-red-8">
+          <q-item-section avatar>
+            <q-icon color="red-8" name="mdi-flash-circle"/>
+          </q-item-section>
+          <q-item-section class="text-left">
+            <q-item-label>
+              3 days free trial
+            </q-item-label>
+            <q-item-label caption>Start for free then use discounts for longer subscription plans</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item>
           <q-item-section avatar>
             <q-icon color="primary" name="mdi-flash-circle"/>
           </q-item-section>
@@ -31,6 +43,17 @@
               Personal Lightning Network Node
             </q-item-label>
             <q-item-label caption>Bitcoin Mainnet network</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item class="text-bold">
+          <q-item-section avatar>
+            <q-icon color="primary" name="mdi-flash-circle"/>
+          </q-item-section>
+          <q-item-section class="text-left">
+            <q-item-label>
+              Bittery payments platform
+            </q-item-label>
+            <q-item-label caption>Use your node to accept Bitcoin Lightning Network payments</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
@@ -85,7 +108,7 @@
             <q-item-label>
               Stateless initialization
             </q-item-label>
-            <q-item-label caption>LN node does not store admin macaroon file. Bittery hosts only client side encrypted admin macaroons.</q-item-label>
+            <q-item-label caption>admin.macaroon is not stored anywhere. Bittery hosts only client side encrypted admin macaroons.</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
@@ -96,7 +119,7 @@
             <q-item-label>
               Lightning Labs LND implementation
             </q-item-label>
-            <q-item-label caption>https://github.com/lightningnetwork/lnd</q-item-label>
+            <q-item-label caption>Version: {{lndVersion}}</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -108,8 +131,9 @@
 import GlobalMixin from "../../../mixins/global-mixin";
 import ErrorPopup from 'components/utils/ErrorPopup.vue';
 import Loader from 'components/utils/Loader.vue';
-import { post } from 'src/api/http-service';
+import { get, post } from 'src/api/http-service';
 import { CountUp } from 'countup.js';
+import { showNotificationError } from 'src/api/notificatios-api';
 
 export default GlobalMixin.extend({
   name: 'SetupNewLndForm',
@@ -128,17 +152,28 @@ export default GlobalMixin.extend({
     return {
       step: 1,
       errorBannerMessage: '',
+      lndVersion: '',
+      lndPriceUsd: 0,
     };
   },
   mounted() {
-    const countUp1 = new CountUp(this.type, 29.99, {
-      decimalPlaces: 2,
+    this.showLoading = true;
+    get(this.$axios, '/api/utils/ln-buy-values', async (res: any) => {
+      await this.sleep(200);
+      this.lndVersion = res.data.lndVersion;
+      this.lndPriceUsd = res.data.lndPriceUsd;
+      this.showLoading = false;
+      const countUp1 = new CountUp(this.type, this.lndPriceUsd, {
+        decimalPlaces: 2,
+      });
+      if (!countUp1.error) {
+        countUp1.start();
+      } else {
+        console.error(countUp1.error);
+      }
+    }, async (err: any) => {
+      showNotificationError('Fetching LND data failed', 'Unexpected server error occurred');
     });
-    if (!countUp1.error) {
-      countUp1.start();
-    } else {
-      console.error(countUp1.error);
-    }
   },
 });
 

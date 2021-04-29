@@ -14,7 +14,7 @@
               Customize your Bittery subscription plan
             </div>
             <div class="text-subtitle1 text-primary text-center">
-              Your plan: <b>LN NODE STANDARD 49.00 USD / month</b> <br>
+              Your plan: <b>LN NODE STANDARD 29.00 USD / month</b> <br>
               Current subscription ends: <b>{{paidToDateFormatted}}</b>
             </div>
           </div>
@@ -65,7 +65,7 @@
                       square
                       style="margin-left: 0;"
                       text-color="white">
-                {{Number(49 * selectedSubscriptionPaymentOption.value *
+                {{Number(29 * selectedSubscriptionPaymentOption.value *
                 (selectedSubscriptionPaymentOption.discount ? selectedSubscriptionPaymentOption.discount: 1.0)).toFixed(2)}} USD
               </q-chip>
               <q-chip color="primary"
@@ -130,14 +130,14 @@ export default GlobalMixin.extend({
           {label: '1 month', value: 1},
           {label: '2 months', value: 2},
           {label: '3 months (-5%)', value: 3, discount: 0.95},
-          {label: '4 months', value: 4},
-          {label: '5 months', value: 5},
+          {label: '4 months (-5%)', value: 4, discount: 0.95},
+          {label: '5 months (-5%)', value: 5, discount: 0.95},
           {label: '6 months (-10%)', value: 6, discount: 0.9},
-          {label: '7 months', value: 7},
-          {label: '8 months', value: 8},
-          {label: '9 months', value: 9},
-          {label: '10 months', value: 10},
-          {label: '11 months', value: 11},
+          {label: '7 months (-10%)', value: 7, discount: 0.9},
+          {label: '8 months (-10%)', value: 8, discount: 0.9},
+          {label: '9 months (-10%)', value: 9, discount: 0.9},
+          {label: '10 months (-10%)', value: 10, discount: 0.9},
+          {label: '11 months (-10%)', value: 11, discount: 0.9},
           {label: '12 months (-20%)', value: 12, discount: 0.8},
         ],
         selectedSubscriptionPaymentOption: {label: '3 months (-5%)', value: 3, discount: 0.95 },

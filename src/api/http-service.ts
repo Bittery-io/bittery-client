@@ -1,5 +1,6 @@
 import {
   hasAccessToken,
+  getRefreshToken,
 } from './session-service';
 import { refreshAccessToken } from './refresh-access-token-service';
 import { showNotificationError } from 'src/api/notificatios-api';
@@ -29,7 +30,9 @@ const handleHttpError = async (error, axios, recallFunction, url, payload, succe
     errorCallback(error);
   } else if (error.response.status === 401 && hasAccessToken() && !urlsWhichHandle401.includes(url)) {
     // eslint-disable-next-line no-use-before-define
-    refreshJWTTokenAndRecallRequest(axios,
+    refreshJWTTokenAndRecallRequest(
+      axios,
+      getRefreshToken(),
       recallFunction,
       url,
       payload,
@@ -80,8 +83,8 @@ export const get = (axios, url, successCallback, errorCallback, headers?) => {
 };
 
 // @ts-ignore
-const refreshJWTTokenAndRecallRequest = (axios, recallFunction, url, payload, successCallback, errorCallback) => {
-  refreshAccessToken(axios,
+const refreshJWTTokenAndRecallRequest = (axios, refreshToken, recallFunction, url, payload, successCallback, errorCallback) => {
+  refreshAccessToken(axios, refreshToken,
     () => {
       if (payload !== undefined) {
         recallFunction(axios, url, payload, successCallback, errorCallback);

@@ -9,13 +9,13 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-bold text-center">
+            <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
              How do I receive Bitcoin payments?
             </div>
-            <div class="text-h5 text-primary text-orange-9 text-uppercase text-bold text-center q-pt-xs q-pb-xs" v-if="userHasElectrum">
+            <div class="text-primary text-orange-9 text-uppercase text-bold text-center q-pt-xs q-pb-xs" :class="isMobile ? 'text-h6' : 'text-h5'" v-if="userHasElectrum">
               LN Node wallet + Electrum wallet
             </div>
-            <div class="text-h5 text-primary text-orange-9 text-uppercase text-bold text-center q-pt-xs q-pb-xs" v-else>
+            <div class="text-primary text-orange-9 text-uppercase text-bold text-center q-pt-xs q-pb-xs" v-else :class="isMobile ? 'text-h6' : 'text-h5'">
               LN Node wallet + standard wallet
             </div>
             <div class="text-primary text-center text-subtitle2 q-pt-xs">

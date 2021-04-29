@@ -29,6 +29,7 @@
     "jquery": "^3.5.1",
     "jsonwebtoken": "^8.5.1",
     "jszip": "^3.6.0",
+    "lndconnect": "^0.2.10",
     "pdfjs": "^2.4.2",
     "pouchdb": "^7.2.2",
     "pouchdb-find": "^7.2.2",

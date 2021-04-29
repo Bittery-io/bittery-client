@@ -14,7 +14,7 @@
       bordered
       class="bg-grey-2"
       vertical
-      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.45}px`"
+      :style="$q.platform.is.mobile ? `` : `width: ${screenWidth * 0.45}px`"
       color="primary"
       animated>
       <q-step
@@ -34,7 +34,7 @@
           <q-badge class="q-ml-xs" v-else>payments go to STANDARD WALLET</q-badge>
         </q-checkbox>
         <q-stepper-navigation>
-          <q-btn @click="step = 2;bitcoinWallet.seed = ''" color="primary" label="Next step"/>
+          <q-btn @click="step = 2;bitcoinWallet.seed = ''" color="primary" label="Next step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -74,8 +74,8 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1" color="primary" label="Previous step"/>
-          <q-btn @click="step = 3" color="primary" :disabled="electrumMasterPublicKey === ''" label="NEXT STEP" class="q-ml-sm"/>
+          <q-btn outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn @click="step = 3" color="primary" :disabled="electrumMasterPublicKey === ''" label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -115,12 +115,12 @@
           </div>
         </q-banner>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
           <q-btn v-show="bitcoinWallet.seed"  @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
                  :label="isMnemonicPwd ? 'Show mnemonic' : 'Hide mnemonic'"
-                 :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" class="q-ml-sm"/>
-          <q-btn @click="generateBtcWallet" color="grey-7" :label="bitcoinWallet.seed ? 'Regenerate' : 'Generate'" class="q-ml-sm"/>
-          <q-btn @click="step = 3;seedMnemonicConfirmationText=''" color="primary" v-show="bitcoinWallet.seed" label="NEXT STEP" class="q-ml-sm"/>
+                 :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="generateBtcWallet" color="grey-7" :label="bitcoinWallet.seed ? 'Regenerate' : 'Generate'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="step = 3;seedMnemonicConfirmationText=''" color="primary" v-show="bitcoinWallet.seed" label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -160,10 +160,10 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 2" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
           <q-btn @click="step = 4" color="primary"
                  :disable="bitcoinWallet.seed && bitcoinWallet.seed.trim() !== seedMnemonicConfirmationText.trim()"
-                 label="NEXT STEP" class="q-ml-sm"/>
+                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -178,11 +178,12 @@
           Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3;lnPassword = ''; lnPasswordRepeat = ''" color="primary" label="Previous step"/>
+          <q-btn outline @click="step = 3;lnPassword = ''; lnPasswordRepeat = ''" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
           <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
-                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock" class="q-ml-sm"/>
-          <q-btn @click="step = 5" :disable="masterPassword === ''" color="primary" label="Next step" class="q-ml-sm"/>
+                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="step = 5" :disable="masterPassword === ''" color="primary" label="Next step" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -196,8 +197,8 @@
           Please don't close the browser and wait until the finish.
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="goToPreviousStep" color="primary" label="Previous step"/>
-          <q-btn @click="setupNewBtcpayServices" icon="mdi-contactless-payment-circle" color="primary" label="Initialize Payments" class="q-ml-sm"/>
+          <q-btn outline @click="goToPreviousStep" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn @click="setupNewBtcpayServices" icon="mdi-contactless-payment-circle" color="primary" label="Initialize Payments" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>

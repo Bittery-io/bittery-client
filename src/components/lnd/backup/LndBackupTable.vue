@@ -1,21 +1,30 @@
 <template>
   <q-card class="shadow-10 bg-grey-2">
-    <lnd-backup-popup :show="showLnBackupPopup"></lnd-backup-popup>
+    <lnd-backup-popup :show="showLnBackupPopup" :lnd-id="lndId"></lnd-backup-popup>
     <q-card-section>
-        <header-qchip :text="`LND Backups`" icon="mdi-table-large"></header-qchip>
-        <q-btn @click="showLnBackupPopup = !showLnBackupPopup" text-color="white" class="float-right" color="primary" icon="mdi-download" label="Download LN Node backup"></q-btn>
-         <q-chip color="accent"  class="text-subtitle2" icon="mdi-clock" text-color="primary">
-          <countdown :time="millisecondsToNextBackup">
-            <template slot-scope="props">Next scheduled backup: {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds</template>
-          </countdown>
-          </q-chip>
+      <header-qchip :text="`LND Backups`" icon="mdi-table-large"></header-qchip>
+      <q-btn @click="showLnBackupPopup = !showLnBackupPopup"
+             text-color="white"
+             class="float-right"
+             color="primary"
+             icon="mdi-download"
+             label="Download LN Node backup"
+              v-if="!isMobile">
+      </q-btn>
+      <q-chip color="accent" size="md" class="text-subtitle2" icon="mdi-clock" text-color="primary" :class="isMobile ? 'q-pt-md' : ''">
+        <countdown :time="millisecondsToNextBackup">
+          <template slot-scope="props">Next scheduled backup: <br v-if="isMobile">
+            {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds
+          </template>
+        </countdown>
+      </q-chip>
     </q-card-section>
     <q-card-section style="padding-top: 0;margin-top:0;">
       <div class="row q-pb-lg q-pl-md">
         <div class="col-grow"></div>
         <div class="col-lg-auto col-xs-grow">
           <div class="q-pa-xs"
-               :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'" debounce="400">
+               :style="isMobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'" debounce="400">
             <q-select v-model="orderByDate" dense :options="orderByDateOptions" label="Order by date"/>
           </div>
         </div>
@@ -46,6 +55,14 @@
           </q-tr>
         </template>
       </q-table>
+      <q-btn @click="showLnBackupPopup = !showLnBackupPopup"
+             text-color="white"
+             class="full-width"
+             color="primary"
+             icon="mdi-download"
+             label="Download LN Node backup"
+             v-if="isMobile">
+      </q-btn>
     </q-card-section>
   </q-card>
 </template>

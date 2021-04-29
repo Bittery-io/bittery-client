@@ -1,23 +1,25 @@
 <template>
-  <q-page padding>
-    <div :class="{ 'fixed-center': !$q.platform.is.mobile }">
-      <div class="row justify-center text-center items-center">
-        <div class="col-auto">
-          <q-card class="shadow-10 bg-grey-2">
-            <q-card-section :class="{ 'q-pa-lg': !$q.platform.is.mobile }">
-              <bittery-logo></bittery-logo>
-              <div class="text-primary q-pt-md text-h5"
-                   :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.8}px` : `width: ${screenWidth * 0.18}px`">
-                Reset your password
-              </div>
-              <div class="text-primary text-body1">
-                Please provide new password for your account
-              </div>
-            </q-card-section>
-            <q-card-section style="padding-top: 0; margin-top:0">
-              <confirm-reset-password-form></confirm-reset-password-form>
-            </q-card-section>
-          </q-card>
+  <q-page>
+    <div class="row items-center justify-center" :style="`height:${screenHeight - 50}px`">
+      <div class="col-auto">
+        <div class="row justify-center text-center items-center">
+          <div class="col-auto">
+            <q-card class="shadow-10 bg-grey-2">
+              <q-card-section :class="{ 'q-pa-lg': !$q.platform.is.mobile }">
+                <bittery-logo></bittery-logo>
+                <div class="text-primary q-pt-md text-h5"
+                     :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.8}px` : `width: ${screenWidth * 0.18}px`">
+                  Reset your password
+                </div>
+                <div class="text-primary text-body1">
+                  Please provide new password for your account
+                </div>
+              </q-card-section>
+              <q-card-section style="padding-top: 0; margin-top:0">
+                <confirm-reset-password-form></confirm-reset-password-form>
+              </q-card-section>
+            </q-card>
+          </div>
         </div>
       </div>
     </div>

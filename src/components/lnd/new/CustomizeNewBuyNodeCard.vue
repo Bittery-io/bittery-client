@@ -6,7 +6,7 @@
                  :show="errorBannerMessage !== ''">
     </error-popup>
     <q-stepper
-      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.35}px`"
+      :style="isMobile ? `` : `width: ${screenWidth * 0.35}px`"
       v-model="step"
       vertical
       bordered
@@ -46,7 +46,7 @@
                   </vue-form>
             </q-item-section>
           </q-item>
-          <q-item class="text-left">
+          <q-item class="text-left" :class="isMobile ? 'q-pt-xl' : ''">
             <q-item-section avatar>
               <q-checkbox :value="statelessInitialization" />
             </q-item-section>

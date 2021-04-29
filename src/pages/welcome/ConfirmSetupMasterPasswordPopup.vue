@@ -1,19 +1,19 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
     <loader :show="showLoading"></loader>
-    <q-card>
+    <q-card class="bg-primary text-white">
       <q-card-section>
         <div class="row justify-center">
-          <div class="col-auto text-primary">
-            <q-icon size="xl" name="mdi-key" color="primary"/>
+          <div class="col-auto">
+            <q-icon size="xl" name="mdi-key" color="white"/>
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-center">
+            <div class="text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Confirm your <b>master password</b>
             </div>
-            <div class="text-subtitle2 text-primary text-center">
+            <div class="text-subtitle2 text-center">
               Remember: <span class="text-red">don't lose this password</span>
             </div>
             <q-input
@@ -42,8 +42,8 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn @click="unlockLnd" color="primary" :disable="password !== masterPassword">Confirm</q-btn>
-        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
+        <q-btn @click="unlockLnd" color="white" text-color="primary" :disable="password !== masterPassword">Confirm</q-btn>
+        <q-btn outline @click="close()" text-color="white">Close</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

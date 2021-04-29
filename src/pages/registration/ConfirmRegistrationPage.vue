@@ -1,27 +1,8 @@
 <template>
-  <q-layout view="hHh lpR fFf" >
+  <q-page padding>
     <registration-confirmed-popup :show="confirmed"></registration-confirmed-popup>
     <loader :show="showLoading"></loader>
-    <q-header elevated class="bg-primary text-white">
-      <q-toolbar>
-        <q-toolbar-title class="text-secondary">
-          Bittery.io
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-header>
-
-    <q-page-container>
-    </q-page-container>
-
-    <q-footer elevated class="bg-grey-1 text-black text-center">
-      <q-toolbar>
-        <q-toolbar-title class="text-subtitle2">
-          2020 All rights reserved
-        </q-toolbar-title>
-      </q-toolbar>
-    </q-footer>
-
-  </q-layout>
+  </q-page>
 </template>
 
 <script lang="ts">
@@ -50,7 +31,8 @@
         this.confirmed = true;
       }, (err: any) => {
         this.showLoading = false;
-        showNotificationError('Registration confirmation failed', 'The link is invalid');
+        showNotificationError('Registration confirmation failed', 'The link is already invalid');
+        this.$router.push('/login');
         console.log(err);
       });
     },

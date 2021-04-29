@@ -9,7 +9,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-center">
+            <div class="text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Lightning Network (LN) is required for payments
             </div>
             <div class="text-primary text-primary text-center text-body1">

@@ -28,7 +28,6 @@
         :done="step > 1">
         <div class="text-body1 q-pb-md">
           Bitcoin consist of multiple components like seeds, files or keys which require <b>private and safe</b> storage. <br>
-<!--          Bittery aims to minimise the technical complexity for the Bitcoin users. <br>-->
           The <b>master password</b> will be used for encrypting your sensitive Bitcoin data used for providing you payment services.
           All the data will be <b>client-side</b> encrypted.<br>
           Bittery will <b>not know</b> your password and will never be able to use it for decrypting your data. <br>

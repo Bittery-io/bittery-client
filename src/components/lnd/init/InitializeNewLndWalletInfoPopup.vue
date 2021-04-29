@@ -9,10 +9,10 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-bold text-center">
+            <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
              What is the LN Node Wallet?
             </div>
-            <div class="text-h5 text-primary text-orange-9 text-uppercase text-bold text-center q-pt-xs q-pb-xs">
+            <div class="text-primary text-orange-9 text-uppercase text-bold text-center q-pt-xs q-pb-xs" :class="isMobile ? 'text-h6' : 'text-h5'">
               24 words mnemonic + password
             </div>
             <div class="text-primary text-center text-subtitle2 q-pt-xs">

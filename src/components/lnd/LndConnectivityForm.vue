@@ -5,7 +5,7 @@
                                    :loader-header="provideMasterPasswordPopupLoaderHeader"
                                    @passwordConfirmed="onMasterPasswordConfirmed">
     </provide-master-password-popup>
-    <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUri"></qr-code-popup>
+    <qr-code-popup :show="showQrCodePopup" :qr-code="connectUri"></qr-code-popup>
     <q-card-section>
       <header-qchip text="LN Node Connectivity" icon="mdi-contactless-payment"></header-qchip>
     </q-card-section>
@@ -123,24 +123,31 @@
       <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input dense
-            type="text"
-            name="email"
+            type="password"
             square
             onkeypress="return false;"
-            v-model="this.userLndDto.lndConnectUri"
-            label="LN Node Connect URI">
+            v-model="connectUri"
+            :type="(connectUri === 'initial_value' || !showConnectUri) ? 'password' : 'text'"
+            label="LN Node Connect URI [ENCRYPTED]">
             <q-tooltip>
               ZAP wallet connection URI.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-wallet"/>
             </template>
+            <template v-slot:after>
+              <q-btn
+                flat
+                color="primary"
+                icon="mdi-eye"
+                @click="showLnConnectionUri"/>
+            </template>
           </q-input>
         </div>
       </div>
       <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
-          <q-field dense readonly borderless label="Zap QR code" stack-label>
+          <q-field dense readonly borderless label="Zap QR code [ENCRYPTED]" stack-label>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-qrcode"/>
             </template>
@@ -152,9 +159,9 @@
                 flat
                 color="primary"
                 icon="mdi-magnify-plus"
-                @click="showQrCodePopup = !showQrCodePopup"/>
+                @click="showQrCode"/>
             </template>
-            <qr-code class="q-mt-xs" :mini="true" id="mini-user-qr-code" :text="userLndDto.lndConnectUri"></qr-code>
+            <qr-code class="q-mt-xs" :mini="true" id="mini-user-qr-code" :text="connectUri"></qr-code>
           </q-field>
         </div>
       </div>
@@ -172,6 +179,7 @@ import QrCodePopup from 'components/utils/QrCodePopup.vue';
 import HeaderQchip from 'components/utils/HeaderQchip.vue';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
 import { decryptSymmetricCtr } from 'src/api/encryption-service';
+import { getLndConnectUri } from 'src/api/ln-connect-uri-service';
 
 export default GlobalMixin.extend({
   components: { ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip },
@@ -189,7 +197,9 @@ export default GlobalMixin.extend({
       showMasterPasswordPopup: false,
       provideMasterPasswordPopupLoaderHeader: '',
       encryptedAction: '',
+      showConnectUri: false,
       lnPassword: 'initial_value',
+      connectUri: 'initial_value',
     };
   },
   computed: {
@@ -213,6 +223,28 @@ export default GlobalMixin.extend({
         }, () => {
           showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');
         });
+      } else if (this.encryptedAction === 'connectionUri') {
+        get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/connecturi`, async (res: any) => {
+          console.log(Buffer.from(decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword), 'base64').toString('hex'));
+          this.connectUri = await getLndConnectUri(
+            res.data.lndIpAddress,
+            res.data.lndTlsCert,
+            Buffer.from(decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword), 'base64').toString('hex'));
+          this.showConnectUri = true;
+        }, () => {
+          showNotificationError('Generating LN connect URI failed', 'Internal server error occurred');
+        });
+      } else if (this.encryptedAction === 'qrCode') {
+        // the same like for connect uri
+        get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/connecturi`, async (res: any) => {
+          this.connectUri = await getLndConnectUri(
+            res.data.lndIpAddress,
+            res.data.lndTlsCert,
+            Buffer.from(decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword), 'base64').toString('hex'));
+          this.showQrCodePopup = !this.showQrCodePopup;
+        }, () => {
+          showNotificationError('Generating LN connect URI QR code failed', 'Internal server error occurred');
+        });
       }
     },
     downloadTls() {
@@ -230,6 +262,24 @@ export default GlobalMixin.extend({
       this.provideMasterPasswordPopupLoaderHeader = 'Decrypting your LN Node password';
       this.showMasterPasswordPopup = !this.showMasterPasswordPopup;
       this.encryptedAction = 'password';
+    },
+    showLnConnectionUri() {
+      if (this.connectUri !== 'initial_value') {
+        this.showConnectUri = true;
+      } else {
+        this.provideMasterPasswordPopupLoaderHeader = 'Decrypting your LN Node connection URI';
+        this.showMasterPasswordPopup = !this.showMasterPasswordPopup;
+        this.encryptedAction = 'connectionUri';
+      }
+    },
+    showQrCode() {
+      if (this.connectUri !== 'initial_value') {
+        this.showQrCodePopup = !this.showQrCodePopup;
+      } else {
+        this.provideMasterPasswordPopupLoaderHeader = 'Decrypting your LN Node connection URI';
+        this.showMasterPasswordPopup = !this.showMasterPasswordPopup;
+        this.encryptedAction = 'qrCode';
+      }
     },
     downloadFile(fileBase64: any, fileName: string, fileType: string) {
       const file = new Blob([Buffer.from(fileBase64, fileType)]);
