@@ -4,6 +4,7 @@ Better Bitcoin payments
 
 ## Install the dependencies
 ```bash
+nvm use v14.5.5
 npm install
 ```
 

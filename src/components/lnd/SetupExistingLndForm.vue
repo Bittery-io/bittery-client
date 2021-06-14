@@ -2,11 +2,12 @@
   <div class="q-pa-xs">
     <loader :show="showLoading"></loader>
     <q-stepper
-      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.45}px`"
+      :style="$q.platform.is.mobile ? `` : `width: ${screenWidth * 0.45}px`"
       v-model="step"
       vertical
       color="primary"
       bordered
+      :class="isMobile ? 'mobile-stepper-full': ''"
       class="bg-grey-2"
       animated
     >
@@ -21,9 +22,9 @@
         <div class="text-bold">
           Bittery has no possibility to access your LN funds. It's technically impossible.
         </div>
-        Your LN node must be accessible through the internet in order to be used with Bittery.<br>
+        Your LN node must be accessible through the Internet in order to be used with Bittery.<br>
         <q-stepper-navigation>
-          <q-btn @click="step = 2" color="primary" label="SETUP"/>
+          <q-btn @click="step = 2" color="primary" label="SETUP" :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -45,12 +46,12 @@
                   ref="lndRestAddress"
                   name="lndRestAddress"
                   square
+                  :dense="isMobile"
                   v-model="lndRestAddress"
                   required
                   label="Your LN node REST API address"
-                  :rules="[ val => (
-                            lnRestState.lndRestAddress !== undefined &&
-                            lnRestState.lndRestAddress.$valid) || 'REST API address is required']">
+                  :rules="[ val => (lnRestState.lndRestAddress !== undefined && lnRestState.lndRestAddress.$valid) || 'REST API address is required',
+                            val => (lnRestState.lndRestAddress !== undefined && !lndRestAddress.toUpperCase().startsWith('HTTP')) || 'Please skip the http/https prefix in the address.']">
                   <template v-slot:before>
                     https://
                   </template>
@@ -60,8 +61,8 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1" color="primary" label="Previous step"/>
-          <q-btn @click="step = 3" color="primary" :disabled="lndRestAddress === ''" label="NEXT STEP" class="q-ml-sm"/>
+          <q-btn outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"/>
+          <q-btn @click="step = 3" color="primary" :disabled="lndRestAddress === '' || lndRestAddress.toUpperCase().startsWith('HTTP')" label="NEXT STEP" :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -81,6 +82,7 @@
             class="q-mt-xs"
             bg-color="grey-3"
             type="text"
+            :dense="isMobile"
             onkeypress="return false;"
             value="lncli bakemacaroon info:read invoices:read invoices:write"
             label="Macaroon bake command">
@@ -100,6 +102,7 @@
                   name="macaroonHex"
                   ref="macaroonHex"
                   square
+                  :dense="isMobile"
                   v-model="macaroonHex"
                   label="Macaroon value"
                   required
@@ -117,8 +120,8 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 2" color="primary" label="Previous step"/>
-          <q-btn @click="step = 4" color="primary" :disabled="!(macaroonHex !== '' && isMacaroonHex)" label="NEXT STEP" class="q-ml-sm"/>
+          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"/>
+          <q-btn @click="step = 4" color="primary" :disabled="!(macaroonHex !== '' && isMacaroonHex)" label="NEXT STEP" :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -133,8 +136,8 @@
                      file-type-filter="application/pkix-cert" size-kb-limit="2" class="q-pt-md"
                      @onFileUploaded="tlsCertFileUploaded"></file-reader>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3" color="primary" label="Previous step"/>
-          <q-btn @click="setupExistingLndNode" color="primary" label="SETUP YOUR LN NODE" :disabled="tlsCertFileText === ''" class="q-ml-sm"/>
+          <q-btn outline @click="step = 3" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"/>
+          <q-btn @click="setupExistingLndNode" color="primary" label="SETUP YOUR LN NODE" :disabled="tlsCertFileText === ''" :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>

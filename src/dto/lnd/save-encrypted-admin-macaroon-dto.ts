@@ -1,8 +1,8 @@
 export class SaveEncryptedAdminMacaroonDto {
 
-    adminMacaroon: string;
+    encryptedAdminMacaroonHex: string;
 
-    constructor(adminMacaroon: string) {
-        this.adminMacaroon = adminMacaroon;
+    constructor(encryptedAdminMacaroonHex: string) {
+        this.encryptedAdminMacaroonHex = encryptedAdminMacaroonHex;
     }
 }

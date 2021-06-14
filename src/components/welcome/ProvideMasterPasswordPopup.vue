@@ -22,6 +22,7 @@
                   class="q-pt-md"
                   outlined
                   square
+                  :dense="isMobile"
                   bg-color="accent"
                   name="password"
                   ref="password"

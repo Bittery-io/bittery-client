@@ -6,7 +6,7 @@
                  :show="errorBannerMessage !== ''">
     </error-popup>
     <q-stepper
-      :style="isMobile ? `` : `width: ${screenWidth * 0.35}px`"
+      :style="isMobile ? `` : `max-width: ${screenWidth * 0.45}px`"
       v-model="step"
       vertical
       bordered
@@ -20,7 +20,6 @@
         icon="info"
         class="text-center text-body1"
         :done="step > 1">
-
         <q-list>
           <q-item>
             <q-item-section>
@@ -33,6 +32,7 @@
                         name="lnAlias"
                         ref="lnAlias"
                         square
+                        :dense="isMobile"
                         counter
                         v-model="lnAlias"
                         hint="Friendly name of your Lightning Network visible for other network participants (OPTIONAL)"
@@ -66,7 +66,8 @@
           </q-item>
         </q-list>
         <q-stepper-navigation>
-          <q-btn @click="setupNewLndNode" color="primary" icon="mdi-flash" label="Setup personal LN Node"/>
+          <q-btn @click="setupNewLndNode" color="primary" icon="mdi-flash" label="Setup personal LN Node"
+                 :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
@@ -88,7 +89,7 @@ export default GlobalMixin.extend({
   data() {
     return {
       step: 1,
-      lnAliasState: '',
+      lnAliasState: {},
       errorBannerMessage: '',
       statelessInitialization: false,
       rtl: false,

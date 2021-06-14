@@ -15,9 +15,10 @@
     <q-stepper
       v-model="step"
       bordered
+      :class="isMobile ? 'mobile-stepper-full' : ''"
       class="bg-grey-2"
       vertical
-      :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.93}px` : `width: ${screenWidth * 0.45}px`"
+      :style="isMobile ? '' : `width: ${screenWidth * 0.45}px`"
       color="primary"
       animated>
       <q-step
@@ -67,7 +68,7 @@
               </validate>
             </div>
           </div>
-          <div class="row q-pt-xs">
+          <div class="row" :class="isMobile ? 'q-pt-md' : `q-pt-xs`">
             <div class="col-12">
               <validate>
                 <q-input
@@ -77,7 +78,6 @@
                   name="masterPasswordRepeat"
                   ref="masterPasswordRepeat"
                   v-model="masterPasswordRepeat"
-                  min-length="10"
                   label="Master password repeat"
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[ val => (
@@ -102,11 +102,20 @@
               </validate>
             </div>
           </div>
+          <div class="row" :class="isMobile ? 'q-pt-md' : `q-pt-xs`">
+            <div class="col-12">
+              <validate>
+                <q-checkbox v-model="understandRules" label="I understand I cannot lose my master password because there is no technical possibility to reset, restore or remind it">
+                </q-checkbox>
+              </validate>
+            </div>
+          </div>
         </vue-form>
         <q-stepper-navigation class="text-center">
           <q-btn @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup"
-                 icon="mdi-key" :disable="masterPassword === '' || (masterPassword !== masterPasswordRepeat)"
-                 color="primary" label="Setup master password" class="q-ml-sm"/>
+                 icon="mdi-key" :disable="!masterPasswordIsCorrect || !understandRules || (masterPassword === '' || (masterPassword !== masterPasswordRepeat))"
+                 color="primary" label="Setup master password"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
@@ -133,6 +142,7 @@ export default GlobalMixin.extend({
       masterPassword: '',
       masterPasswordRepeat: '',
       isPwd: true,
+      understandRules: false,
       passwordRegexp: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,}$/),
     };
   },

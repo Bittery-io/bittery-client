@@ -211,9 +211,10 @@ export default GlobalMixin.extend({
     onMasterPasswordConfirmed(masterPassword: string) {
       if (this.encryptedAction === 'macaroon') {
         get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/files//macaroon`, (res: any) => {
-          const encryptedMacaroon: string = res.data.encryptedArtefact;
-          const decryptedMacaroonFile: string = decryptSymmetricCtr(encryptedMacaroon, masterPassword);
-          this.downloadFile(decryptedMacaroonFile, 'admin.macaroon', 'base64');
+          const encryptedMacaroonHex: string = res.data.encryptedArtefact;
+          const decryptedMacaroonFile: string = decryptSymmetricCtr(encryptedMacaroonHex, masterPassword);
+          console.log('macaroon: ', decryptedMacaroonFile);
+          this.downloadFile(decryptedMacaroonFile, 'admin.macaroon', 'hex');
         }, () => {
           showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');
         });
@@ -225,11 +226,10 @@ export default GlobalMixin.extend({
         });
       } else if (this.encryptedAction === 'connectionUri') {
         get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/connecturi`, async (res: any) => {
-          console.log(Buffer.from(decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword), 'base64').toString('hex'));
           this.connectUri = await getLndConnectUri(
             res.data.lndIpAddress,
             res.data.lndTlsCert,
-            Buffer.from(decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword), 'base64').toString('hex'));
+            decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword));
           this.showConnectUri = true;
         }, () => {
           showNotificationError('Generating LN connect URI failed', 'Internal server error occurred');
@@ -240,7 +240,7 @@ export default GlobalMixin.extend({
           this.connectUri = await getLndConnectUri(
             res.data.lndIpAddress,
             res.data.lndTlsCert,
-            Buffer.from(decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword), 'base64').toString('hex'));
+            decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword));
           this.showQrCodePopup = !this.showQrCodePopup;
         }, () => {
           showNotificationError('Generating LN connect URI QR code failed', 'Internal server error occurred');

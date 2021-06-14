@@ -14,10 +14,16 @@ export const cleanSessionInStorage = () => {
   emitLoggedStatusChanged();
 };
 
-export const setNewAccessTokenInStorage = (accessToken: string) => {
+export const setNewAccessTokenInStorage = (accessToken: string, afterLogin: boolean) => {
   localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
   localStorage.setItem(ACCESS_TOKEN_SAVE_DATE_KEY, Date.now().toString());
-  localStorage.setItem(PASSWORD_PROOF_KEY, getPasswordProofFromJWT(accessToken));
+  // without there was a case that after first login (accessToken and refreshToken have not password_proof yet encoded)
+  // user was not reloging so refresh token was used and
+  // new jwt token had empty password proof (backend takes it from existing token when new accessToken on refreshing)
+  // so was setting in localStorage empty value of passwordProof what caused wrong screens showing (setup password page when already was..)
+  if (afterLogin || !hasPasswordProofSet()) {
+      localStorage.setItem(PASSWORD_PROOF_KEY, getPasswordProofFromJWT(accessToken));
+  }
   emitLoggedStatusChanged();
 };
 
@@ -27,7 +33,7 @@ export const setNetRefreshTokenInStorage = (refreshToken: string) => {
 
 export const setSessionInStorage = (accessTokenDto: AccessTokenDto) => {
   cleanSessionInStorage();
-  setNewAccessTokenInStorage(accessTokenDto.accessToken);
+  setNewAccessTokenInStorage(accessTokenDto.accessToken, true);
   setNetRefreshTokenInStorage(accessTokenDto.refreshToken);
 };
 

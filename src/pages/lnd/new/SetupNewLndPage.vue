@@ -5,7 +5,7 @@
         <div class="row q-pt-md">
           <div class="col-12">
             <div class="text-center" :class="isMobile ? 'text-h3' : 'text-h2'">LN Node hosting
-              <q-img src="statics/lnd.png" :style="isMobile ? 'width: 30%' : 'width: 8%'"></q-img>
+              <q-img src="statics/lnd.png" :style="isMobile ? 'width: 20%' : 'width: 8%'"></q-img>
             </div>
             <div class="text-h5 text-center q-pb-md" style="margin-top: 1%;">Choose your personal, private <b>Lightning Network Node</b> hosting plan.<br>
               Use Bitcoin second layer - <span class="text-bold">instant and super cheap</span> off-chain transactions.</div>

@@ -4,14 +4,14 @@
       <div class="col-auto">
         <div class="row">
           <div class="col-12">
-            <div class="text-h2 text-center" style="margin-bottom: 0;">Setup your Bitcoin LN node
+            <div class="text-h2 text-center" style="margin-bottom: 0;">Setup your Bitcoin LN
               <q-icon name="mdi-flash" color="yellow-7"/>
             </div>
             <div class="text-h5 text-center" style="margin-top: 0;">Please provide your personal Lightning Network node details</div>
           </div>
         </div>
-        <div class="row justify-center">
-          <div class="col-auto justify-center">
+        <div class="row justify-center q-pt-md">
+          <div class="col-12 justify-center">
             <setup-existing-lnd-form></setup-existing-lnd-form>
           </div>
         </div>

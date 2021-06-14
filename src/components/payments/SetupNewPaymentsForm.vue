@@ -14,6 +14,7 @@
       bordered
       class="bg-grey-2"
       vertical
+      :class="isMobile ? 'mobile-stepper-full' : ''"
       :style="$q.platform.is.mobile ? `` : `width: ${screenWidth * 0.45}px`"
       color="primary"
       animated>
@@ -26,10 +27,10 @@
         <div class="text-body1 q-pb-xs">
           You will be able to receive Bitcoin payments:
         </div>
-        <q-checkbox :value="bitcoinLndCheckbox" label="off-chain (fast and cheap) via Lightning Network" class="nocursor">
+        <q-checkbox :dense="isMobile" :value="bitcoinLndCheckbox" label="off-chain (fast and cheap) via Lightning Network" class="nocursor">
           <q-badge class="q-ml-xs">payments go to LN NODE WALLET</q-badge>
         </q-checkbox> <br>
-        <q-checkbox :value="bitcoinLndCheckbox" label="on-chain (blockchain transactions)" class="nocursor">
+        <q-checkbox :dense="isMobile" :value="bitcoinLndCheckbox" label="on-chain (blockchain transactions)" class="nocursor">
           <q-badge class="q-ml-xs" v-if="userHasElectrum">payments go to your Electrum wallet</q-badge>
           <q-badge class="q-ml-xs" v-else>payments go to STANDARD WALLET</q-badge>
         </q-checkbox>
@@ -59,6 +60,7 @@
                   name="electrumMasterPublicKey"
                   ref="electrumMasterPublicKey"
                   square
+                  :dense="isMobile"
                   v-model="electrumMasterPublicKey"
                   label="Electrum Master Public Key value"
                   required
@@ -101,6 +103,7 @@
             outlined
             class="q-mt-xs"
             bg-color="grey-3"
+            :dense="isMobile"
             :type="isMnemonicPwd ? 'password' : 'text'"
             onkeypress="return false;"
             square
@@ -141,6 +144,7 @@
                   v-model="seedMnemonicConfirmationText"
                   outlined
                   square
+                  :dense="isMobile"
                   name="seedMnemonicConfirmationText"
                   ref="seedMnemonicConfirmationText"
                   bg-color="accent"
@@ -178,7 +182,7 @@
           Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3;lnPassword = ''; lnPasswordRepeat = ''" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn outline @click="step = 3;masterPassword = '';lnPassword = ''; lnPasswordRepeat = ''" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
           <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
                  :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
@@ -256,6 +260,7 @@
         }), 500);
       },
       goToPreviousStep() {
+        this.masterPassword = '';
         if (this.userHasElectrum) {
           this.step = 2;
         } else {

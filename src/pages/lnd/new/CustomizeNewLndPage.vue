@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12 col-xs-12 q-pa-xs justify-center">
+          <div class="col-12 q-pa-xs justify-center">
             <customize-new-buy-node-card></customize-new-buy-node-card>
           </div>
         </div>

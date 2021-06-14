@@ -12,6 +12,7 @@
       v-model="step"
       bordered
       class="bg-grey-2"
+      :class="isMobile ? 'mobile-stepper-full' : ''"
       vertical
       :style="$q.platform.is.mobile ? `` : `width: ${screenWidth * 0.45}px`"
       color="primary"
@@ -45,6 +46,7 @@
             outlined
             class="q-mt-xs"
             bg-color="grey-3"
+            :dense="isMobile"
             :type="isMnemonicPwd ? 'password' : 'text'"
             onkeypress="return false;"
             square
@@ -84,6 +86,7 @@
                   v-model="seedMnemonicConfirmationText"
                   outlined
                   square
+                  :dense="isMobile"
                   name="seedMnemonicConfirmationText"
                   ref="seedMnemonicConfirmationText"
                   bg-color="accent"
@@ -131,6 +134,7 @@
                 :type="isMnemonicPwd ? 'password' : 'text'"
                 onkeypress="return false;"
                 square
+                :dense="isMobile"
                 :value="lnPassword"
                 label="LN Node password">
                 <template v-slot:prepend>
@@ -169,6 +173,7 @@
                   v-model="lnPasswordConfirmation"
                   outlined
                   square
+                  :dense="isMobile"
                   name="lnPasswordConfirmation"
                   ref="lnPasswordConfirmation"
                   bg-color="accent"
@@ -314,7 +319,7 @@ export default GlobalMixin.extend({
         encryptSymmetricCtr(this.seedMnemonic.toString(), this.masterPassword));
       post(this.$axios, `/api/lnd/${this.$route.params.lndId}/initwallet`, lndInitWalletDto, async (res: any) => {
         const saveEncryptedAdminMacaroonDto: SaveEncryptedAdminMacaroonDto =
-          new SaveEncryptedAdminMacaroonDto(encryptSymmetricCtr(res.data.adminMacaroon, this.masterPassword));
+          new SaveEncryptedAdminMacaroonDto(encryptSymmetricCtr(res.data.adminMacaroonHex, this.masterPassword));
         post(this.$axios, `/api/lnd/${this.$route.params.lndId}/adminmacaroon`, saveEncryptedAdminMacaroonDto, async () => {
           this.showLoading = false;
           await this.sleep(200); // small sleep required

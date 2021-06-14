@@ -9,7 +9,7 @@
              color="primary"
              icon="mdi-download"
              label="Download LN Node backup"
-              v-if="!isMobile">
+              v-if="!isMobile && filteredData.length > 0">
       </q-btn>
       <q-chip color="accent" size="md" class="text-subtitle2" icon="mdi-clock" text-color="primary" :class="isMobile ? 'q-pt-md' : ''">
         <countdown :time="millisecondsToNextBackup">
@@ -61,7 +61,7 @@
              color="primary"
              icon="mdi-download"
              label="Download LN Node backup"
-             v-if="isMobile">
+             v-if="isMobile && filteredData.length > 0">
       </q-btn>
     </q-card-section>
   </q-card>

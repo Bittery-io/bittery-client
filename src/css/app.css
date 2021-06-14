@@ -11,6 +11,11 @@ html {
   /*transform: perspective(1px) scale(1.0)*/
   /*font-family: 'Inter', sans-serif !important;;*/
 }
+  @media only screen and (max-width: 638px) {
+    html {
+      font-size: 0.85rem !important;
+    }
+  }
 a {text-decoration: none;}
 
 .grow, .grow2 {
@@ -89,4 +94,15 @@ div.q-item__label.q-item__label--caption.text-caption {
 
 .nocursor {
   cursor: default !important;
+}
+
+/*For stepper to be full width on mobile*/
+.mobile-stepper-full .q-stepper__step-inner {
+  width: 100% !important;
+  padding: 5px;
+}
+
+/*For stepper to not have thin line in mobile*/
+.mobile-stepper-full .row.flex-center::after{
+  content: none !important;
 }

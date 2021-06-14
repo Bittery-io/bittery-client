@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="row justify-center q-pt-md">
-          <div class="col-auto justify-center">
+          <div class="col-12 justify-center">
             <setup-master-password-form></setup-master-password-form>
           </div>
         </div>
