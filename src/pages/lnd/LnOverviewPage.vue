@@ -67,11 +67,6 @@
       <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.customLndDto">
         <custom-lnd-form :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'" :custom-lnd-dto="this.customLndDto"></custom-lnd-form>
       </div>
-<!--      <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">-->
-<!--        <user-btc-form-->
-<!--          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"-->
-<!--          :user-btc-wallet-dto="this.userBtcWalletDto" v-if="this.userBtcWalletDto"></user-btc-form>-->
-<!--      </div>-->
     </div>
 
   </q-page>

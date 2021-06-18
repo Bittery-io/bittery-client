@@ -46,7 +46,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff">
+      <div class="row" v-show="isNotTurnedOff && this.userLndDto.lndType === 'HOSTED'">
         <div class="col-12">
           <q-input dense
             type="text"
@@ -71,7 +71,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff">
+      <div class="row" v-show="isNotTurnedOff && this.userLndDto.lndType === 'HOSTED'">
         <div class="col-12">
           <q-input dense
             type="text"
@@ -96,7 +96,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="this.userLndDto.lndRestAddress">
+      <div class="row" v-show="this.userLndDto.lndRestAddress && this.userLndDto.lndType === 'HOSTED'">
         <div class="col-12">
           <q-input dense
                    onkeypress="return false;"
@@ -120,7 +120,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff">
+      <div class="row" v-show="isNotTurnedOff && this.userLndDto.lndType === 'HOSTED'">
         <div class="col-12">
           <q-input dense
             type="password"
@@ -145,7 +145,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff">
+      <div class="row" v-show="isNotTurnedOff && this.userLndDto.lndType === 'HOSTED'">
         <div class="col-12">
           <q-field dense readonly borderless label="Zap QR code [ENCRYPTED]" stack-label>
             <template v-slot:before>
