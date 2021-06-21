@@ -10,7 +10,7 @@
             </div>
             <div v-if="userHasElectrum" class="text-center text-h5" style="margin-top: 1%;">Provide your <b>Electrum wallet</b>
               master public key details <br> and initialize your personal <span
-                class="text-bold text-orange-8">Bitcoin</span>payment services.</div>
+                class="text-bold text-orange-8">Bitcoin</span> payment services.</div>
             <div v-else class="text-center text-h5" style="margin-top: 1%;">Create <b>standard wallet</b> and initialize your
               personal <span class="text-bold text-orange-8">Bitcoin</span> payment services.</div>
           </div>

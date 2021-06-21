@@ -1,8 +1,3 @@
-/*.required-field > label::after {*/
-/*  content: '*';*/
-/*  color: red;*/
-/*  margin-left: 0.25rem;*/
-/*}*/
 html {
   color: #001f10;
   /*font-family : 'Lato', sans-serif;*/
@@ -10,6 +5,10 @@ html {
   /*transform: translateZ(0) !important;*/
   /*transform: perspective(1px) scale(1.0)*/
   /*font-family: 'Inter', sans-serif !important;;*/
+
+  -webkit-transition: all 0.3s ease-in-out !important;
+  -moz-transition: all 0.3s ease-in-out !important;
+  transition: all 0.3s ease-in-out !important;
 }
   @media only screen and (max-width: 638px) {
     html {

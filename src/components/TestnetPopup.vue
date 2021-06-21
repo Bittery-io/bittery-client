@@ -1,5 +1,6 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+    <loader :show="showLoading" message="Bittery is loading"></loader>
     <q-card class="bg-lime-3">
       <q-card-section>
         <div class="row justify-center">
@@ -36,10 +37,12 @@
 
 import GlobalMixin from 'src/mixins/global-mixin';
 import { getPasswordProof } from 'src/api/session-service';
+import Loader from 'components/utils/Loader.vue';
+import { sleep } from 'src/api/sleep-service';
 
 export default GlobalMixin.extend({
   name: 'TestnetPopup',
-  components: {},
+  components: {Loader, },
   props: {
     show: {
       type: Boolean,
@@ -62,15 +65,21 @@ export default GlobalMixin.extend({
     },
   },
   methods: {
-    close() {
-      this.showPopup = false;
+    async close() {
       if (this.isAfterLogin) {
+        this.showLoading = true;
+        await sleep(1000);
+        this.showLoading = false;
+        await sleep(200);
+        this.showPopup = false;
         if (getPasswordProof() === '') {
           console.log('No master password set, pushing to /welcome');
-          this.$router.push('/welcome');
+          await this.$router.push('/welcome');
         } else {
-          this.$router.push('/payments/overview');
+          await this.$router.push('/payments/overview');
         }
+      } else {
+        this.showPopup = false;
       }
     },
   },

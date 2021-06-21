@@ -1,0 +1,137 @@
+/*html {*/
+/*}*/
+
+/*.modal.page {*/
+  /*background-color: #001f10;*/
+/*}*/
+
+.top-header {
+  background-color: #eefef5;
+}
+
+.top-header .timer-row__progress-bar {
+  background: #001f10;
+}
+
+.top-header .timer-row {
+  background: #001f10;
+}
+
+.payment-tabs__slider {
+  background: #001f10;
+}
+
+.action-button {
+  color: #fff !important;
+  border: none;
+  background: #001f10;
+}
+
+.action-button:active {
+  background-image: linear-gradient(to right, #001f10, #01ff90);
+}
+
+.invoice {
+  background-color: #eefef5;
+}
+
+.expired__body {
+  color: #eefef5;
+}
+
+.currency-selection {
+  background-color: #eefef5;
+  border-bottom: 1px solid #001f10;
+  color: #001f10;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  height: auto;
+}
+
+.line-items {
+  background-color: #eefef5;
+  color: #001f10 !important;
+  border-top: 1px solid #001f10 !important;
+}
+
+.buyerTotalLine {
+  border-top: 1px solid #001f10;
+  background-color: #eefef5;
+  color: #001f10;
+}
+
+.payment-tabs {
+  background-color: #eefef5;
+  color: #001f10;
+  border-top: 1px solid #001f10;
+  border-bottom: 1px solid #001f10;
+}
+
+.payment-tabs__tab .active {
+  background-color: #001f10;
+  color: #eefef5;
+}
+
+.payment-tabs__tab.active {
+  border-bottom: none !important;
+  background-color: #001f10;
+  color: #eefef5;
+}
+
+a {
+  color: #eefef5 !important;
+}
+
+/*canvas {*/
+/*  border: 5px solid red;*/
+/*}*/
+
+#prettydropdown-DefaultLang ul {
+  color: #001f10 !important;
+  border: 1px solid #001f10 !important;
+  background-color: #eefef5 !important;
+}
+#prettydropdown-DefaultLang ul::after {
+  color: #001f10 !important;
+  border: 1px solid #001f10 !important;
+  background-color: #eefef5 !important;
+}
+
+.manual__step-one__header {
+  color: #ffffff;
+}
+.manual__step-one__instructions {
+  color: #ffffff;
+}
+
+.payment__currencies {
+  border: 1px solid #001f10;
+}
+
+.payment__currencies:hover {
+  background: rgba(248, 248, 248,0.1);
+}
+
+/*jak sie kliknie w metode platnosci to okno*/
+.vexmenu {
+  background: #eefef5;
+  color: #001f10;
+}
+.vexmenuitem a {
+  color: #001f10 !important;
+}
+
+.modal-content.long {
+  border: 1px solid #001f10;
+}
+
+.close-icon.close-action {
+  color: #001f10;
+}
+
+
+/*tutaj cos z ta strzalka poczatki ale nadal nie dziala*/
+/*li {*/
+/*  background-color: #001f10 !important;*/
+/*  color: #eefef5 !important;*/
+/*}*/

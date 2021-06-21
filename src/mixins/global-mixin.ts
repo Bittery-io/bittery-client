@@ -1,7 +1,5 @@
 import Vue from 'vue';
-import { openURL } from 'quasar'
 import { sleep } from 'src/api/sleep-service';
-import { hasPasswordProofSet } from 'src/api/session-service';
 
 export default Vue.extend({
   data() {
@@ -42,7 +40,8 @@ export default Vue.extend({
       }
     },
     openUrlNewTab(url: string) {
-      openURL(url);
+      console.log(url);
+      window.open(url);
     },
     openUrlTheSameTab(url: string) {
       window.open(url, '_self');

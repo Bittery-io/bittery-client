@@ -1,5 +1,9 @@
 <template>
   <q-item :to="link" :disable="isDisabled" clickable active-class="bg-accent">
+      <q-badge color="red" floating size>
+        <q-icon name="bluetooth" color="white" />
+
+        22</q-badge>
     <q-item-section v-if="icon" avatar>
       <q-icon :name="icon" size="md" color="primary"/>
     </q-item-section>
@@ -49,9 +53,6 @@
         required: true,
         default: false,
       },
-    },
-    mounted() {
-      console.log('dupa', this.isDisabled);
     }
   });
 </script>

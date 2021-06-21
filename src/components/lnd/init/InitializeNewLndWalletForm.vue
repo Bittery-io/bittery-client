@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-xs">
     <loader :show="showLoading"></loader>
-    <error-popup header="BTCPay setup failed"
+    <error-popup header="LN Node wallet initialization failed"
                  :error-message="errorBannerMessage"
                  :show="errorBannerMessage !== ''">
     </error-popup>
@@ -19,26 +19,31 @@
       animated>
       <q-step
         :name="1"
-        title="Generate LN Node wallet 24 words mnemonic seed"
+        title="Introduction"
         icon="info"
         class="text-left"
         :done="step > 1">
         <div class="text-body1">
-          LN Node wallet <b>manages funds</b> of your Lightning Network Node.
-          24 words mnemonic seed is a human friendly, readable, cryptographically secure form of LN Node wallet.
-          This mnemonic allows you <b>to restore</b> your LN Node wallet any time in the future (using any LN node).
+          LN Node wallet of your Lightning Network Node. It consists of 2 main components:<br>
+          • <b>24 words mnemonic seed</b> - human friendly, readable, cryptographically secure form of LN Node wallet.<br>
+          • <b>password</b> - protect access to your LN Node.<br>
+          The process below will generate these components for your LN Node.
         </div>
         <q-stepper-navigation>
-          <q-btn @click="generateSeedMnemonic" color="primary" label="Generate LN Node mnemonic"
+          <q-btn @click="generateSeedMnemonic" color="primary" label="Generate 24 words mnemonic seed"
                  :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
         :name="2"
-        title="Save the LN Node wallet mnemonic seed"
+        title="24 words mnemonic seed - generate"
         icon="info"
         class="text-left"
         :done="step > 2">
+        <div class="text-body1 q-pb-md">
+          In any case 24 words mnemonic seed allows you to <b>restore</b> your LN Node wallet in any Bitcoin wallet. <br>
+          This mnemonic must be keep <b>private</b> - it gives full access to LN Node Bitcoin wallet funds.
+        </div>
         <q-banner rounded class="text-white text-bold bg-primary">
           <q-icon name="info" size="lg" color="white" />
           Your LN Node wallet 24 words mnemonic seed.<br><span class="text-bold text-red"> Save it and keep private.</span>
@@ -71,12 +76,12 @@
       </q-step>
       <q-step
         :name="3"
-        title="Confirm LN Node wallet mnemonic seed"
+        title="24 words mnemonic seed - confirm and save"
         icon="info"
         class="text-left"
         :done="step > 3">
         <div class="text-body1 q-pb-md">
-          Please provide generated 24 words mnemonic in order <b>to confirm</b> you saved it correctly.
+          Please provide generated 24 words mnemonic seed in order <b>to confirm</b> you saved it correctly.
         </div>
         <div class="row">
           <div class="col-12">
@@ -90,12 +95,12 @@
                   name="seedMnemonicConfirmationText"
                   ref="seedMnemonicConfirmationText"
                   bg-color="accent"
-                  label="24 words mnemonic"
+                  label="24 words mnemonic seed"
                   required
                   :rules="[ val => (
                               lnSeedState.seedMnemonicConfirmationText !== undefined &&
-                              lnSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 24 words mnemonic',
-                              val => (seedMnemonicText.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic does not match generated!']"
+                              lnSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 24 words mnemonic seed',
+                              val => (seedMnemonicText.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic seed does not match generated!']"
                   type='text'>
                   <template v-slot:prepend>
                     <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>
@@ -114,7 +119,7 @@
       </q-step>
       <q-step
         :name="4"
-        title="Define LN Node password"
+        title="LN Node password - generate"
         icon="info"
         class="text-left"
         :done="step > 4">
@@ -158,7 +163,7 @@
       </q-step>
       <q-step
         :name="5"
-        title="Confirm LN Node wallet mnemonic seed"
+        title="LN Node password - confirm and save"
         icon="info"
         class="text-left"
         :done="step > 5">
@@ -201,13 +206,13 @@
       </q-step>
       <q-step
         :name="6"
-        title="Encrypt your data"
+        title="Encrypt components"
         icon="info"
         class="text-left"
         :done="step > 6">
         <div class="text-body1 q-pb-md">
           Your LN Node <b>seed</b> and <b>password</b> will be now encrypted in your browser using your <b>master password</b>.<br>
-          Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
+          Bittery will store the data encrypted as your <b>backup</b> and will be able to provide it to you when needed.<br>
         </div>
         <q-stepper-navigation>
           <q-btn outline @click="step = 5;masterPassword='';" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>

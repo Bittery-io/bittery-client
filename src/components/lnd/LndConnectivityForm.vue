@@ -18,9 +18,9 @@
             name="email"
             square
             :value="this.userLndDto.lndUri"
-            label="Lightning Address">
+            label="LN Node URI">
             <q-tooltip>
-              The public address of your personal LN Node.
+              The public address of your personal LN Node. Other LN nodes can connect to your node using this address.
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px; color: gold" name="mdi-flash"/>
@@ -46,7 +46,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff && this.userLndDto.lndType === 'HOSTED'">
+      <div class="row" v-show="isNotTurnedOff">
         <div class="col-12">
           <q-input dense
             type="text"
@@ -71,7 +71,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff && this.userLndDto.lndType === 'HOSTED'">
+      <div class="row" v-show="isNotTurnedOff && userLndDto.hostedLndType">
         <div class="col-12">
           <q-input dense
             type="text"
@@ -96,7 +96,31 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="this.userLndDto.lndRestAddress && this.userLndDto.lndType === 'HOSTED'">
+      <div class="row" v-show="isNotTurnedOff">
+        <div class="col-12">
+          <q-input dense
+                   onkeypress="return false;"
+                   square
+                   :type="adminMacaroonHex === 'initial_value' ? 'password' : 'text'"
+                   :value="adminMacaroonHex"
+                   label="admin.macaroon HEX [ENCRYPTED]">
+            <q-tooltip>
+              Your admin.macaroon file in hexadecimal (HEX).
+            </q-tooltip>
+            <template v-slot:before>
+              <q-icon style="width:50px;" color="primary" name="mdi-key"/>
+            </template>
+            <template v-slot:after>
+              <q-btn
+                flat
+                color="primary"
+                icon="mdi-eye"
+                @click="showAdminMacaroonHex"/>
+            </template>
+          </q-input>
+        </div>
+      </div>
+      <div class="row" v-show="this.userLndDto.lndRestAddress && userLndDto.hostedLndType">
         <div class="col-12">
           <q-input dense
                    onkeypress="return false;"
@@ -120,7 +144,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff && this.userLndDto.lndType === 'HOSTED'">
+      <div class="row" v-show="isNotTurnedOff && userLndDto.hostedLndType">
         <div class="col-12">
           <q-input dense
             type="password"
@@ -145,7 +169,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff && this.userLndDto.lndType === 'HOSTED'">
+      <div class="row" v-show="isNotTurnedOff && userLndDto.hostedLndType">
         <div class="col-12">
           <q-field dense readonly borderless label="Zap QR code [ENCRYPTED]" stack-label>
             <template v-slot:before>
@@ -198,6 +222,7 @@ export default GlobalMixin.extend({
       provideMasterPasswordPopupLoaderHeader: '',
       encryptedAction: '',
       showConnectUri: false,
+      adminMacaroonHex: 'initial_value',
       lnPassword: 'initial_value',
       connectUri: 'initial_value',
     };
@@ -209,12 +234,15 @@ export default GlobalMixin.extend({
   },
   methods: {
     onMasterPasswordConfirmed(masterPassword: string) {
-      if (this.encryptedAction === 'macaroon') {
+      if (this.encryptedAction === 'macaroon' || this.encryptedAction === 'macaroon_hex') {
         get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/files//macaroon`, (res: any) => {
           const encryptedMacaroonHex: string = res.data.encryptedArtefact;
           const decryptedMacaroonFile: string = decryptSymmetricCtr(encryptedMacaroonHex, masterPassword);
-          console.log('macaroon: ', decryptedMacaroonFile);
-          this.downloadFile(decryptedMacaroonFile, 'admin.macaroon', 'hex');
+          if (this.encryptedAction === 'macaroon') {
+            this.downloadFile(decryptedMacaroonFile, 'admin.macaroon', 'hex');
+          } else {
+            this.adminMacaroonHex = decryptedMacaroonFile;
+          }
         }, () => {
           showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');
         });
@@ -262,6 +290,11 @@ export default GlobalMixin.extend({
       this.provideMasterPasswordPopupLoaderHeader = 'Decrypting your LN Node password';
       this.showMasterPasswordPopup = !this.showMasterPasswordPopup;
       this.encryptedAction = 'password';
+    },
+    showAdminMacaroonHex() {
+      this.provideMasterPasswordPopupLoaderHeader = 'Decrypting your admin.macaroon file';
+      this.showMasterPasswordPopup = !this.showMasterPasswordPopup;
+      this.encryptedAction = 'macaroon_hex';
     },
     showLnConnectionUri() {
       if (this.connectUri !== 'initial_value') {

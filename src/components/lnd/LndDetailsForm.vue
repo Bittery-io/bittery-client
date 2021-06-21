@@ -1,6 +1,16 @@
 <template>
   <q-card class="shadow-10 bg-grey-2" v-if="this.lndInfo">
     <q-card-section>
+      <q-chip
+              v-if="!this.lndInfo.syncedToChain"
+              icon="mdi-sync"
+              square
+              color="primary"
+              style="animation-duration: 1s"
+              class="text-subtitle2 float-right animated infinite flash"
+              text-color="white">
+        SYNCING
+      </q-chip>
       <header-qchip text="LN Node Details" icon="mdi-book-open"></header-qchip>
     </q-card-section>
     <q-card-section>

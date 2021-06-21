@@ -31,7 +31,7 @@
           </q-field>
         </div>
       </div>
-      <div class="row">
+      <div class="row" v-if="userLndDto.hostedLndType">
         <div class="col-12">
           <q-field dense label="Type" stack-label borderless>
             <q-chip dense square color="primary" outline style="margin-left: 0;"
@@ -45,6 +45,21 @@
           </q-field>
         </div>
       </div>
+      <div class="row" v-if="!userLndDto.hostedLndType && userLndDto.lndType">
+        <div class="col-12">
+          <q-field dense label="Type" stack-label borderless>
+            <q-chip dense square color="primary" outline style="margin-left: 0;"
+                    text-color="white" class="text-subtitle2">{{ this.userLndDto.lndType }}</q-chip>
+            <template v-slot:before>
+              <q-icon style="width:50px;" color="primary" name="mdi-order-bool-descending"/>
+            </template>
+            <q-tooltip>
+              Your LN Node type.
+            </q-tooltip>
+          </q-field>
+        </div>
+      </div>
+
       <div class="row" v-show="this.userLndDto.rtlAddress">
         <div class="col-12">
           <q-input dense
@@ -96,7 +111,7 @@
       </div>
       <div class="row justify-end">
         <div class="col-auto justify-end">
-          <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'RUNNING'">
+          <q-field readonly borderless label="" stack-label v-if="userLndDto">
             <q-btn
               label="RESTART"
               color="primary"
@@ -114,7 +129,9 @@
               class="full-width"
               color="primary"
               icon="mdi-lock-open"
-              @click="$router.push(`/ln/setup/${userLndDto.lndId}/init/wallet`)"/>
+              @click="$router.push(`/ln/setup/${userLndDto.lndId}/init/wallet`)">
+              <q-badge color="red" floating size>REQUIRED</q-badge>
+            </q-btn>
           </q-field>
           <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'UNLOCK_REQUIRED'">
             <q-btn

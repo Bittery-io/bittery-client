@@ -61,7 +61,7 @@
       <div class="col-lg-6 col-xs-grow">
         <lnd-connectivity-form :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'" :user-lnd-dto="this.userLndDto"></lnd-connectivity-form>
       </div>
-      <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.userLndDto && this.userLndDto.lndInfo">
+      <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.userLndDto && this.userLndDto.lndInfo && this.userLndDto.hostedLndType">
         <lnd-backup-table :lnd-id="this.userLndDto.lndId" :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'" ></lnd-backup-table>
       </div>
       <div class="col-lg-6 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }" v-if="this.customLndDto">

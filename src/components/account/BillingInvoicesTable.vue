@@ -1,5 +1,5 @@
 <template>
-  <q-card class="shadow-10 bg-grey-2">
+  <q-card class="shadow-10 bg-grey-2" v-if="filteredData.length > 0">
     <q-card-section>
       <header-qchip text="Your billing invoices" icon="mdi-table-large" size="md"></header-qchip>
     </q-card-section>
