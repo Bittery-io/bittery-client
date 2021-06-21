@@ -131,7 +131,20 @@ a {
 
 
 /*tutaj cos z ta strzalka poczatki ale nadal nie dziala*/
-/*li {*/
-/*  background-color: #001f10 !important;*/
-/*  color: #eefef5 !important;*/
-/*}*/
+#prettydropdown-DefaultLang li {
+  background-color: #001f10 !important;
+  color: #eefef5 !important;
+}
+
+/*przyciski wyboru bolt-11 invoice vs node info dla LN platnosci*/
+.btnGroupLnd button {
+  border: 1px solid #001f10 !important;
+  background: #eefef5;
+}
+.btnGroupLnd button:active  {
+  background-color:  #001f10 !important;
+}
+.btnGroupLnd button.active  {
+  background-color:  #001f10 !important;
+  border: 1px solid #001f10 !important;
+}

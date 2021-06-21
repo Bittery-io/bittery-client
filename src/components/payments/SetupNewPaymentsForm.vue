@@ -31,11 +31,12 @@
           <q-badge class="q-ml-xs">payments go to LN NODE WALLET</q-badge>
         </q-checkbox> <br>
         <q-checkbox :dense="isMobile" :value="bitcoinLndCheckbox" label="on-chain (blockchain transactions)" class="nocursor">
-          <q-badge class="q-ml-xs" v-if="userHasElectrum">payments go to your Electrum wallet</q-badge>
+          <q-badge class="q-ml-xs" v-if="userHasElectrum" >payments go to your Electrum wallet</q-badge>
           <q-badge class="q-ml-xs" v-else>payments go to STANDARD WALLET</q-badge>
         </q-checkbox>
         <q-stepper-navigation>
-          <q-btn @click="step = 2;bitcoinWallet.seed = ''" color="primary" label="Next step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn @click="step = 2;bitcoinWallet.seed = ''" color="primary" label="Next step"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -76,8 +77,10 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
-          <q-btn @click="step = 3" color="primary" :disabled="electrumMasterPublicKey === ''" label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn outline @click="step = 1" color="primary" label="Previous step"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
+          <q-btn @click="step = 3" color="primary" :disabled="electrumMasterPublicKey === ''" label="NEXT STEP"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -118,90 +121,99 @@
           </div>
         </q-banner>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn outline @click="step = 1;" color="primary" label="Previous step"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
           <q-btn v-show="bitcoinWallet.seed"  @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
                  :label="isMnemonicPwd ? 'Show mnemonic' : 'Hide mnemonic'"
                  :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="generateBtcWallet" color="grey-7" :label="bitcoinWallet.seed ? 'Regenerate' : 'Generate'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="step = 3;seedMnemonicConfirmationText=''" color="primary" v-show="bitcoinWallet.seed" label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="generateBtcWallet" color="grey-7"
+                 :label="bitcoinWallet.seed ? 'Regenerate' : 'Generate'"
+                 :icon="bitcoinWallet.seed ? 'mdi-cog-clockwise' : 'mdi-cogs'"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="step = 3;seedMnemonicConfirmationText=''" color="primary" v-show="bitcoinWallet.seed" label="NEXT STEP"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
+<!--      <q-step-->
+<!--        v-if="!userHasElectrum"-->
+<!--        :name="3"-->
+<!--        title="Confirm seed"-->
+<!--        icon="info"-->
+<!--        class="text-left"-->
+<!--        :done="step > 3">-->
+<!--        <div class="text-body1 q-pb-md">-->
+<!--          Please provide your 12 words mnemonic seed in order <b>to confirm</b> you saved your Bitcoin standard wallet seed correctly.-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div class="col-12">-->
+<!--            <vue-form :state='bipSeedState' @submit.prevent="() => {}">-->
+<!--              <validate>-->
+<!--                <q-input-->
+<!--                  v-model="seedMnemonicConfirmationText"-->
+<!--                  outlined-->
+<!--                  square-->
+<!--                  :dense="isMobile"-->
+<!--                  name="seedMnemonicConfirmationText"-->
+<!--                  ref="seedMnemonicConfirmationText"-->
+<!--                  bg-color="accent"-->
+<!--                  label="12 words mnemonic seed"-->
+<!--                  required-->
+<!--                  :rules="[ val => (-->
+<!--                              bipSeedState.seedMnemonicConfirmationText !== undefined &&-->
+<!--                              bipSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 12 words mnemonic seed',-->
+<!--                              val => (bitcoinWallet.seed && bitcoinWallet.seed.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic seed does not match generated!']"-->
+<!--                  type='text'>-->
+<!--                  <template v-slot:prepend>-->
+<!--                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>-->
+<!--                  </template>-->
+<!--                </q-input>-->
+<!--              </validate>-->
+<!--            </vue-form>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <q-stepper-navigation>-->
+<!--          <q-btn outline @click="step = 2" color="primary" label="Previous step"-->
+<!--                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>-->
+<!--          <q-btn @click="step = 4" color="primary"-->
+<!--                 :disable="bitcoinWallet.seed && bitcoinWallet.seed.trim() !== seedMnemonicConfirmationText.trim()"-->
+<!--                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>-->
+<!--        </q-stepper-navigation>-->
+<!--      </q-step>-->
       <q-step
         v-if="!userHasElectrum"
         :name="3"
-        title="Confirm seed"
-        icon="info"
-        class="text-left"
-        :done="step > 3">
-        <div class="text-body1 q-pb-md">
-          Please provide your 12 words mnemonic seed in order <b>to confirm</b> you saved your Bitcoin standard wallet seed correctly.
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <vue-form :state='bipSeedState' @submit.prevent="() => {}">
-              <validate>
-                <q-input
-                  v-model="seedMnemonicConfirmationText"
-                  outlined
-                  square
-                  :dense="isMobile"
-                  name="seedMnemonicConfirmationText"
-                  ref="seedMnemonicConfirmationText"
-                  bg-color="accent"
-                  label="12 words mnemonic seed"
-                  required
-                  :rules="[ val => (
-                              bipSeedState.seedMnemonicConfirmationText !== undefined &&
-                              bipSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 12 words mnemonic seed',
-                              val => (bitcoinWallet.seed && bitcoinWallet.seed.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic seed does not match generated!']"
-                  type='text'>
-                  <template v-slot:prepend>
-                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>
-                  </template>
-                </q-input>
-              </validate>
-            </vue-form>
-          </div>
-        </div>
-        <q-stepper-navigation>
-          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
-          <q-btn @click="step = 4" color="primary"
-                 :disable="bitcoinWallet.seed && bitcoinWallet.seed.trim() !== seedMnemonicConfirmationText.trim()"
-                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-        </q-stepper-navigation>
-      </q-step>
-      <q-step
-        v-if="!userHasElectrum"
-        :name="4"
         title="Encrypt your data"
         icon="info"
         class="text-left"
-        :done="step > 4">
+        :done="step > 3">
         <div class="text-body1 q-pb-md">
           Your <b>seed</b> will be now encrypted in your browser using your <b>master password</b>.<br>
           Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3;masterPassword = '';lnPassword = ''; lnPasswordRepeat = ''" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn outline @click="step = 2;bitcoinWallet.seed = ''" color="primary" label="Previous step"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
           <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
                  :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="step = 5" :disable="masterPassword === ''" color="primary" label="Next step" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="step = 4" :disable="masterPassword === ''" color="primary" label="Next step"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
-        :name="userHasElectrum? 3 : 5"
+        :name="userHasElectrum? 3 : 4"
         title="Initialize payment services"
         icon="info"
         class="text-left"
-        :done="userHasElectrum? (step > 3) : (step > 5)">
+        :done="userHasElectrum? (step > 2) : (step > 4)">
         <div class="text-body1 q-pb-xs">
           Initializing your personal Bitcoin payments services can take up to 30 seconds. <br>
           Please don't close the browser and wait until the finish.
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="goToPreviousStep" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn outline @click="goToPreviousStepFromLastStep" color="primary" label="Previous step"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
           <q-btn @click="setupNewBtcpayServices" icon="mdi-contactless-payment-circle" color="primary" label="Initialize Payments" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
@@ -254,12 +266,13 @@
       },
       generateBtcWallet() {
         this.showLoading = true;
+        this.isMnemonicPwd = true;
         setTimeout((() => {
           this.bitcoinWallet = generateBitcoinWallet();
           this.showLoading = false;
         }), 500);
       },
-      goToPreviousStep() {
+      goToPreviousStepFromLastStep() {
         this.masterPassword = '';
         if (this.userHasElectrum) {
           this.step = 2;

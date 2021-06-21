@@ -30,7 +30,7 @@
           The process below will generate these components for your LN Node.
         </div>
         <q-stepper-navigation>
-          <q-btn @click="generateSeedMnemonic" color="primary" label="Generate 24 words mnemonic seed"
+          <q-btn @click="generateSeedMnemonic" icon="mdi-cogs" color="primary" label="Generate 24 words mnemonic seed"
                  :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>
@@ -66,63 +66,65 @@
           </div>
         </q-banner>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1;" color="primary" label="Previous step" :class="isMobile ? 'full-width' : ''"/>
+          <q-btn outline @click="step = 1;" color="primary" label="Previous step" :class="isMobile ? 'full-width' : ''"
+                 icon="mdi-arrow-left-bold"/>
           <q-btn @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
                  :label="isMnemonicPwd ? 'Show mnemonic' : 'Hide mnemonic'"
                  :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="step = 3;seedMnemonicConfirmationText = ''" color="primary" v-show="seedMnemonicText" label="NEXT STEP"
-                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="generateLnPassword()" color="primary" v-show="seedMnemonicText" label="NEXT STEP"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold">
+          </q-btn>
         </q-stepper-navigation>
       </q-step>
+<!--      <q-step-->
+<!--        :name="3"-->
+<!--        title="24 words mnemonic seed - confirm and save"-->
+<!--        icon="info"-->
+<!--        class="text-left"-->
+<!--        :done="step > 3">-->
+<!--        <div class="text-body1 q-pb-md">-->
+<!--          Please provide generated 24 words mnemonic seed in order <b>to confirm</b> you saved it correctly.-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div class="col-12">-->
+<!--            <vue-form :state='lnSeedState' @submit.prevent="() => {}">-->
+<!--              <validate>-->
+<!--                <q-input-->
+<!--                  v-model="seedMnemonicConfirmationText"-->
+<!--                  outlined-->
+<!--                  square-->
+<!--                  :dense="isMobile"-->
+<!--                  name="seedMnemonicConfirmationText"-->
+<!--                  ref="seedMnemonicConfirmationText"-->
+<!--                  bg-color="accent"-->
+<!--                  label="24 words mnemonic seed"-->
+<!--                  required-->
+<!--                  :rules="[ val => (-->
+<!--                              lnSeedState.seedMnemonicConfirmationText !== undefined &&-->
+<!--                              lnSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 24 words mnemonic seed',-->
+<!--                              val => (seedMnemonicText.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic seed does not match generated!']"-->
+<!--                  type='text'>-->
+<!--                  <template v-slot:prepend>-->
+<!--                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>-->
+<!--                  </template>-->
+<!--                </q-input>-->
+<!--              </validate>-->
+<!--            </vue-form>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <q-stepper-navigation>-->
+<!--          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>-->
+<!--          <q-btn @click="generateLnPassword" color="primary"-->
+<!--                 :disable="seedMnemonicText.trim() !== seedMnemonicConfirmationText.trim()"-->
+<!--                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>-->
+<!--        </q-stepper-navigation>-->
+<!--      </q-step>-->
       <q-step
         :name="3"
-        title="24 words mnemonic seed - confirm and save"
-        icon="info"
-        class="text-left"
-        :done="step > 3">
-        <div class="text-body1 q-pb-md">
-          Please provide generated 24 words mnemonic seed in order <b>to confirm</b> you saved it correctly.
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <vue-form :state='lnSeedState' @submit.prevent="() => {}">
-              <validate>
-                <q-input
-                  v-model="seedMnemonicConfirmationText"
-                  outlined
-                  square
-                  :dense="isMobile"
-                  name="seedMnemonicConfirmationText"
-                  ref="seedMnemonicConfirmationText"
-                  bg-color="accent"
-                  label="24 words mnemonic seed"
-                  required
-                  :rules="[ val => (
-                              lnSeedState.seedMnemonicConfirmationText !== undefined &&
-                              lnSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 24 words mnemonic seed',
-                              val => (seedMnemonicText.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic seed does not match generated!']"
-                  type='text'>
-                  <template v-slot:prepend>
-                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>
-                  </template>
-                </q-input>
-              </validate>
-            </vue-form>
-          </div>
-        </div>
-        <q-stepper-navigation>
-          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
-          <q-btn @click="generateLnPassword" color="primary"
-                 :disable="seedMnemonicText.trim() !== seedMnemonicConfirmationText.trim()"
-                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-        </q-stepper-navigation>
-      </q-step>
-      <q-step
-        :name="4"
         title="LN Node password - generate"
         icon="info"
         class="text-left"
-        :done="step > 4">
+        :done="step > 3">
         <div class="text-body1 q-pb-md">
           LN Node password <b>protects</b> access to your node including the wallet.<br>
           Password will be generated automatically (in your browser) to ensure it's secure enough.
@@ -136,7 +138,7 @@
                 outlined
                 class="q-mt-xs"
                 bg-color="grey-3"
-                :type="isMnemonicPwd ? 'password' : 'text'"
+                :type="isPwd ? 'password' : 'text'"
                 onkeypress="return false;"
                 square
                 :dense="isMobile"
@@ -153,88 +155,94 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3;lnPassword = '';" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
-          <q-btn @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
-                 :label="isMnemonicPwd ? 'Show password' : 'Hide password'"
-                 :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="generateLnPassword" color="grey-7" label="Regenerate" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="step = 5;lnPasswordConfirmation=''" color="primary" label="Next step" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn outline @click="step = 2;lnPassword = '';isMnemonicPwd=true;" color="primary" label="Previous step"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
+          <q-btn @click="isPwd = !isPwd" color="grey-7"
+                 :label="isPwd ? 'Show password' : 'Hide password'"
+                 :icon="isPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="generateLnPassword" color="grey-7" label="Regenerate" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"
+           icon="mdi-cog-clockwise"/>
+          <q-btn @click="step = 4;lnPasswordConfirmation=''" color="primary" label="Next step"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
+<!--      <q-step-->
+<!--        :name="5"-->
+<!--        title="LN Node password - confirm and save"-->
+<!--        icon="info"-->
+<!--        class="text-left"-->
+<!--        :done="step > 5">-->
+<!--        <div class="text-body1 q-pb-md">-->
+<!--          Please provide generate LN Node password in order <b>to confirm</b> you saved it correctly.-->
+<!--        </div>-->
+<!--        <div class="row">-->
+<!--          <div class="col-12">-->
+<!--            <vue-form :state='lnPasswordState' @submit.prevent="() => {}">-->
+<!--              <validate>-->
+<!--                <q-input-->
+<!--                  v-model="lnPasswordConfirmation"-->
+<!--                  outlined-->
+<!--                  square-->
+<!--                  :dense="isMobile"-->
+<!--                  name="lnPasswordConfirmation"-->
+<!--                  ref="lnPasswordConfirmation"-->
+<!--                  bg-color="accent"-->
+<!--                  label="LN Node password"-->
+<!--                  required-->
+<!--                  :rules="[ val => (-->
+<!--                              lnPasswordState.lnPasswordConfirmation !== undefined &&-->
+<!--                              lnPasswordState.lnPasswordConfirmation.$valid) || 'Please confirm your LN Node password',-->
+<!--                              val => (lnPassword.trim() === lnPasswordConfirmation.trim()) || 'Given password does not match generated!']"-->
+<!--                  type='text'>-->
+<!--                  <template v-slot:prepend>-->
+<!--                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>-->
+<!--                  </template>-->
+<!--                </q-input>-->
+<!--              </validate>-->
+<!--            </vue-form>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <q-stepper-navigation>-->
+<!--          <q-btn outline @click="step = 4" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>-->
+<!--          <q-btn @click="step = 6" color="primary"-->
+<!--                 :disable="lnPassword.trim() !== lnPasswordConfirmation.trim()"-->
+<!--                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>-->
+<!--        </q-stepper-navigation>-->
+<!--      </q-step>-->
       <q-step
-        :name="5"
-        title="LN Node password - confirm and save"
-        icon="info"
-        class="text-left"
-        :done="step > 5">
-        <div class="text-body1 q-pb-md">
-          Please provide generate LN Node password in order <b>to confirm</b> you saved it correctly.
-        </div>
-        <div class="row">
-          <div class="col-12">
-            <vue-form :state='lnPasswordState' @submit.prevent="() => {}">
-              <validate>
-                <q-input
-                  v-model="lnPasswordConfirmation"
-                  outlined
-                  square
-                  :dense="isMobile"
-                  name="lnPasswordConfirmation"
-                  ref="lnPasswordConfirmation"
-                  bg-color="accent"
-                  label="LN Node password"
-                  required
-                  :rules="[ val => (
-                              lnPasswordState.lnPasswordConfirmation !== undefined &&
-                              lnPasswordState.lnPasswordConfirmation.$valid) || 'Please confirm your LN Node password',
-                              val => (lnPassword.trim() === lnPasswordConfirmation.trim()) || 'Given password does not match generated!']"
-                  type='text'>
-                  <template v-slot:prepend>
-                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>
-                  </template>
-                </q-input>
-              </validate>
-            </vue-form>
-          </div>
-        </div>
-        <q-stepper-navigation>
-          <q-btn outline @click="step = 4" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
-          <q-btn @click="step = 6" color="primary"
-                 :disable="lnPassword.trim() !== lnPasswordConfirmation.trim()"
-                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-        </q-stepper-navigation>
-      </q-step>
-      <q-step
-        :name="6"
+        :name="4"
         title="Encrypt components"
         icon="info"
         class="text-left"
-        :done="step > 6">
+        :done="step > 4">
         <div class="text-body1 q-pb-md">
           Your LN Node <b>seed</b> and <b>password</b> will be now encrypted in your browser using your <b>master password</b>.<br>
           Bittery will store the data encrypted as your <b>backup</b> and will be able to provide it to you when needed.<br>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 5;masterPassword='';" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn outline @click="step = 3;masterPassword='';isPwd=true" color="primary" label="Previous step"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
           <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
                  :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="step = 7" :disable="masterPassword === ''" color="primary" label="Next step" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn @click="step = 5" :disable="masterPassword === ''" color="primary" label="Next step"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
-        :name="7"
+        :name="5"
         title="Initialize LN Node wallet"
         icon="info"
         class="text-left"
-        :done="step > 7">
+        :done="step > 5">
         <div class="text-body1 q-pb-xs">
           Initializing your LN Node wallet can take up to 30 seconds. <br>
           Please don't close the browser and wait until the finish.
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 6" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>
+          <q-btn outline @click="step = 4" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"
+                 icon="mdi-arrow-left-bold"/>
           <q-btn @click="initializeLnd" icon="mdi-wallet-plus" color="primary" label="Initialize LND wallet" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
@@ -270,7 +278,6 @@ export default GlobalMixin.extend({
       bitcoinWallet: <BitcoinWallet> {},
       seedMnemonic: [],
       seedMnemonicText: '',
-      seedMnemonicConfirmationText: '',
       seedMnemonicTextEncrypted: '',
       step: 1,
       errorBannerMessage: '',
@@ -278,7 +285,6 @@ export default GlobalMixin.extend({
       userHasElectrum: false,
       electrumMasterPublicKey: '',
       lnPassword: '',
-      lnPasswordConfirmation: '',
       masterPassword: '',
     };
   },
@@ -345,9 +351,9 @@ export default GlobalMixin.extend({
       if (this.lnPassword !== '') {
         showNotificationInfo('LN Node password regenerated', 'New random password was generated');
       }
-      this.isMnemonicPwd = true;
+      this.isPwd = true;
       this.lnPassword = uuidv4();
-      this.step = 4;
+      this.step = 3;
     }
   },
 });
