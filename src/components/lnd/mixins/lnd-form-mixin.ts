@@ -33,6 +33,17 @@ export default Vue.extend({
         return lndStatus;
       }
     },
+    getLndStatusCommentDependingOfStatus(lndStatus: string) {
+      if (lndStatus === 'INIT_REQUIRED') {
+        return 'Please proceed with required node initialization.';
+      } else if (lndStatus === 'UNLOCK_REQUIRED') {
+        return 'Your node is locked. Please unlock it.';
+      } else if (lndStatus === 'RUNNING') {
+        return 'Everything is good. All services ready to use.';
+      } else {
+        return '';
+      }
+    },
     getColorDependingOfBooleanStatus(status: boolean) {
       if (status) {
         return 'primary';

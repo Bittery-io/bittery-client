@@ -251,7 +251,7 @@
 </template>
 
 <script lang="ts">
-import GlobalMixin from "../../../mixins/global-mixin";
+import GlobalMixin from "../../../../mixins/global-mixin";
 import ErrorPopup from 'components/utils/ErrorPopup.vue';
 import Loader from 'components/utils/Loader.vue';
 import { get, post } from 'src/api/http-service';

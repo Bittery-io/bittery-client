@@ -26,8 +26,9 @@ export default Vue.extend({
   },
   methods: {
     getStatusLabelColor(status: string) {
-      switch (status) {
+      switch (status.toLowerCase()) {
         case 'new':
+        case 'pending':
           return 'bg-orange text-primary';
         case 'complete':
         case 'paid':

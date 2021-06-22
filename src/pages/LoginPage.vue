@@ -19,12 +19,12 @@
 </template>
 
 <script lang="ts">
-  import BitteryLogoAnimated from 'components/utils/BitteryLogoAnimated.vue';
-  import LoginForm from 'components/login/LoginForm.vue';
-  import GlobalMixin from "../mixins/global-mixin";
+import BitteryLogoAnimated from 'components/utils/BitteryLogoAnimated.vue';
+import LoginForm from 'components/login/LoginForm.vue';
+import GlobalMixin from "../mixins/global-mixin";
 
-  export default GlobalMixin.extend({
-    name: 'LoginPage',
-    components: { BitteryLogoAnimated, LoginForm },
-  });
+export default GlobalMixin.extend({
+  name: 'LoginPage',
+  components: { BitteryLogoAnimated, LoginForm },
+});
 </script>

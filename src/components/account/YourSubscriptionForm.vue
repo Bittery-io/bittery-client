@@ -12,6 +12,7 @@
       <div class="row" v-if="subscriptionRemainingDays <= 7 && subscriptionDto.subscriptionPlan !== 'FREE'">
         <div class="col-12">
           <warning-info-banner
+            :icon-flash="true"
             class="q-mt-xs"
             :text="`Your subscription will end within ${subscriptionRemainingDays} days. Payment is required in order to remain your Bittery payment services active.`">
           </warning-info-banner>

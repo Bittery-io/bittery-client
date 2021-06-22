@@ -100,7 +100,7 @@
                   @click="openInNewTab(props.row.id)"/>
               </q-td>
               <q-td>
-                <q-badge class="float-right" outline :class="getStatusLabelColor(props.row.status)">
+                <q-badge class="float-right" :class="getStatusLabelColor(props.row.status)">
                   <div class="text-subtitle2 text-uppercase">
                     <q-icon name="mdi-file" /> {{props.row.status}}</div>
                 </q-badge>

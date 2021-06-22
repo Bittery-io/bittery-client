@@ -1,7 +1,7 @@
 <template>
   <q-card class="shadow-10 bg-grey-2" v-if="this.userLndDto.lndStatus === 'RUNNING'">
     <provide-master-password-popup :show="showMasterPasswordPopup"
-                                   subheader="Password will be used for your data decryption"
+                                   subheader="Password will be used for data decryption"
                                    :loader-header="provideMasterPasswordPopupLoaderHeader"
                                    @passwordConfirmed="onMasterPasswordConfirmed">
     </provide-master-password-popup>
@@ -96,7 +96,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row" v-show="isNotTurnedOff">
+      <div class="row" v-show="isNotTurnedOff && userLndDto.hostedLndType">
         <div class="col-12">
           <q-input dense
                    onkeypress="return false;"
@@ -116,6 +116,30 @@
                 color="primary"
                 icon="mdi-eye"
                 @click="showAdminMacaroonHex"/>
+            </template>
+          </q-input>
+        </div>
+      </div>
+      <div class="row" v-show="isNotTurnedOff && !userLndDto.hostedLndType">
+        <div class="col-12">
+          <q-input dense
+                   onkeypress="return false;"
+                   square
+                   :type="externalMacaroonHex === 'initial_value' ? 'password' : 'text'"
+                   :value="externalMacaroonHex"
+                   label="custom.macaroon HEX (provided during setup)">
+            <q-tooltip>
+              Your custom.macaroon file in hexadecimal provided during LN node setup (HEX).
+            </q-tooltip>
+            <template v-slot:before>
+              <q-icon style="width:50px;" color="primary" name="mdi-key"/>
+            </template>
+            <template v-slot:after>
+              <q-btn
+                flat
+                color="primary"
+                icon="mdi-eye"
+                @click="showMacaroonHexForExternalNode"/>
             </template>
           </q-input>
         </div>
@@ -223,6 +247,7 @@ export default GlobalMixin.extend({
       encryptedAction: '',
       showConnectUri: false,
       adminMacaroonHex: 'initial_value',
+      externalMacaroonHex: 'initial_value',
       lnPassword: 'initial_value',
       connectUri: 'initial_value',
     };
@@ -295,6 +320,13 @@ export default GlobalMixin.extend({
       this.provideMasterPasswordPopupLoaderHeader = 'Decrypting your admin.macaroon file';
       this.showMasterPasswordPopup = !this.showMasterPasswordPopup;
       this.encryptedAction = 'macaroon_hex';
+    },
+    showMacaroonHexForExternalNode() {
+      get(this.$axios, `/api/lnd/external/${this.userLndDto.lndId}/files/macaroon`, (res: any) => {
+        this.externalMacaroonHex = res.data.encryptedArtefact;
+      }, () => {
+        showNotificationError('Downloading custom.macaroon failed', 'Internal server error occurred');
+      });
     },
     showLnConnectionUri() {
       if (this.connectUri !== 'initial_value') {

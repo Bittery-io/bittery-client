@@ -25,8 +25,8 @@
 
 <script lang="ts">
 import GlobalMixin from "../../../mixins/global-mixin";
-import InitializeNewLndWalletForm from 'components/lnd/init/InitializeNewLndWalletForm.vue';
-import InitializeNewLndWalletInfoPopup from 'components/lnd/init/InitializeNewLndWalletInfoPopup.vue';
+import InitializeNewLndWalletInfoPopup from 'components/lnd/new/init/InitializeNewLndWalletInfoPopup.vue';
+import InitializeNewLndWalletForm from 'components/lnd/new/init/InitializeNewLndWalletForm.vue';
 
 export default GlobalMixin.extend({
   name: 'InitializeLndWalletPage',

@@ -17,14 +17,14 @@
         icon="info"
         class="text-left text-body1"
         :done="step > 1">
-        Bittery allows you to accept Lightning Network payments. <br>
-        This is why you need to provide general information about your LN node.<br>
+        Bittery connects to your Lightning Network node in order to provide payment services. <br>
+        Please provide required (minimum trust) connection details to Bittery.<br>
         <div class="text-bold">
           Bittery has no possibility to access your LN funds. It's technically impossible.
         </div>
         Your LN node must be accessible through the Internet in order to be used with Bittery.<br>
         <q-stepper-navigation>
-          <q-btn @click="step = 2" color="primary" label="SETUP" :class="isMobile ? 'full-width' : ''"/>
+          <q-btn @click="step = 2" color="primary" label="SETUP" icon="mdi-cog" :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -33,7 +33,7 @@
         icon="info"
         class="text-left text-body1"
         :done="step > 2">
-        Provide your LN node REST API address <br>(e.g. mycustomnode:8080 or 78.8.236.172:8080). <br>
+        Provide your LN node REST API address <i>(e.g. mycustomnode:443 or 78.8.236.172:443).</i> <br>
         Your node <b>must support</b> encrypted communication (TLS).
         <div class="row q-pt-xs">
           <div class="col-12">
@@ -61,18 +61,21 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"/>
-          <q-btn @click="step = 3" color="primary" :disabled="lndRestAddress === '' || lndRestAddress.toUpperCase().startsWith('HTTP')" label="NEXT STEP" :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"/>
+          <q-btn outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
+                 icon="mdi-arrow-left-bold"/>
+          <q-btn @click="step = 3" color="primary" :disabled="lndRestAddress === '' || lndRestAddress.toUpperCase().startsWith('HTTP')"
+                 label="NEXT STEP" :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"
+                 icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
         :name="3"
-        title="Bake custom macaroon"
+        title="Provide custom macaroon"
         icon="info"
         class="text-left text-body1"
         :done="step > 3">
-        Generate <b>custom macaroon file</b>.<br>
-        The macaroon gives Bittery minimum permissions to create payment invoices (read and create invoices permissions <b>only</b>).
+        Generate <b>custom macaroon file</b>.
+        The macaroon gives Bittery <b>minimum</b> permissions to deliver payment services (read/write invoices, read node general info <b>only</b>).
         <q-banner rounded class="text-white text-bold bg-primary q-mt-lg">
           <q-icon name="info" size="lg" color="white" />
           Run below command with lncli (Lightning Network cli) and copy the result.
@@ -84,7 +87,7 @@
             type="text"
             :dense="isMobile"
             onkeypress="return false;"
-            value="lncli bakemacaroon info:read invoices:read invoices:write"
+            value="lncli bakemacaroon info:read invoices:read invoices:write offchain:read"
             label="Macaroon bake command">
           </q-input>
           <div class="text-bold text-red q-pt-xs text-body2">
@@ -108,7 +111,7 @@
                   required
                   :rules="[ val => (
                             macaroonHexState.macaroonHex !== undefined &&
-                            macaroonHexState.macaroonHex.$valid) || 'Baked macaroon is required' ,
+                            macaroonHexState.macaroonHex.$valid) || 'Custom macaroon is required otherwise Bittery will not be able to utilize your LN node' ,
                             val => isMacaroonHex || 'Given macaroon is not correctly HEX encoded'
                             ]">
                   <template v-slot:prepend>
@@ -120,24 +123,37 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"/>
-          <q-btn @click="step = 4" color="primary" :disabled="!(macaroonHex !== '' && isMacaroonHex)" label="NEXT STEP" :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"/>
+          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
+                 icon="mdi-arrow-left-bold"/>
+          <q-btn @click="step = 4" color="primary" :disabled="!(macaroonHex !== '' && isMacaroonHex)" label="NEXT STEP"
+                 :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"
+                 icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
         :name="4"
-        title="Upload LND tls.cert"
+        title="Upload tls.cert"
         icon="info"
         class="text-left text-body1"
         :done="step > 4">
         Upload your LN node <b>tls.cert</b> file.<br>
-        TLS certificate is required in order to connect securely to your Lightning Network node. <br>
-        <file-reader label="Upload LN node tls.cert file" file-name-filter="tls.cert"
-                     file-type-filter="application/pkix-cert" size-kb-limit="2" class="q-pt-md"
+        TLS certificate is required in order to securely connect to your Lightning Network node. <br>
+        <file-reader label="Upload LN node tls.cert file"
+                     file-name-filter="tls.cert"
+                     file-type-filter="application/pkix-cert"
+                     size-kb-limit="2"
+                     class="q-pt-md"
                      @onFileUploaded="tlsCertFileUploaded"></file-reader>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"/>
-          <q-btn @click="setupExistingLndNode" color="primary" label="SETUP YOUR LN NODE" :disabled="tlsCertFileText === ''" :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"/>
+          <q-btn outline @click="step = 3" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
+                 icon="mdi-arrow-left-bold"/>
+          <q-btn @click="setupExistingLndNode"
+                 color="primary"
+                 label="SETUP YOUR LN NODE"
+                 icon="mdi-cog-box"
+                 :disabled="tlsCertFileText === ''"
+                 :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"/>
+
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
@@ -145,7 +161,7 @@
 </template>
 
 <script lang="ts">
-  import GlobalMixin from "../../mixins/global-mixin";
+  import GlobalMixin from "../../../../mixins/global-mixin";
   import ErrorPopup from 'components/utils/ErrorPopup.vue';
   import Loader from 'components/utils/Loader.vue';
   import FileReader from 'components/utils/FileReader.vue';
@@ -195,7 +211,7 @@
               caption = 'User already has LND';
               break;
             case 2:
-              caption = 'Connection to node failed. Please verify the node is reachable and connection details you provided are correct.';
+              caption = 'Connection to node failed. Please verify the node is reachable and connection details you provided are correct (getting node info failed).';
           }
           this.showLoading = false;
           showNotificationError('Adding LND failed', caption);

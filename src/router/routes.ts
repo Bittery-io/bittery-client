@@ -92,6 +92,13 @@ const routes: RouteConfig[] = [
       { path: '', component: () => import('pages/integrations/IntegrationsPage.vue') },
     ],
   },
+  {
+    path: '/maintenance',
+    component: () => import('layouts/MainLayoutInformative.vue'),
+    children: [
+      { path: '', component: () => import('pages/MaintenancePage.vue') },
+    ],
+  },
 ];
 
 // Always leave this as last one

@@ -24,7 +24,7 @@ const handleHttpError = async (error, axios, recallFunction, url, payload, succe
   if (error.response.status === 504 || error.response.status === 503 || error.response.status === 502) {
     showNotificationError('Request failed', 'Server maintenance, please try again later');
     LOADING.hide();
-    VUE_ROUTER.push('/login');
+    VUE_ROUTER.push('/maintenance');
   } else if (error.response.status === 500) {
     showNotificationError('Request failed', 'Unexpected server error');
     errorCallback(error);

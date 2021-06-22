@@ -22,6 +22,15 @@
                     text-color="white">
               {{getLabelDependingOfStatus(this.userLndDto.lndStatus)}}
             </q-chip>
+            <q-chip dense
+                    v-if="getLndStatusCommentDependingOfStatus(this.userLndDto.lndStatus) !== ''"
+                    square
+                    outline
+                    color="primary"
+                    class="text-subtitle2"
+                    text-color="white">
+              {{getLndStatusCommentDependingOfStatus(this.userLndDto.lndStatus)}}
+            </q-chip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-lightbulb-on"/>
             </template>
@@ -130,7 +139,7 @@
               color="primary"
               icon="mdi-lock-open"
               @click="$router.push(`/ln/setup/${userLndDto.lndId}/init/wallet`)">
-              <q-badge color="red" floating size>REQUIRED</q-badge>
+              <q-badge color="red" floating size>ACTION REQUIRED</q-badge>
             </q-btn>
           </q-field>
           <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'UNLOCK_REQUIRED'">
@@ -140,7 +149,9 @@
               class="full-width"
               color="primary"
               icon="mdi-lock-open"
-              @click="unlockLndNode"/>
+              @click="unlockLndNode">
+              <q-badge color="red" floating size>ACTION REQUIRED</q-badge>
+            </q-btn>
           </q-field>
         </div>
       </div>
@@ -199,7 +210,9 @@
             await sleep(3000);
             this.showLoading = false;
             await sleep(100);
-            this.$router.go('/ln/overview');
+            // todo eksperymentalnie komentuje
+            // this.$router.go('/ln/overview');
+            await this.$router.push('/ln/overview');
           }, async () => {
             showNotificationError('LN Node unlocking failed!', 'Unlocking node failed, probably because of wrong master password.');
             await sleep(100);

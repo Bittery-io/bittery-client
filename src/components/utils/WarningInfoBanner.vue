@@ -1,7 +1,11 @@
 <template>
   <q-banner class="text-grey-2 text-bold bg-red-8 q-mb-xs">
     <template v-slot:avatar>
-      <q-icon name="error" color="white" />
+      <q-icon name="error" color="white"
+              :class="iconFlash ? 'animated infinite flash' : ''"
+              :style="iconFlash ? 'animation-duration: 1s' : ''"
+
+      />
     </template>
     <div class="text-subtitle2">
       {{text}}
@@ -27,6 +31,11 @@ export default GlobalMixin.extend({
       required: false,
       default: false,
     },
+    iconFlash: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
   },
 });
 

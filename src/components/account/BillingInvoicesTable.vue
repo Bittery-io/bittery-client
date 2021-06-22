@@ -135,20 +135,20 @@ export default InvoicesMixin.extend({
     dateFormatOnly(date: number) {
       return formatOnlyDate(date);
     },
-    getStatusLabelColor(status: string) {
-      switch (status.toLowerCase()) {
-        case 'pending':
-          return 'text-primary bg-orange';
-        case 'complete':
-        case 'paid':
-        case 'confirmed':
-          return 'text-white bg-green';
-        case 'expired':
-          return 'text-primary bg-grey';
-        default:
-          return 'text-white bg-primary';
-      }
-    }
+    // getStatusLabelColor(status: string) {
+    //   switch (status.toLowerCase()) {
+    //     case 'pending':
+    //       return 'text-primary bg-orange-8';
+    //     case 'complete':
+    //     case 'paid':
+    //     case 'confirmed':
+    //       return 'text-white bg-green';
+    //     case 'expired':
+    //       return 'text-primary bg-grey-5';
+    //     default:
+    //       return 'text-white bg-primary';
+    //   }
+    // }
   },
 });
 </script>

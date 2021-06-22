@@ -14,7 +14,7 @@
     <q-footer class="bg-accent text-black text-center">
       <q-toolbar>
         <q-toolbar-title class="text-subtitle2">
-          2020 Bittery.io All rights reserved
+          2021 Bittery.io All rights reserved
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>

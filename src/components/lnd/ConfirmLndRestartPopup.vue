@@ -82,7 +82,9 @@
           await sleep(2000);
           this.showLoading = false;
           await sleep(100);
-          this.$router.go('/ln/overview');
+          //todo eksperymentalnie komentuje
+          // this.$router.go('/ln/overview');
+          await this.$router.push('/ln/overview');
         }, async () => {
           showNotificationError('LND unlock failed!', 'Error occurred on LND restarting');
           await sleep(100);
