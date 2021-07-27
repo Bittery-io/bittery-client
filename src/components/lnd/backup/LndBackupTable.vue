@@ -2,7 +2,7 @@
   <q-card class="shadow-10 bg-grey-2">
     <lnd-backup-popup :show="showLnBackupPopup" :lnd-id="lndId"></lnd-backup-popup>
     <q-card-section>
-      <header-qchip :text="`LND Backups`" icon="mdi-table-large"></header-qchip>
+      <header-qchip text="LN Node Backups" icon="mdi-table-large"></header-qchip>
       <q-btn @click="showLnBackupPopup = !showLnBackupPopup"
              text-color="white"
              class="float-right"

@@ -1,5 +1,5 @@
 <template>
-  <q-card class="shadow-10 bg-grey-2" v-if="filteredData.length > 0">
+  <q-card class="shadow-10 bg-grey-2" v-if="">
     <q-card-section>
       <header-qchip text="Your billing invoices" icon="mdi-table-large" size="md"></header-qchip>
     </q-card-section>
@@ -71,6 +71,7 @@
             </q-td>
             <q-td>
               <q-btn
+                :disable="props.row.status === 'EXPIRED' || props.row.status === 'REPLACED_BY_NEWER'"
                 flat
                 color="primary"
                 icon="mdi-download"
@@ -78,6 +79,7 @@
             </q-td>
             <q-td>
               <q-btn
+                :disable="props.row.status === 'EXPIRED' || props.row.status === 'REPLACED_BY_NEWER'"
                 flat
                 color="primary"
                 icon="mdi-arrow-right-bold-box-outline"
@@ -86,7 +88,7 @@
             <q-td>
               <q-badge class="float-right" :class="getStatusLabelColor(props.row.status)">
                 <div class="text-subtitle2 text-uppercase">
-                  <q-icon name="mdi-file" /> {{props.row.status}}</div>
+                  <q-icon name="mdi-file" /> {{props.row.status.replaceAll('_', ' ')}}</div>
               </q-badge>
             </q-td>
           </q-tr>

@@ -6,11 +6,11 @@
                  :show="errorBannerMessage !== ''">
     </error-popup>
     <q-stepper
-      :style="isMobile ? `` : `max-width: ${screenWidth * 0.45}px`"
+      :style="isMobile ? `` : `width: ${screenWidth * 0.45}px`"
       v-model="step"
       vertical
       bordered
-      class="bg-grey-2"
+      class="bg-grey-2 mobile-stepper-full"
       color="primary"
       animated
     >
@@ -51,7 +51,7 @@
               <q-checkbox :value="statelessInitialization" />
             </q-item-section>
             <q-item-section>
-              <q-item-label ><span :class="statelessBadgeStrike ? 'text-strike':''">Stateless initialization </span> <q-badge :color="statelessBadgeColor">Encrypted Lightning Node only</q-badge></q-item-label>
+              <q-item-label ><span :class="statelessBadgeStrike ? 'text-strike':''">Stateless initialization </span> <q-badge :color="statelessBadgeColor">Bittery Encrypted plan only</q-badge></q-item-label>
               <q-item-label caption>Bittery will not store plain macaroon files (only encrypted form)</q-item-label>
             </q-item-section>
           </q-item>
@@ -60,7 +60,7 @@
               <q-checkbox :value="rtl" />
             </q-item-section>
             <q-item-section>
-              <q-item-label><span :class="rtlBadgeStrike ? 'text-strike':''">Personal RTL </span> <q-badge :color="rtlBadgeColor">Standard Lightning Node only</q-badge></q-item-label>
+              <q-item-label><span :class="rtlBadgeStrike ? 'text-strike':''">Personal RTL </span> <q-badge :color="rtlBadgeColor">Bittery Standard plan only</q-badge></q-item-label>
               <q-item-label caption>Ride The Lightning LN Node management tool access</q-item-label>
             </q-item-section>
           </q-item>

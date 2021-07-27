@@ -25,3 +25,7 @@ export const addMonthsToDate = (date: number, months: number): number => {
 export const getDaysBetweenTwoDates = (date: number, date2: number): number => {
   return dayjs(date).diff(dayjs(date2), 'day');
 };
+
+export const isDateExpired = (date: number): boolean => {
+  return dayjs(date).isBefore(dayjs());
+};

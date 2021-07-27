@@ -35,7 +35,9 @@ export default Vue.extend({
         case 'confirmed':
           return 'text-white bg-green';
         case 'expired':
-          return 'text-primary bg-grey';
+          return 'text-white bg-red-8';
+        case 'replaced_by_newer':
+          return 'text-white bg-grey';
         default:
           return 'text-white bg-primary';
       }

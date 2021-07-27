@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-12 q-pa-xs justify-center">
+          <div class="col-12 q-pa-xs justify-center q-pt-md">
             <customize-new-buy-node-card></customize-new-buy-node-card>
           </div>
         </div>
@@ -38,9 +38,9 @@ export default GlobalMixin.extend({
   computed: {
     selectedPlan() {
       if (this.$route.params.lndType === 'STANDARD') {
-        return 'Standard Lightning Node';
+        return 'Bittery Standard';
       } else {
-        return 'Encrypted Lightning Node';
+        return 'Bittery Encrypted';
       }
     },
   },

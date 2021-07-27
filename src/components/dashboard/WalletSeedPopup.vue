@@ -100,9 +100,8 @@ export default GlobalMixin.extend({
   },
   methods: {
     close() {
-      // todo eksperymentalnie komentuje
-      // this.$router.go('/dashboard');
-      this.$router.push('/dashboard');
+      // niepoprawne ale odswieza strone - wiec okej
+      this.$router.go('/dashboard');
     },
   },
 });

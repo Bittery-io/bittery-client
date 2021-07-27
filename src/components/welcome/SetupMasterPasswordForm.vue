@@ -139,10 +139,10 @@ export default GlobalMixin.extend({
       passwordState: {},
       showConfirmMasterPasswordPopup: false,
       showMasterPasswordSuccessfullySetPopup: false,
-      masterPassword: '',
-      masterPasswordRepeat: '',
+      masterPassword: 'asdfasdf!1',
+      masterPasswordRepeat: 'asdfasdf!1',
       isPwd: true,
-      understandRules: false,
+      understandRules: true,
       passwordRegexp: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,}$/),
     };
   },

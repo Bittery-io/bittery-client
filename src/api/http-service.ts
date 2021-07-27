@@ -21,6 +21,7 @@ const urlsWhichHandle401: string[] = ['/api/user/login', '/api/user/password/res
 
 // @ts-ignore
 const handleHttpError = async (error, axios, recallFunction, url, payload, successCallback, errorCallback) => {
+  console.log('ogrywam error', error);
   if (error.response.status === 504 || error.response.status === 503 || error.response.status === 502) {
     showNotificationError('Request failed', 'Server maintenance, please try again later');
     LOADING.hide();

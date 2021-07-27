@@ -40,7 +40,7 @@
           <div class="row q-pa-xs">
             <div class="col-12">
               <validate>
-                <q-select dense square outlined bg-color="accent" value="24 days" :options="paymentDates" label="Invoice validity">
+                <q-select dense square outlined bg-color="accent" v-model="invoiceValidity" :options="invoiceValidityOptions" label="Invoice validity">
                   <template v-slot:prepend>
                     <q-icon style="width:50px;" color="primary" name="mdi-calendar-clock"/>
                   </template>
@@ -119,7 +119,16 @@
         amount: 0,
         currency: 'PLN',
         currencies: ['PLN', 'USD', 'EUR'],
-        paymentDates: ['24 days'],
+        invoiceValidity: { label: '7 days', value: '7d' },
+        invoiceValidityOptions: [
+          { label: '1 hour', value: '1h' },
+          { label: '4 hours', value: '4h' },
+          { label: '12 hours', value: '12h' },
+          { label: '1 day', value: '1d' },
+          { label: '3 days', value: '3d' },
+          { label: '7 days', value: '7d' },
+          { label: '30 days', value: '30d' },
+        ],
         description: '',
         buyer: '',
         createInvoiceFormState: {},
@@ -130,7 +139,7 @@
       saveInvoice() {
         this.showLoading = true;
         this.createInvoiceButtonLocked = true;
-        post(this.$axios, '/api/payments', new SaveInvoiceDto(this.amount, this.currency, this.description, this.buyer), async () => {
+        post(this.$axios, '/api/payments', new SaveInvoiceDto(this.amount, this.currency, this.invoiceValidity.value, this.description, this.buyer), async () => {
           await this.sleep(200); // small sleep required
           this.showLoading = false;
           this.createInvoiceButtonLocked = false;

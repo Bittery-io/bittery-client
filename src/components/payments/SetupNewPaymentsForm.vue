@@ -186,7 +186,7 @@
         icon="info"
         class="text-left"
         :done="step > 3">
-        <div class="text-body1 q-pb-md">
+        <div class="text-body1">
           Your <b>seed</b> will be now encrypted in your browser using your <b>master password</b>.<br>
           Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
         </div>
@@ -208,7 +208,7 @@
         class="text-left"
         :done="userHasElectrum? (step > 2) : (step > 4)">
         <div class="text-body1 q-pb-xs">
-          Initializing your personal Bitcoin payments services can take up to 30 seconds. <br>
+          Initializing your personal Bitcoin payment services can take up to 30 seconds. <br>
           Please don't close the browser and wait until the finish.
         </div>
         <q-stepper-navigation>
@@ -262,9 +262,11 @@
     },
     methods: {
       onMasterPasswordConfirmed(masterPassword: string) {
+        showNotificationInfo('Seed successfully encrypted', 'The data is encrypted with your master password');
         this.masterPassword = masterPassword;
       },
       generateBtcWallet() {
+        this.masterPassword = '';
         this.showLoading = true;
         this.isMnemonicPwd = true;
         setTimeout((() => {

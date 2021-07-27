@@ -24,9 +24,9 @@
         class="text-left"
         :done="step > 1">
         <div class="text-body1">
-          LN Node wallet of your Lightning Network Node. It consists of 2 main components:<br>
+          LN Node wallet of your Lightning Network Node consists of 2 main components:<br>
           • <b>24 words mnemonic seed</b> - human friendly, readable, cryptographically secure form of LN Node wallet.<br>
-          • <b>password</b> - protect access to your LN Node.<br>
+          • <b>password</b> - protects access to your LN Node wallet.<br>
           The process below will generate these components for your LN Node.
         </div>
         <q-stepper-navigation>
@@ -36,13 +36,13 @@
       </q-step>
       <q-step
         :name="2"
-        title="24 words mnemonic seed - generate"
+        title="Generate 24 words mnemonic seed"
         icon="info"
         class="text-left"
         :done="step > 2">
         <div class="text-body1 q-pb-md">
-          In any case 24 words mnemonic seed allows you to <b>restore</b> your LN Node wallet in any Bitcoin wallet. <br>
-          This mnemonic must be keep <b>private</b> - it gives full access to LN Node Bitcoin wallet funds.
+          In any case 24 words mnemonic seed allows you to <b>restore</b> your LN Node wallet. <br>
+          This mnemonic must be kept <b>private</b> - it gives full access to LN Node Bitcoin wallet funds.
         </div>
         <q-banner rounded class="text-white text-bold bg-primary">
           <q-icon name="info" size="lg" color="white" />
@@ -121,12 +121,12 @@
 <!--      </q-step>-->
       <q-step
         :name="3"
-        title="LN Node password - generate"
+        title="Generate LN Node password"
         icon="info"
         class="text-left"
         :done="step > 3">
         <div class="text-body1 q-pb-md">
-          LN Node password <b>protects</b> access to your node including the wallet.<br>
+          LN Node password <b>protects</b> access to your LN node wallet.<br>
           Password will be generated automatically (in your browser) to ensure it's secure enough.
         </div>
         <div class="row q-pt-xs">
@@ -149,7 +149,7 @@
                 </template>
               </q-input>
               <div class="text-bold text-red q-pt-xs text-body2">
-                REMEMBER: Password allows to interact with your LN Node. Don't share this password to anyone.
+                REMEMBER: Password allows access to your LN Node wallet. Don't share this password to anyone.
               </div>
             </q-banner>
           </div>
@@ -215,7 +215,7 @@
         icon="info"
         class="text-left"
         :done="step > 4">
-        <div class="text-body1 q-pb-md">
+        <div class="text-body1">
           Your LN Node <b>seed</b> and <b>password</b> will be now encrypted in your browser using your <b>master password</b>.<br>
           Bittery will store the data encrypted as your <b>backup</b> and will be able to provide it to you when needed.<br>
         </div>
@@ -224,7 +224,7 @@
                  :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
           <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
-                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
+                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword === '' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
           <q-btn @click="step = 5" :disable="masterPassword === ''" color="primary" label="Next step"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
@@ -295,9 +295,11 @@ export default GlobalMixin.extend({
   },
   methods: {
     onMasterPasswordConfirmed(masterPassword: string) {
+      showNotificationInfo('Components successfully encrypted', 'The data is encrypted with your master password');
       this.masterPassword = masterPassword;
     },
     generateSeedMnemonic() {
+      this.masterPassword = '';
       this.showLoading = true;
       setTimeout((() => {
         get(this.$axios, `/api/lnd/${this.$route.params.lndId}/seed`, (res: any) => {

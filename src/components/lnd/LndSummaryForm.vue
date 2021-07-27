@@ -7,7 +7,8 @@
                                    loader-header="Decrypting LN Node password">
     </provide-master-password-popup>
     <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUri"></qr-code-popup>
-    <confirm-lnd-restart-popup :show="showConfirmLndRestartPopup" :lnd-id="userLndDto.lndId"></confirm-lnd-restart-popup>
+    <confirm-lnd-restart-popup :show="showConfirmLndRestartPopup" :lnd-id="userLndDto.lndId" :turned-off="true"></confirm-lnd-restart-popup>
+    <rtl-insecure-popup :show="showRtlInsecurePopup" :rtl-address="this.userLndDto.rtlAddress"></rtl-insecure-popup>
     <q-card-section>
      <header-qchip :text="$q.platform.is.mobile ? 'Your LN Node' : 'Your Lightning Network Node'" icon="mdi-flash"></header-qchip>
     </q-card-section>
@@ -89,7 +90,7 @@
                 flat
                 color="primary"
                 icon="mdi-arrow-right-bold-box-outline"
-                @click="openUrlNewTab(userLndDto.rtlAddress)"/>
+                @click="openRtl(userLndDto.rtlAddress)"/>
             </template>
           </q-input>
         </div>
@@ -122,7 +123,7 @@
         <div class="col-auto justify-end">
           <q-field readonly borderless label="" stack-label v-if="userLndDto">
             <q-btn
-              label="RESTART"
+              :label="userLndDto.lndStatus !== 'TURNED_OFF' ? 'RESTART': 'TURN ON'"
               color="primary"
               icon="mdi-restart"
               @click="showConfirmLndRestartPopup = !showConfirmLndRestartPopup"/>
@@ -173,9 +174,10 @@
   import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
   import { decryptSymmetricCtr } from 'src/api/encryption-service';
   import sha256 from 'js-sha256';
+  import RtlInsecurePopup from 'components/lnd/RtlInsecurePopup.vue';
 
   export default GlobalMixin.extend({
-    components: { ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip, ConfirmLndRestartPopup, Loader },
+    components: { RtlInsecurePopup, ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip, ConfirmLndRestartPopup, Loader },
     name: 'LndSummaryForm',
     mixins: [ LndFormMixin ],
     props: {
@@ -190,6 +192,7 @@
         showConfirmMasterPasswordPopup: false,
         requestLndButtonDisabled: false,
         showConfirmLndRestartPopup: false,
+        showRtlInsecurePopup: false,
       };
     },
     computed: {
@@ -198,6 +201,9 @@
       },
     },
     methods: {
+      openRtl(rtlUrl: string) {
+        this.showRtlInsecurePopup = !this.showRtlInsecurePopup;
+      },
       unlockLndNode() {
           this.showConfirmMasterPasswordPopup = !this.showConfirmMasterPasswordPopup;
       },
@@ -210,9 +216,7 @@
             await sleep(3000);
             this.showLoading = false;
             await sleep(100);
-            // todo eksperymentalnie komentuje
-            // this.$router.go('/ln/overview');
-            await this.$router.push('/ln/overview');
+            this.$router.go('/ln/overview');
           }, async () => {
             showNotificationError('LN Node unlocking failed!', 'Unlocking node failed, probably because of wrong master password.');
             await sleep(100);

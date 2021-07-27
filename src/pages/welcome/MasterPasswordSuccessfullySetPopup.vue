@@ -9,7 +9,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
+            <div class="text-center text-bold" :class="isMobile ? 'text-h6' : 'text-h5'">
               Your master password is set
             </div>
             <div class="text-center text-body1">

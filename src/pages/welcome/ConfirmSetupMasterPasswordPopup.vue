@@ -79,7 +79,7 @@ export default WelcomeMixin.extend({
     return {
       isPwd: true,
       showPopup: false,
-      password: '',
+      password: 'asdfasdf!1',
       unlockButtonDisabled: false,
     };
   },

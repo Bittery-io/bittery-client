@@ -31,9 +31,16 @@
 
 <script lang="ts">
 import GlobalMixin from "../mixins/global-mixin";
+import { get } from 'src/api/http-service';
 
 export default GlobalMixin.extend({
   name: 'MaintenancePage',
+  mounted() {
+    get(this.$axios, `/api/health`, async (res: any) => {
+      await this.$router.push('/payments/overview');
+    }, () => {
+    });
+  },
   methods: {
     goToTwitter() {
       window.open('https://twitter.com/bitteryio', '_blank');

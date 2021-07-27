@@ -25,7 +25,7 @@
             <div class="text-primary text-left text-subtitle2 q-pt-xs">
               • Your standard wallet receives on-chain payments (Bitcoin transactions)<br>
               <span v-if="userBtcWalletDto && userBtcWalletDto.type === 'BIP49'">
-                • You can access this wallet having 12 words seed passphrase <br>
+                • You can access this wallet having 12 words seed passphrase (BIP39) <br>
                 • Standard wallet is derived from given BIP49 root public key<br>
               </span>
               <span v-else>

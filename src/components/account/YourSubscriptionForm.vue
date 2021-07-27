@@ -2,29 +2,38 @@
   <q-card class="shadow-10 bg-grey-2" v-if="this.subscriptionDto">
     <loader :show="showLoading"></loader>
     <subscription-pay-popup :show="showSubscriptionPayPopup"
-                            :paid-to-date="this.subscriptionDto.paidToDate"
+                            :subscription-dto="subscriptionDto"
                             @extendSubscriptionRequested="onExtendSubscriptionRequested">
     </subscription-pay-popup>
     <q-card-section>
       <header-qchip text="Your Bittery subscription" icon="mdi-flash"></header-qchip>
     </q-card-section>
     <q-card-section>
-      <div class="row" v-if="subscriptionRemainingDays <= 7 && subscriptionDto.subscriptionPlan !== 'FREE'">
+      <div class="row" v-if="subscriptionRemainingDays <= 7 && subscriptionDto.subscriptionPlan !== 'FREE' && !isSubscriptionExpired">
         <div class="col-12">
           <warning-info-banner
             :icon-flash="true"
             class="q-mt-xs"
-            :text="`Your subscription will end within ${subscriptionRemainingDays} days. Payment is required in order to remain your Bittery payment services active.`">
+            :text="`Your subscription will end at ${subscriptionEndDate} (${subscriptionRemainingDays} days left). Extend your subscription in order to remain Bittery services active.`">
+          </warning-info-banner>
+        </div>
+      </div>
+
+      <div class="row" v-if="subscriptionDto.subscriptionPlan !== 'FREE' && isSubscriptionExpired">
+        <div class="col-12">
+          <warning-info-banner
+            class="q-mt-xs"
+            :text="`Your subscription is expired. Renew your subscription in order to use Bittery services.`">
           </warning-info-banner>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
           <q-field dense label="Subscription status" stack-label borderless>
-            <q-chip color="primary"
+            <q-chip :color="isSubscriptionExpired ? 'red-8' : 'primary'"
+                    dense
                     class="text-subtitle2"
                     square
-                    dense
                     style="margin-left: 0;"
                     text-color="white">
               {{subscriptionDto.subscriptionStatus}}
@@ -41,7 +50,7 @@
       <div class="row">
         <div class="col-12">
           <q-field dense label="Subscription plan" stack-label borderless>
-            <q-chip dense square color="primary"  class="text-subtitle2 bg-grey" style="margin-left: 0;" text-color="white">
+            <q-chip dense square color="primary"  class="" style="margin-left: 0;" text-color="white">
               {{subscriptionDto.subscriptionPlan}}
             </q-chip>
             <q-chip dense square color="primary" class="text-subtitle2" outline style="margin-left: 0;" text-color="white">
@@ -56,18 +65,18 @@
           </q-field>
         </div>
       </div>
-      <div class="row" v-if="subscriptionDto.subscriptionPlan !== 'FREE'">
+      <div class="row" v-if="subscriptionDto.subscriptionPlan !== 'FREE' && !isSubscriptionExpired">
         <div class="col-12">
           <q-field dense label="Active to" stack-label borderless>
-            <q-chip color="red"
+            <q-chip color="red-8"
                     class="text-subtitle2"
                     square
                     dense
                     style="margin-left: 0;"
                     text-color="white">
-              {{ paidToDate }}
+              {{ subscriptionEndDate }}
             </q-chip>
-            <q-chip color="red"
+            <q-chip color="red-8"
                     square
                     class="text-subtitle2"
                     outline
@@ -85,11 +94,11 @@
         </div>
       </div>
 
-      <div class="row justify-end" v-if="subscriptionDto.paidToDate > 0">
+      <div class="row justify-end" v-if="subscriptionDto.subscriptionPlan !== 'FREE'">
         <div class="col-auto justify-end">
           <q-field readonly borderless label="" stack-label>
             <q-btn
-              label="Renew subscription"
+              :label="isSubscriptionExpired ? 'Renew subscription' : 'Extend subscription'"
               color="primary"
               icon="mdi-bitcoin"
               @click="showSubscriptionPayPopup = !showSubscriptionPayPopup"/>
@@ -114,7 +123,7 @@ import { sleep } from 'src/api/sleep-service';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
 import { decryptSymmetricCtr } from 'src/api/encryption-service';
 import sha256 from 'js-sha256';
-import { formatOnlyDate, getDaysBetweenTwoDates } from 'src/api/date-service';
+import { formatDate, formatOnlyDate, getDaysBetweenTwoDates, isDateExpired } from 'src/api/date-service';
 import SubscriptionPayPopup from 'components/account/SubscriptionPayPopup.vue';
 import WarningInfoBanner from 'components/utils/WarningInfoBanner.vue';
 
@@ -132,8 +141,11 @@ export default GlobalMixin.extend({
     };
   },
   computed: {
-    paidToDate() {
-      return formatOnlyDate(this.subscriptionDto.paidToDate);
+    subscriptionEndDate() {
+      return formatDate(this.subscriptionDto.paidToDate);
+    },
+    isSubscriptionExpired() {
+      return isDateExpired(this.subscriptionDto.paidToDate);
     },
     subscriptionRemainingDays() {
       return getDaysBetweenTwoDates(this.subscriptionDto.paidToDate, new Date().getTime());
@@ -144,6 +156,7 @@ export default GlobalMixin.extend({
     get(this.$axios, '/api/account/subscription', (res: any) => {
       this.showLoading = false;
       this.subscriptionDto = res.data;
+      console.log(this.subscriptionDto);
       console.log(this.subscriptionDto);
     }, async (err: any) => {
       console.log('Getting account subscription failed!', err);

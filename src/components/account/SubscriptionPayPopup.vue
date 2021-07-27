@@ -14,7 +14,8 @@
               Customize your Bittery subscription plan
             </div>
             <div class="text-subtitle1 text-primary text-center">
-              Your plan: <b>LN NODE STANDARD 29.00 USD / month</b> <br>
+              Your plan: <b>{{ subscriptionDto.subscriptionPlan }} </b><br>
+              Price: <b>{{ subscriptionDto.monthlyPrice }} USD / month </b><br>
               Current subscription ends: <b>{{paidToDateFormatted}}</b>
             </div>
           </div>
@@ -115,8 +116,8 @@ export default GlobalMixin.extend({
         type: Boolean,
         required: true,
       },
-      paidToDate: {
-        type: Number,
+      subscriptionDto: {
+        type: Object,
         required: true,
       },
     },
@@ -152,10 +153,10 @@ export default GlobalMixin.extend({
     computed: {
       newPaidToDate() {
         return formatOnlyDate(
-          addMonthsToDate(new Date(this.paidToDate).getTime(), this.selectedSubscriptionPaymentOption.value));
+          addMonthsToDate(new Date(this.subscriptionDto.paidToDate).getTime(), this.selectedSubscriptionPaymentOption.value));
       },
       paidToDateFormatted() {
-        return formatOnlyDate(new Date(this.paidToDate).getTime());
+        return formatOnlyDate(new Date(this.subscriptionDto.paidToDate).getTime());
       },
     },
     methods: {

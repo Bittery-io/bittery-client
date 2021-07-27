@@ -4,12 +4,12 @@
       <q-item>
         <q-item-section>
           <q-item-label>
-            <div class="text-h5">
+            <div class="text-h5 text-bold">
               <q-icon name="mdi-flash" :color="type === 'ENCRYPTED' ? 'yellow-10': 'yellow-7'" size="xl"/>{{ title }}
             </div>
           </q-item-label>
-          <q-item-label caption v-if="type === 'ENCRYPTED'">Best privacy but no tools included</q-item-label>
-          <q-item-label caption v-if="type === 'STANDARD'">Tools included</q-item-label>
+          <q-item-label caption v-if="type === 'ENCRYPTED'">Enhanced security, limited tooling possibilities</q-item-label>
+          <q-item-label caption v-if="type === 'STANDARD'">Node management tools (RTL) included</q-item-label>
         </q-item-section>
       </q-item>
       <q-item>
@@ -25,13 +25,14 @@
       <q-list>
         <q-item class="text-bold text-red-8">
           <q-item-section avatar>
-            <q-icon color="red-8" name="mdi-flash-circle"/>
+            <q-icon color="red-8" name="mdi-flash-circle" style="animation-duration: 1s"
+                    class="text-subtitle2 float-right animated infinite flash"/>
           </q-item-section>
           <q-item-section class="text-left">
             <q-item-label>
               3 days free trial
             </q-item-label>
-            <q-item-label caption>Start for free then use discounts for longer subscription plans</q-item-label>
+            <q-item-label caption class="text-red-8">Try Bittery then use discounts for longer subscription plans</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
@@ -42,7 +43,7 @@
             <q-item-label>
               Personal Lightning Network Node
             </q-item-label>
-            <q-item-label caption>Bitcoin Mainnet network</q-item-label>
+            <q-item-label caption>Public node, working in Mainnet network, backed by Bitcoin full node.</q-item-label>
           </q-item-section>
         </q-item>
         <q-item class="text-bold">
@@ -53,7 +54,18 @@
             <q-item-label>
               Bittery payments platform
             </q-item-label>
-            <q-item-label caption>Use your node to accept Bitcoin Lightning Network payments</q-item-label>
+            <q-item-label caption>Use all Bittery features to accept Bitcoin payments (transactions and Lightning Network)</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item>
+          <q-item-section avatar>
+            <q-icon color="primary" name="mdi-flash-circle"/>
+          </q-item-section>
+          <q-item-section class="text-left">
+            <q-item-label>
+              Lightning Network inbound channel
+            </q-item-label>
+            <q-item-label caption>Bittery will provide 0.01 BTC/month inbound Lightning channel to your node - you are ready to accept Lightning immediately</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
@@ -64,18 +76,7 @@
             <q-item-label>
               Backups and data exports
             </q-item-label>
-            <q-item-label caption>Regular backups for enhanced security</q-item-label>
-          </q-item-section>
-        </q-item>
-        <q-item>
-          <q-item-section avatar>
-            <q-icon color="primary" name="mdi-flash-circle"/>
-          </q-item-section>
-          <q-item-section class="text-left">
-            <q-item-label>
-              Bitcoin full node connection
-            </q-item-label>
-            <q-item-label caption>Connected to Bittery backed Bitcoin full node</q-item-label>
+            <q-item-label caption>Automated regular backups, client side encrypted artefacts (keys, seeds) storage.</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>
@@ -119,7 +120,7 @@
             <q-item-label>
               Lightning Labs LND implementation
             </q-item-label>
-            <q-item-label caption>Version: {{lndVersion}}</q-item-label>
+            <q-item-label caption>Current version: {{lndVersion}}. Regular updates provided.</q-item-label>
           </q-item-section>
         </q-item>
       </q-list>
@@ -160,7 +161,7 @@ export default GlobalMixin.extend({
     this.showLoading = true;
     get(this.$axios, '/api/utils/ln-buy-values', async (res: any) => {
       await this.sleep(200);
-      this.lndVersion = res.data.lndVersion;
+      this.lndVersion = res.data.lndVersion.trim();
       this.lndPriceUsd = res.data.lndPriceUsd;
       this.showLoading = false;
       const countUp1 = new CountUp(this.type, this.lndPriceUsd, {
