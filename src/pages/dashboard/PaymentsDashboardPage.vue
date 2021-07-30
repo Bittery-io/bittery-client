@@ -1,5 +1,6 @@
 <template>
   <q-page>
+    <dashboard-not-visible-first-setup-payments-popup :show="showDashboardPopup"></dashboard-not-visible-first-setup-payments-popup>
     <loader :show="showLoading"></loader>
     <div class="row">
       <div class="col-lg-12 col-xs-grow">
@@ -42,12 +43,15 @@ import PaymentsAmountsCard from 'components/dashboard/PaymentsAmountsCard.vue';
 import PaymentsHistoryChart from 'components/dashboard/PaymentsHistoryChart.vue';
 import InvoicesDistributionChart from 'components/dashboard/InvoicesDistributionChart.vue';
 import InvoicesTable from 'components/dashboard/InvoicesTable.vue';
+import DashboardNotVisibleFirstSetupPaymentsPopup
+  from 'components/dashboard/DashboardNotVisibleFirstSetupPaymentsPopup.vue';
 
 export default GlobalMixin.extend({
   name: 'PaymentsDashboardPage',
-  components: { PaymentsAmountsCard, PaymentsHistoryChart, InvoicesDistributionChart, InvoicesTable, Loader },
+  components: { DashboardNotVisibleFirstSetupPaymentsPopup, PaymentsAmountsCard, PaymentsHistoryChart, InvoicesDistributionChart, InvoicesTable, Loader },
   data() {
     return {
+      showDashboardPopup: false,
       timeframe: 'Last 30 days',
       timeframes: ['Last 30 days'],
       dashboardInfoDto: undefined,
@@ -61,7 +65,8 @@ export default GlobalMixin.extend({
       this.dashboardInfoDto = res.data;
     }, (err: any) => {
       this.showLoading = false;
-      console.log(err);
+      this.showDashboardPopup = !this.showDashboardPopup;
+      console.log('Get dashboard error:', err);
     });
   },
   methods: {

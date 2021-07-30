@@ -16,7 +16,7 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h5 text-primary text-bold text-center">
-              Download your LN Node backup
+              Download latest LN Node backup
             </div>
             <div class="text-subtitle1 text-primary text-center">
               Choose the components of your LN Node backup
@@ -117,7 +117,7 @@ export default GlobalMixin.extend({
     },
     async onPasswordConfirmed(password: string) {
       this.showLoading = true;
-      get(this.$axios, `/api/lnd/${this.lndId}/full-    backup?seed=${this.lnSeedBackup}&macaroon=${this.adminMacaroonBackup}&password=${this.lnNodePasswordBackup}&scb=${this.lnScbBackup}&tls=${this.tlsCertBackup}`, (res: any) => {
+      get(this.$axios, `/api/lnd/${this.lndId}/full-backup?seed=${this.lnSeedBackup}&macaroon=${this.adminMacaroonBackup}&password=${this.lnNodePasswordBackup}&scb=${this.lnScbBackup}&tls=${this.tlsCertBackup}`, (res: any) => {
         const lndFullBackupDto: LndFullBackupDto = res.data;
         let zip = new JSZip();
         if (lndFullBackupDto.allStaticChannelsBackupDto) {

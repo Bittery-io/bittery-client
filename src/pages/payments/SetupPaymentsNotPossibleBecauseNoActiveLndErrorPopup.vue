@@ -10,16 +10,16 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
-              {{header}}
+              Payments cannot be setup
             </div>
             <div class="text-primary text-primary text-center text-body1">
-              {{errorMessage}}
+              Payments setup is not possible because your subscription is expired. Please renew your subscription first.
             </div>
           </div>
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto text-primary">
-            <q-btn outlined @click="close()" color="red">Close</q-btn>
+            <q-btn outlined @click="closeAndGoToAccount()" color="red">RENEW SUBSCRIPTION</q-btn>
           </div>
         </div>
       </q-card-section>
@@ -31,41 +31,32 @@
 </style>
 
 <script lang="ts">
-  import Vue from 'vue';
+import Vue from 'vue';
 
-  export default Vue.extend({
-    name: 'ErrorPopup',
-    components: {},
-    props: {
-      show: {
-        type: Boolean,
-        required: true,
-      },
-      header: {
-        type: String,
-        required: false,
-        default: '',
-      },
-      errorMessage: {
-        type: String,
-        required: false,
-        default: '',
-      },
+export default Vue.extend({
+  name: 'SetupPaymentsNotPossibleBecauseNoActiveLndErrorPopup',
+  components: {},
+  props: {
+    show: {
+      type: Boolean,
+      required: true,
     },
-    data() {
-      return {
-        showPopup: false,
-      };
+  },
+  data() {
+    return {
+      showPopup: false,
+    };
+  },
+  watch: {
+    show() {
+      this.showPopup = this.show;
     },
-    watch: {
-      show() {
-        this.showPopup = this.show;
-      },
+  },
+  methods: {
+    closeAndGoToAccount() {
+      this.showPopup = false;
+      this.$router.push('/account');
     },
-    methods: {
-      close() {
-        this.showPopup = false;
-      },
-    },
-  });
+  },
+});
 </script>

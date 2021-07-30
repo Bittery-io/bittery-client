@@ -8,10 +8,10 @@
              class="float-right"
              color="primary"
              icon="mdi-download"
-             label="Download LN Node backup"
+             label="Download latest LN Node backup"
               v-if="!isMobile && filteredData.length > 0">
       </q-btn>
-      <q-chip color="accent" size="md" class="text-subtitle2" icon="mdi-clock" text-color="primary" :class="isMobile ? 'q-pt-md' : ''">
+      <q-chip color="accent" size="md" class="text-subtitle2" icon="mdi-clock" text-color="primary" :class="isMobile ? 'q-pt-md' : ''" v-if="!isExpired">
         <countdown :time="millisecondsToNextBackup">
           <template slot-scope="props">Next scheduled backup: <br v-if="isMobile">
             {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds
@@ -24,7 +24,7 @@
         <div class="col-grow"></div>
         <div class="col-lg-auto col-xs-grow">
           <div class="q-pa-xs"
-               :style="isMobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'" debounce="400">
+               :style="isMobile ? `` : 'width: 200px;height:100%;'" debounce="400">
             <q-select v-model="orderByDate" dense :options="orderByDateOptions" label="Order by date"/>
           </div>
         </div>
@@ -60,7 +60,7 @@
              class="full-width"
              color="primary"
              icon="mdi-download"
-             label="Download LN Node backup"
+             label="Download latest LN Node backup"
              v-if="isMobile && filteredData.length > 0">
       </q-btn>
     </q-card-section>
@@ -80,6 +80,11 @@ export default GlobalMixin.extend({
     lndId: {
       type: String,
       required: true,
+    },
+    isExpired: {
+      type: Boolean,
+      required: false,
+      default: false,
     },
   },
   data() {
@@ -118,6 +123,7 @@ export default GlobalMixin.extend({
           return 'bg-primary text-white';
         case 'FAILURE':
         case 'FAILURE_NODE_LOCKED':
+        case 'FAILURE_NO_MACAROON':
           return 'bg-red-8 text-white';
         default:
           return 'bg-primary text-white';
@@ -131,6 +137,8 @@ export default GlobalMixin.extend({
           return 'FAILURE';
         case 'FAILURE_NODE_LOCKED':
           return 'SKIPPED - NODE LOCKED';
+        case 'FAILURE_NO_MACAROON':
+          return 'SKIPPED - NO MACAROON';
         default:
           return status;
       }

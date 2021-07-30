@@ -81,7 +81,7 @@
                           <q-icon color="primary" name="mdi"/>
                         </q-item-section>
                         <q-item-section>
-                          <q-linear-progress stripe size="10px" :value="Number(props.row.btcPaid) / Number(props.row.btcPrice)"/>
+                          <q-linear-progress stripe size="10px" :value="Number(props.row.btcPaid) / Number(props.row.btcPrice)" style="margin-bottom: 5px"/>
                           <q-item-label caption>Total paid</q-item-label>
                         </q-item-section>
                       </q-item>
@@ -116,6 +116,28 @@
                             {{props.row.id}}
                           </q-item-label>
                           <q-item-label caption>Invoice ID</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item>
+                        <q-item-section avatar>
+                          <q-icon color="primary" name="mdi-contactless-payment-circle"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>
+                            <q-badge v-if="props.row.cryptoInfo.filter(_ => _.paymentType === 'LightningLike').length > 0" style="margin: 1px"> <q-icon size="xs" name="mdi-flash" color="yellow-7"></q-icon>
+                              <q-tooltip>
+                                Invoice can be paid via Lightning Network.
+                              </q-tooltip>
+                              LIGHTNING
+                            </q-badge>
+                            <q-badge v-if="props.row.cryptoInfo.filter(_ => _.paymentType === 'BTCLike').length > 0" style="margin: 1px"> <q-icon size="xs" name="mdi-bitcoin" color="orange-8"></q-icon>
+                              <q-tooltip>
+                                Invoice can be paid using standard Bitcoin transaction.
+                              </q-tooltip>
+                              BITCOIN
+                            </q-badge>
+                          </q-item-label>
+                          <q-item-label caption>Payment methods</q-item-label>
                         </q-item-section>
                       </q-item>
                       <q-item class="justify-center">

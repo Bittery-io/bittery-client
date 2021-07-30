@@ -3,6 +3,9 @@
     <div class="row items-center justify-center" :style="`height:${screenHeight - 50}px`">
       <div class="col-auto">
       <loader :show="showLoading"></loader>
+        <setup-payments-not-possible-because-no-active-lnd-error-popup
+          :show="showSetupPaymentsNotPossibleBecauseNoActiveLndErrorPopup">
+        </setup-payments-not-possible-because-no-active-lnd-error-popup>
       <setup-lnd-before-payments-required-popup :show="showPopup"></setup-lnd-before-payments-required-popup>
         <div class="row justify-center">
           <div class="col-lg-12">
@@ -46,15 +49,18 @@
   import ClickableRouteCard from 'components/utils/ClickableRouteCard.vue';
   import GlobalMixin from "../../mixins/global-mixin";
   import { get } from 'src/api/http-service';
-  import SetupLndBeforePaymentsRequiredPopup from 'pages/payments/SetupLndBeforePaymentsRequiredPopup.vue';
   import Loader from 'components/utils/Loader.vue';
-  import { getPasswordProof } from 'src/api/session-service';
+  import ErrorPopup from 'components/utils/ErrorPopup.vue';
+  import SetupPaymentsNotPossibleBecauseNoActiveLndErrorPopup
+    from 'pages/payments/SetupPaymentsNotPossibleBecauseNoActiveLndErrorPopup.vue';
+  import SetupLndBeforePaymentsRequiredPopup from 'pages/payments/SetupLndBeforePaymentsRequiredPopup.vue';
   export default GlobalMixin.extend({
     name: 'SetupPaymentsPage',
-    components: { ClickableRouteCard, SetupLndBeforePaymentsRequiredPopup, Loader },
+    components: { SetupLndBeforePaymentsRequiredPopup, SetupPaymentsNotPossibleBecauseNoActiveLndErrorPopup, ErrorPopup, ClickableRouteCard, Loader },
     data() {
       return {
         showPopup: false,
+        showSetupPaymentsNotPossibleBecauseNoActiveLndErrorPopup: false,
       };
     },
     mounted() {
@@ -62,6 +68,11 @@
       get(this.$axios, '/api/lnd/user', async (res: any) => {
         await this.sleep(200);
         this.showLoading = false;
+        // for inactive lnd also should not allow to setup payments
+        if (res.data.activeUserLndDto === undefined) {
+          await this.sleep(200);
+          this.showSetupPaymentsNotPossibleBecauseNoActiveLndErrorPopup = true;
+        }
         console.log('User lnd data: ', res.data);
       }, async (err: any) => {
         console.log('User lnd get err: ', err);

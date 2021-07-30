@@ -30,7 +30,7 @@
       <div class="row">
         <div class="col-12">
           <q-field dense label="Subscription status" stack-label borderless>
-            <q-chip :color="isSubscriptionExpired ? 'red-8' : 'primary'"
+            <q-chip :color="subscriptionDto.subscriptionPlan !== 'FREE' ? (isSubscriptionExpired ? 'red-8' : 'primary') : 'primary'"
                     dense
                     class="text-subtitle2"
                     square
@@ -99,7 +99,7 @@
           <q-field readonly borderless label="" stack-label>
             <q-btn
               :label="isSubscriptionExpired ? 'Renew subscription' : 'Extend subscription'"
-              color="primary"
+              :color="isSubscriptionExpired ? 'red-8' : 'primary'"
               icon="mdi-bitcoin"
               @click="showSubscriptionPayPopup = !showSubscriptionPayPopup"/>
           </q-field>
