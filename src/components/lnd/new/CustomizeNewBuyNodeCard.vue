@@ -52,7 +52,7 @@
             </q-item-section>
             <q-item-section>
               <q-item-label ><span :class="statelessBadgeStrike ? 'text-strike':''">Stateless initialization </span> <q-badge :color="statelessBadgeColor">Bittery Encrypted plan only</q-badge></q-item-label>
-              <q-item-label caption>Bittery will not store plain macaroon files (only encrypted form)</q-item-label>
+              <q-item-label caption>Plain admin.macaroon file of your node will not be stored (only encrypted form)</q-item-label>
             </q-item-section>
           </q-item>
           <q-item class="text-left">

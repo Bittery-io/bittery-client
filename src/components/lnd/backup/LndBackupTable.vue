@@ -143,12 +143,6 @@ export default GlobalMixin.extend({
           return status;
       }
     },
-    timeFormatOnly(date: number) {
-      return formatOnlyTime(date);
-    },
-    dateFormatOnly(date: number) {
-      return formatOnlyDate(date);
-    },
   },
 });
 </script>

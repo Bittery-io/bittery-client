@@ -7,7 +7,7 @@
                                    loader-header="Decrypting LN Node password">
     </provide-master-password-popup>
     <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUri"></qr-code-popup>
-    <confirm-lnd-restart-popup :show="showConfirmLndRestartPopup" :lnd-id="userLndDto.lndId" :turned-off="true"></confirm-lnd-restart-popup>
+    <confirm-lnd-restart-popup :show="showConfirmLndRestartPopup" :lnd-id="userLndDto.lndId" :turned-off="!isNotTurnedOff"></confirm-lnd-restart-popup>
     <rtl-insecure-popup :show="showRtlInsecurePopup" :rtl-address="this.userLndDto.rtlAddress"></rtl-insecure-popup>
     <q-card-section>
      <header-qchip :text="$q.platform.is.mobile ? 'Your LN Node' : 'Your Lightning Network Node'" icon="mdi-flash"></header-qchip>

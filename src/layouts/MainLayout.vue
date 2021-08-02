@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <loader :show="showLoading"></loader>
-    <testnet-popup :show="showTestnetPopup"></testnet-popup>
+    <mainnet-popup :show="showMainnetPopup"></mainnet-popup>
     <q-header elevated>
       <q-toolbar>
         <q-btn
@@ -17,7 +17,7 @@
           <router-link to="/payments/overview">
             <bittery-logo></bittery-logo>
           </router-link>
-          <q-chip color="lime-3" text-color="primary" square class="text-bold"
+          <q-chip color="lime-4" text-color="primary" square class="text-bold"
                   icon="mdi-bitcoin" size="md" clickable @click="showPopup">Mainnet
           </q-chip>
         </q-toolbar-title>
@@ -79,21 +79,22 @@
   import LoginMenuButton from '../components/login/LoginMenuButton';
   import BitteryLogo from '../components/utils/BitteryLogo';
   import Loader from '../components/utils/Loader';
-  import TestnetPopup from '../components/TestnetPopup';
   import { hasPasswordProofSet } from '../api/session-service';
+  import MainnetPopup from '../components/MainnetPopup';
 
   export default GlobalMixin.extend({
     name: 'MainLayout',
 
     components: {
-      EssentialLink, LoginMenuButton, BitteryLogo, Loader, TestnetPopup
+      MainnetPopup,
+      EssentialLink, LoginMenuButton, BitteryLogo, Loader
     },
     methods: {
       isActive(essentialLink) {
         return this.$route.fullPath === essentialLink.link;
       },
       showPopup() {
-        this.showTestnetPopup = !this.showTestnetPopup;
+        this.showMainnetPopup = !this.showMainnetPopup;
       }
     },
     mounted() {
@@ -102,7 +103,7 @@
     data() {
       return {
         showLoading: false,
-        showTestnetPopup: false,
+        showMainnetPopup: false,
         leftDrawerOpen: false,
         essentialLinks: [
           {

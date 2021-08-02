@@ -39,8 +39,12 @@
         <template v-slot:body="props">
           <q-tr :props="props">
             <q-td>
-              <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoiceTime) }}
-              <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoiceTime) }}
+              <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoice.invoiceTime) }}
+              <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoice.invoiceTime) }}
+            </q-td>
+            <q-td>
+              <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoice.expirationTime) }}
+              <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoice.expirationTime) }}
             </q-td>
             <q-td>
               <q-input
@@ -48,26 +52,26 @@
                 type="text"
                 square
                 onkeypress="return false;"
-                :value="props.row.description">
+                :value="props.row.invoice.itemDesc">
               </q-input>
             </q-td>
             <q-td >
               <q-chip dense square color="primary" class="text-subtitle2" outline text-color="white">
-                {{ props.row.price.toFixed(2) }}
+                {{ props.row.invoice.price.toFixed(2) }}
               </q-chip>
             </q-td>
             <q-td >
               <q-chip dense square color="grey" class="text-subtitle2" text-color="white">
-              {{ props.row.currency }}
+              {{ props.row.invoice.currency }}
               </q-chip>
             </q-td>
             <q-td >
               <q-chip dense square color="primary" class="text-subtitle2" outline text-color="white">
-                {{ props.row.btcPrice }}
+                {{ props.row.invoice.btcPrice }}
               </q-chip>
             </q-td>
             <q-td >
-              <q-linear-progress stripe size="10px" :value="Number(props.row.btcPaid) / Number(props.row.btcPrice)"/>
+              <q-linear-progress stripe size="10px" :value="Number(props.row.invoice.btcPaid) / Number(props.row.invoice.btcPrice)"/>
             </q-td>
             <q-td>
               <q-btn
@@ -75,7 +79,7 @@
                 flat
                 color="primary"
                 icon="mdi-download"
-                @click="$router.push(`/payments/pdf/${props.row.invoiceId}`)"/>
+                @click="$router.push(`/payments/pdf/${props.row.invoiceId}?isBitteryInvoice=true`)"/>
             </q-td>
             <q-td>
               <q-btn
@@ -83,7 +87,20 @@
                 flat
                 color="primary"
                 icon="mdi-arrow-right-bold-box-outline"
-                @click="openInNewTab(props.row.invoiceId)"/>
+                @click="openPayInvoiceInNewTab(props.row.invoiceId)"/>
+            </q-td>
+            <q-td>
+              <q-chip square dense  color="primary" text-color="white" class="text-bold" style="margin-left: 0;">
+                {{getValidForString(props.row.invoice.expirationTime, props.row.invoice.invoiceTime)}}
+              </q-chip>
+            </q-td>
+            <q-td v-if="props.row.status.toUpperCase() === 'COMPLETE'">
+              <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(getPaymentDoneDate(props.row)) }}
+              <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(getPaymentDoneDate(props.row)) }}
+            </q-td>
+            <q-td v-else>
+              <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoice.expirationTime) }}
+              <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoice.expirationTime) }}
             </q-td>
             <q-td>
               <q-badge class="float-right" :class="getStatusLabelColor(props.row.status)">
@@ -110,6 +127,7 @@ export default InvoicesMixin.extend({
     return {
       columns: [
         { label: 'Invoice date', sortable: true, align: 'left' },
+        { label: 'Due date', sortable: true, align: 'left' },
         { label: 'Description', align: 'left' },
         { label: 'Amount', sortable: true, align: 'left' },
         { label: 'Currency', sortable: true, align: 'left' },
@@ -117,6 +135,8 @@ export default InvoicesMixin.extend({
         { label: 'Total paid', align: 'center' },
         { label: 'Invoice PDF', align: 'left'},
         { label: 'Payment widget', align: 'left'},
+        { label: 'Invoice validity', align: 'left'},
+        { label: 'Paid date/Expiration date', align: 'left'},
         { label: 'Status', align: 'right'},
       ]
     };

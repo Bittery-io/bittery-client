@@ -101,7 +101,6 @@ export default GlobalMixin.extend({
   },
   computed: {
     rootPublicKeyLabel() {
-      console.log(this.userBtcWalletDto);
       if (this.userBtcWalletDto) {
         if (this.userBtcWalletDto.type === 'BIP49') {
           return 'BIP49 Root Public Key';

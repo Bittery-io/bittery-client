@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import { sleep } from 'src/api/sleep-service';
+import { formatOnlyDate, formatOnlyTime } from 'src/api/date-service';
 
 export default Vue.extend({
   data() {
@@ -75,6 +76,12 @@ export default Vue.extend({
     },
     sleep(ms: number) {
       return sleep(ms);
+    },
+    timeFormatOnly(date: number) {
+      return formatOnlyTime(date);
+    },
+    dateFormatOnly(date: number) {
+      return formatOnlyDate(date);
     },
   },
 });

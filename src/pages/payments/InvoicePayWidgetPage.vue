@@ -18,6 +18,9 @@
       };
     },
     mounted() {
+      window.btcpay.onModalWillLeave(function () {
+        window.close();
+      });
       // @ts-ignore
       window.btcpay.setApiUrlPrefix(process.env.BTCPAY_URL);
       // @ts-ignore

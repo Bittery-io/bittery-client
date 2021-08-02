@@ -6,7 +6,6 @@ const URLS_FORBIDDEN_FOR_LOGGED_USERS: string[] = ['/login', '/register', '/pass
 export const setRouterNavguard = (router: any) => {
 
   router.beforeEach((to: any, from: any, next: any) => {
-    console.log(to);
     const hasToken: boolean = hasAccessToken();
     if (URLS_FORBIDDEN_FOR_LOGGED_USERS.includes(to.path) && hasToken) {
       showNotificationError('Cannot go to url', 'Please logout first');

@@ -17,8 +17,9 @@
                   type="text"
                   name="amount"
                   square
+                  @keypress="isNumber($event)"
                   v-model="amount"
-                  label="Amount">
+                  :label="`Amount ${currency}`">
                   <template v-slot:prepend>
                     <q-icon style="width:50px;" color="primary" name="mdi-cash-multiple"/>
                   </template>
@@ -109,6 +110,7 @@
   import { SaveInvoiceDto } from 'src/dto/save-invoice-dto';
   import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
   import HeaderQchip from 'components/utils/HeaderQchip.vue';
+  import { addMonthsToDate } from 'src/api/date-service';
 
   export default GlobalMixin.extend({
     components: { Loader, HeaderQchip },
@@ -116,7 +118,7 @@
 
     data() {
       return {
-        amount: 0,
+        amount: '0',
         currency: 'PLN',
         currencies: ['PLN', 'USD', 'EUR'],
         invoiceValidity: { label: '7 days', value: '7d' },
@@ -133,9 +135,35 @@
         buyer: '',
         createInvoiceFormState: {},
         createInvoiceButtonLocked: false,
+        numberInputChars: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',', '.'],
       };
     },
     methods: {
+      isNumber(event) {
+        const isCorrectNumberChar: boolean = this.numberInputChars.includes(event.key);
+        if (!isCorrectNumberChar) {
+          event.preventDefault();
+        }
+        // if is dot or ,
+        if (event.key === '.' || event.key === ',') {
+          if (this.amount.includes('.') || this.amount.includes(',') || this.amount === '')
+            event.preventDefault();
+        }
+        if (this.amount.includes('.')) {
+          const afterDotPart: string | undefined = this.amount.substr(this.amount.indexOf('.'), this.amount.length);
+          // because '.' is also included so 3
+          if (afterDotPart && afterDotPart.length === 3) {
+            event.preventDefault();
+          }
+        }
+        if (this.amount.includes(',')) {
+          const afterDotPart: string | undefined = this.amount.substr(this.amount.indexOf(','), this.amount.length);
+          // because ',' is also included so 3
+          if (afterDotPart && afterDotPart.length === 3) {
+            event.preventDefault();
+          }
+        }
+      },
       saveInvoice() {
         this.showLoading = true;
         this.createInvoiceButtonLocked = true;

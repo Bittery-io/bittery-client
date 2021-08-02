@@ -39,6 +39,14 @@
   color: #eefef5;
 }
 
+.expired__text {
+  color: #001f10;
+}
+
+.expired__header {
+  color: #001f10;
+}
+
 .currency-selection {
   background-color: #eefef5;
   border-bottom: 1px solid #001f10;
@@ -147,4 +155,20 @@ a {
 .btnGroupLnd button.active  {
   background-color:  #001f10 !important;
   border: 1px solid #001f10 !important;
+}
+
+.status-icon__wrapper__outline {
+  border-color: #001f10 !important;
+  color: #001f10 !important;
+}
+.status-icon__wrapper__icon img {
+  content:url("/statics/ok2.gif");
+}
+.status-icon__wrapper__icon {
+  border-color: #001f10 !important;
+  color: #001f10 !important;
+}
+div.success-message {
+  color: #001f10 !important;
+  font-weight: bold;
 }

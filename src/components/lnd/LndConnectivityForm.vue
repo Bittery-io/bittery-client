@@ -228,6 +228,7 @@ import HeaderQchip from 'components/utils/HeaderQchip.vue';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
 import { decryptSymmetricCtr } from 'src/api/encryption-service';
 import { getLndConnectUri } from 'src/api/ln-connect-uri-service';
+import sha256 from 'js-sha256';
 
 export default GlobalMixin.extend({
   components: { ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip },
@@ -273,7 +274,7 @@ export default GlobalMixin.extend({
         });
       } else if (this.encryptedAction === 'password') {
         get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/password`, (res: any) => {
-          this.lnPassword = decryptSymmetricCtr(res.data.encryptedArtefact, masterPassword);
+          this.lnPassword = sha256(decryptSymmetricCtr(res.data.encryptedArtefact, masterPassword));
         }, () => {
           showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');
         });

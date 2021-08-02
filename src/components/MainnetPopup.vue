@@ -1,7 +1,7 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
     <loader :show="showLoading" message="Bittery is loading"></loader>
-    <q-card class="bg-lime-3">
+    <q-card class="bg-lime-4">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -14,9 +14,8 @@
               Bitcoin Mainnet
             </div>
             <div class="text-primary text-bold text-primary text-center text-body1">
-              Bittery.io is under active development and is currently running in Bitcoin Testnet mode. <br>
-              Don't operate with your real mainnet Bitcoins! <br>
-              Bittery doesn't take responsibility of any cryptocurrencies lost due to user actions.
+              Bittery is operating on Bitcoin Mainnet Network. <br>
+              Please be aware, that Bittery is still under active development and uses technology which is still also experimental.<br>
             </div>
           </div>
         </div>
@@ -41,7 +40,7 @@ import Loader from 'components/utils/Loader.vue';
 import { sleep } from 'src/api/sleep-service';
 
 export default GlobalMixin.extend({
-  name: 'TestnetPopup',
+  name: 'MainnetPopup',
   components: {Loader, },
   props: {
     show: {

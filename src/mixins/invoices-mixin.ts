@@ -1,13 +1,13 @@
 import GlobalMixin from "./global-mixin";
 import { get } from 'src/api/http-service';
-import { addDaysToDate, formatDate } from 'src/api/date-service';
+import { addDaysToDate, formatDate, getDaysBetweenTwoDates, getHoursBetweenTwoDates } from 'src/api/date-service';
 
 export default GlobalMixin.extend({
   data() {
     return {
       filter: '',
       invoiceStatus: 'all',
-      invoiceStatuses: ['all', 'new', 'expired', 'paid'],
+      invoiceStatuses: ['all', 'new', 'expired', 'complete'],
       orderByDate: 'newest first',
       orderByDateOptions: ['newest first', 'oldest first'],
       data: [],
@@ -46,6 +46,13 @@ export default GlobalMixin.extend({
     },
   },
   methods: {
+    getPaymentDoneDate(row: any) {
+      if (row.status.toUpperCase() === 'COMPLETE') {
+        //todo probably should be done better
+        console.log(row.cryptoInfo[0].payments[0].receivedDate);
+        return new Date(row.cryptoInfo[0].payments[0].receivedDate).getTime();
+      }
+    },
     getClassDependingOfInvoiceStatus(status: string) {
       switch (status) {
         case 'complete':
@@ -70,13 +77,16 @@ export default GlobalMixin.extend({
         return this.data;
       }
     },
-    dateFormatted(date: number) {
-      return formatDate(date);
+    getValidForString(expirationDate: number, invoiceDate: number) {
+      const daysBetween: number = getDaysBetweenTwoDates(expirationDate, invoiceDate);
+      if (daysBetween === 0) {
+        const hoursBetween: number = getHoursBetweenTwoDates(expirationDate, invoiceDate);
+        return `${hoursBetween} ${hoursBetween === 1 ? 'hour' : 'hours'}`;
+      } else {
+        return `${daysBetween} ${daysBetween === 1 ? 'day' :'days'}`;
+      }
     },
-    addDueTimeToDate(date: number) {
-      return addDaysToDate(date, 24);
-    },
-    openInNewTab(invoiceId: string) {
+    openPayInvoiceInNewTab(invoiceId: string) {
       if (this.$q.platform.is.mobile) {
         this.$router.push(`/invoices/${invoiceId}`);
       } else {

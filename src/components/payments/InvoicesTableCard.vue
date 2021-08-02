@@ -37,13 +37,13 @@
                       <div class="text-subtitle2 text-uppercase">
                         <q-icon name="mdi-file" /> {{props.row.status}}</div>
                     </q-badge>
-                    <q-list>
-                      <q-item class="q-pt-md" style="padding-left: 3% !important;">
+                    <q-list class="text-subtitle2" dense>
+                      <q-item class="q-pt-md">
                         <q-item-section avatar>
-                          <q-icon color="primary" name="mdi-cash-multiple" size="xl"/>
+                          <q-icon color="primary" name="mdi-cash-multiple"/>
                         </q-item-section>
                         <q-item-section>
-                          <q-item-label><span v-bind:style="{'font-size': `${getPriceFontSize(props.row.id)}px`}">{{props.row.price}}</span>
+                          <q-item-label><span v-bind:style="{'font-size': `${getPriceFontSize(props.row.id)}px`}">{{Number(props.row.price).toFixed(2)}}</span>
                             {{props.row.currency}}
                           </q-item-label>
                           <q-item-label caption>Amount currency</q-item-label>
@@ -56,6 +56,31 @@
                         <q-item-section>
                           <q-item-label>{{props.row.btcPrice}} BTC</q-item-label>
                           <q-item-label caption>Amount BTC</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item dense>
+                        <q-item-section avatar>
+                          <q-icon color="primary" name="mdi"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-linear-progress stripe size="10px" :value="Number(props.row.btcPaid) / Number(props.row.btcPrice)" style="margin-bottom: 5px"/>
+                          <q-item-label caption>Total paid</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item>
+                        <q-item-section avatar>
+                          <q-icon color="primary" name="mdi-file-clock-outline"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>
+                            <q-chip square dense  color="primary" text-color="white" class="text-bold" style="margin-left: 0;">
+                              <q-tooltip>
+                                Validity of your invoice. After that time invoice will be expired.
+                              </q-tooltip>
+                              {{getValidForString(props.row.expirationTime, props.row.invoiceTime)}}
+                            </q-chip>
+                          </q-item-label>
+                          <q-item-label caption>Invoice validity</q-item-label>
                         </q-item-section>
                       </q-item>
                       <q-item v-if="props.row.itemDesc">
@@ -78,20 +103,12 @@
                       </q-item>
                       <q-item>
                         <q-item-section avatar>
-                          <q-icon color="primary" name="mdi"/>
-                        </q-item-section>
-                        <q-item-section>
-                          <q-linear-progress stripe size="10px" :value="Number(props.row.btcPaid) / Number(props.row.btcPrice)" style="margin-bottom: 5px"/>
-                          <q-item-label caption>Total paid</q-item-label>
-                        </q-item-section>
-                      </q-item>
-                      <q-item>
-                        <q-item-section avatar>
                           <q-icon color="primary" name="today"/>
                         </q-item-section>
                         <q-item-section>
                           <q-item-label>
-                            {{dateFormatted(props.row.invoiceTime)}}
+                            <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoiceTime) }}
+                            <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoiceTime) }}
                           </q-item-label>
                           <q-item-label caption>Creation date</q-item-label>
                         </q-item-section>
@@ -102,9 +119,57 @@
                         </q-item-section>
                         <q-item-section>
                           <q-item-label>
-                            {{dateFormatted(addDueTimeToDate(props.row.invoiceTime))}}
+                            <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.expirationTime) }}
+                            <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.expirationTime) }}
                           </q-item-label>
                           <q-item-label caption>Payment due date</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item v-if="props.row.status.toUpperCase() !== 'COMPLETE'">
+                        <q-item-section avatar>
+                          <q-icon color="primary" name="mdi-clock-alert-outline"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <countdown :time="getMillisecondsBetweenNowAndDate(props.row.expirationTime)">
+                            <template slot-scope="props">
+                              <span v-if="props.days > 0">{{props.days}} days</span><span v-if="props.hours > 0"> {{props.hours}} hours</span> {{ props.minutes }} minutes {{ props.seconds }} seconds
+                            </template>
+                          </countdown>
+                          <q-item-label caption>Payment due date countdown</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item v-else>
+                        <q-item-section avatar>
+                          <q-icon color="primary" name="mdi-clock-alert-outline"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>
+                            <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(getPaymentDoneDate(props.row)) }}
+                            <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(getPaymentDoneDate(props.row)) }}
+                          </q-item-label>
+                          <q-item-label caption>Payment done date</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item>
+                        <q-item-section avatar>
+                          <q-icon color="primary" name="mdi-contactless-payment-circle-outline"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>
+                            <q-badge class="text-bold" v-if="props.row.cryptoInfo.filter(_ => _.paymentType === 'LightningLike').length > 0" style="margin: 1px"> <q-icon size="xs" name="mdi-flash" color="yellow-7"></q-icon>
+                              <q-tooltip>
+                                Invoice can be paid via Lightning Network.
+                              </q-tooltip>
+                              LIGHTNING
+                            </q-badge>
+                            <q-badge class="text-bold" v-if="props.row.cryptoInfo.filter(_ => _.paymentType === 'BTCLike').length > 0" style="margin: 1px"> <q-icon size="xs" name="mdi-bitcoin" color="orange-8"></q-icon>
+                              <q-tooltip>
+                                Invoice can be paid using standard Bitcoin transaction.
+                              </q-tooltip>
+                              BITCOIN
+                            </q-badge>
+                          </q-item-label>
+                          <q-item-label caption>Payment methods</q-item-label>
                         </q-item-section>
                       </q-item>
                       <q-item>
@@ -118,33 +183,11 @@
                           <q-item-label caption>Invoice ID</q-item-label>
                         </q-item-section>
                       </q-item>
-                      <q-item>
-                        <q-item-section avatar>
-                          <q-icon color="primary" name="mdi-contactless-payment-circle"/>
-                        </q-item-section>
-                        <q-item-section>
-                          <q-item-label>
-                            <q-badge v-if="props.row.cryptoInfo.filter(_ => _.paymentType === 'LightningLike').length > 0" style="margin: 1px"> <q-icon size="xs" name="mdi-flash" color="yellow-7"></q-icon>
-                              <q-tooltip>
-                                Invoice can be paid via Lightning Network.
-                              </q-tooltip>
-                              LIGHTNING
-                            </q-badge>
-                            <q-badge v-if="props.row.cryptoInfo.filter(_ => _.paymentType === 'BTCLike').length > 0" style="margin: 1px"> <q-icon size="xs" name="mdi-bitcoin" color="orange-8"></q-icon>
-                              <q-tooltip>
-                                Invoice can be paid using standard Bitcoin transaction.
-                              </q-tooltip>
-                              BITCOIN
-                            </q-badge>
-                          </q-item-label>
-                          <q-item-label caption>Payment methods</q-item-label>
-                        </q-item-section>
+                      <q-item class="justify-center q-mt-md">
+                          <q-btn class="text-su" color="primary" label="Invoice PDF" :style="$q.platform.is.mobile ? 'width: 100%' : 'width: 80%'" icon="mdi-file-pdf" @click="$router.push(`/payments/pdf/${props.row.id}`)"/>
                       </q-item>
                       <q-item class="justify-center">
-                          <q-btn color="primary" label="Invoice PDF" :style="$q.platform.is.mobile ? 'width: 100%' : 'width: 80%'" icon="mdi-file-pdf" @click="$router.push(`/payments/pdf/${props.row.id}`)"/>
-                      </q-item>
-                      <q-item class="justify-center">
-                            <q-btn  color="primary" label="Payment" :style="$q.platform.is.mobile ? 'width: 100%' : 'width: 80%'" icon="mdi-contactless-payment" @click="openInNewTab(props.row.id)"/>
+                            <q-btn  color="primary" label="Payment" :style="$q.platform.is.mobile ? 'width: 100%' : 'width: 80%'" icon="mdi-contactless-payment" @click="openPayInvoiceInNewTab(props.row.id)"/>
                       </q-item>
                     </q-list>
                   </q-card-section>
@@ -163,6 +206,7 @@ import InvoicesMixin from "../../mixins/invoices-mixin";
 import Loader from 'components/utils/Loader.vue';
 import { get } from 'src/api/http-service';
 import HeaderQchip from 'components/utils/HeaderQchip.vue';
+import { getDaysBetweenTwoDates, getHoursBetweenTwoDates, getMillisecondsBetweenTwoDates } from 'src/api/date-service';
 
 export default InvoicesMixin.extend({
     components: { Loader, HeaderQchip },
@@ -174,10 +218,18 @@ export default InvoicesMixin.extend({
         default: false,
       },
     },
+    data() {
+      return {
+        validForMilliseconds: 10000,
+      };
+    },
     mounted() {
       this.loadInvoices();
     },
     methods: {
+      getMillisecondsBetweenNowAndDate(fromDate: number) {
+        return getMillisecondsBetweenTwoDates(fromDate, new Date().getTime());
+      },
       loadInvoices() {
         get(this.$axios, '/api/payments/invoices', async (res: any) => {
           await this.sleep(200); // small sleep required

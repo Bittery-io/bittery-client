@@ -227,7 +227,7 @@
           console.log(err);
         });
       },
-      openInNewTab(invoiceId: string) {
+      openPayInvoiceInNewTab(invoiceId: string) {
         const route = this.$router.resolve({ path: `/invoices/${invoiceId}` });
         window.open(route.href, '_blank');
       },

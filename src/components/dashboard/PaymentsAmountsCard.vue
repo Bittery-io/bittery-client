@@ -27,7 +27,7 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>
-                  <span class="text-h2" id="totalReceivedPaymentsBtc"></span>
+                  <span :class="isMobile ? 'text-h4': 'text-h2'" id="totalReceivedPaymentsBtc"></span>
                   <span class="text-h4"> BTC </span>
                 </q-item-label>
                 <q-item-label caption>Total received payments</q-item-label>
@@ -37,10 +37,10 @@
         </div>
         <div class="col-auto" :class="$q.platform.is.mobile ? '' : 'q-pa-lg'">
           <q-list>
-            <q-item style="margin: 0; padding: 0;">
+            <q-item :style="isMobile ? '': 'margin: 0; padding: 0;'">
               <q-item-section>
                 <q-item-label>
-                  <span class="text-h5 vertical-middle" id="totalReceivedPaymentsStandardWalletBtc"></span>
+                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsStandardWalletBtc"></span>
                   <span class="text-subtitle2"> BTC </span>
                   <q-chip outline color="primary" text-color="white" square
                           icon="mdi-wallet" icon-right="mdi-bitcoin" clickable @click="showStandardWalletInfoPopup = !showStandardWalletInfoPopup">
@@ -49,10 +49,10 @@
                 </q-item-label>
               </q-item-section>
             </q-item>
-            <q-item style="margin: 0; padding: 0;">
+            <q-item :style="isMobile ? '': 'margin: 0; padding: 0;'">
               <q-item-section>
                 <q-item-label>
-                  <span class="text-h5 vertical-middle" id="totalReceivedPaymentsLnNodeWalletBtc"></span>
+                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsLnNodeWalletBtc"></span>
                   <span class="text-subtitle2"> BTC </span>
                   <q-chip outline color="primary" text-color="white" square
                           icon="mdi-wallet" icon-right="mdi-flash" clickable @click="showLndWalleInfoPopup = !showLndWalleInfoPopup">
@@ -69,25 +69,25 @@
           <q-list dense separator class="vertical-align">
             <statistic-item
               icon="mdi-cash-plus"
-              :value="`${dashboardInfo.totalInvoicedAmountBtc.toFixed(5)} BTC`"
+              :value="`${dashboardInfo.totalInvoicedAmountBtc.toFixed(8)} BTC`"
               caption="Invoiced amounts">
             </statistic-item>
             <statistic-item
               icon="mdi-cash-plus"
               icon-color="orange"
-              :value="`${dashboardInfo.newInvoicedAmountBtc.toFixed(5)} BTC`"
+              :value="`${dashboardInfo.newInvoicedAmountBtc.toFixed(8)} BTC`"
               caption="New">
             </statistic-item>
             <statistic-item
               icon="mdi-cash-plus"
               icon-color="green"
-              :value="`${dashboardInfo.paidInvoicedAmountBtc.toFixed(5)} BTC`"
+              :value="`${dashboardInfo.paidInvoicedAmountBtc.toFixed(8)} BTC`"
               caption="Paid">
             </statistic-item>
             <statistic-item
               icon="mdi-cash-plus"
               icon-color="grey"
-              :value="`${dashboardInfo.expiredInvoicedAmountBtc.toFixed(5)} BTC`"
+              :value="`${dashboardInfo.expiredInvoicedAmountBtc.toFixed(8)} BTC`"
               caption="Expired">
             </statistic-item>
           </q-list>
@@ -162,13 +162,13 @@ export default GlobalMixin.extend({
     await this.sleep(200); // small sleep required
     this.timeframeValue = this.timeframe;
     const countUp = new CountUp('totalReceivedPaymentsBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
-      decimalPlaces: 5,
+      decimalPlaces: 8,
     });
-    const countUp2 = new CountUp('totalReceivedPaymentsStandardWalletBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
-      decimalPlaces: 5,
+    const countUp2 = new CountUp('totalReceivedPaymentsStandardWalletBtc', this.dashboardInfo.totalReceivedViaTransactions, {
+      decimalPlaces: 8,
     });
-    const countUp3 = new CountUp('totalReceivedPaymentsLnNodeWalletBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
-      decimalPlaces: 5,
+    const countUp3 = new CountUp('totalReceivedPaymentsLnNodeWalletBtc', this.dashboardInfo.totalReceivedViaLightning, {
+      decimalPlaces: 8,
     });
 
     if (!countUp.error && !countUp2.error && !countUp3.error) {

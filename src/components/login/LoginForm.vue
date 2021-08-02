@@ -6,7 +6,7 @@
                    :error-message="errorBannerMessage"
                    :show="errorBannerMessage !== ''">
       </error-popup>
-      <testnet-popup :show="showTestnetPopup" :is-after-login="true"></testnet-popup>
+      <mainnet-popup :show="showMainnetPopup" :is-after-login="true"></mainnet-popup>
       <vue-form :state='loginformstate' @submit.prevent="onSubmit">
         <div class="row q-pa-xs" >
           <div class="col-grow">
@@ -97,11 +97,11 @@
   import { post } from 'src/api/http-service';
   import { setSessionInStorage } from 'src/api/session-service';
   import GlobalMixin from "../../mixins/global-mixin";
-  import TestnetPopup from 'components/TestnetPopup.vue';
   import sha256 from 'js-sha256';
+  import MainnetPopup from 'components/MainnetPopup.vue';
 
   export default GlobalMixin.extend({
-    components: { ErrorPopup, Loader, TestnetPopup },
+    components: { MainnetPopup, ErrorPopup, Loader },
     data: () => ({
       loginformstate: {},
       email: 'peerzet3@gmail.com',
@@ -110,7 +110,7 @@
       emailInitialValid: true,
       passwordInitialValid: true,
       isPwd: true,
-      showTestnetPopup: false,
+      showMainnetPopup: false,
     }),
     name: 'LoginForm',
     watch: {
@@ -133,11 +133,10 @@
             sha256(this.password),
           ),
           async (resp: any) => {
-            console.log(resp);
             this.showLoading = false;
             await this.sleep(200); // small sleep required
             setSessionInStorage(resp.data);
-            this.showTestnetPopup = true;
+            this.showMainnetPopup = true;
             await this.sleep(200); // small sleep required
             //this is now moved to testnet popup
           },

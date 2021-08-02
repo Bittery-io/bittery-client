@@ -24,7 +24,7 @@
             <div class="text-primary text-left text-subtitle2 q-pt-xs">
               • Your LN Node wallet receives off-chain payments (Lightning Network)<br>
               • It is part of your Lightning Network Node<br>
-              • This wallet doesn't contain funds of opened LN channels<br>
+              • This wallet <span class="text-red-8">doesn't contain</span> funds of opened LN channels<br>
             </div>
           </div>
         </div>

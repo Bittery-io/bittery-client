@@ -22,7 +22,6 @@
       };
     },
     mounted() {
-      console.log(this.$route, this.$route.params.signUpKey);
       this.showLoading = true;
       post(this.$axios, '/api/user/register/confirm',
         // @ts-ignore

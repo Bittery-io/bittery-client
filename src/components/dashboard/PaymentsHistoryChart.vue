@@ -27,6 +27,9 @@ export default GlobalMixin.extend({
       required: true,
     },
   },
+  mounted() {
+    console.log(this.dashboardInfo.paidInvoicesAmountTimeframesValues);
+  },
   data: function() {
     return {
       chartOptions: {
@@ -69,7 +72,7 @@ export default GlobalMixin.extend({
           },
           formatter: function (val, opts) {
             if (val > 0) {
-              return val.toFixed(5);
+              return val.toFixed(8);
             } else {
               return '';
             }
@@ -81,7 +84,7 @@ export default GlobalMixin.extend({
       },
       series: [{
         name: 'Received payment [BTC]',
-        data: this.dashboardInfo.paidInvoicesAmountTimeframesValues
+        data: this.dashboardInfo.paidInvoicesAmountTimeframesValues,
       }]
     }
   },

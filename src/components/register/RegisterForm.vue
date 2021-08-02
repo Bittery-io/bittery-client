@@ -202,13 +202,13 @@
             this.handleRequestError(err, (errorCode: any) => {
               switch (errorCode) {
                 case 0:
-                  this.errorBannerMessage = 'E-mail is already taken.';
+                  this.errorBannerMessage = 'E-mail is already taken. Please choose different e-mail.';
                   break;
                 case 1:
-                  this.errorBannerMessage = 'E-mail is already taken.';
+                  this.errorBannerMessage = 'E-mail is already taken. Please choose different e-mail.';
                   break;
                 case 2:
-                  this.errorBannerMessage = 'E-mail is incorrect.';
+                  this.errorBannerMessage = 'E-mail is incorrect. Please fix it.';
                   break;
                 default:
                   this.errorBannerMessage = 'Unexpected server error.';

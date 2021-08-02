@@ -57,6 +57,8 @@
   export default GlobalMixin.extend({
     name: 'InvoicePdf',
     components: { pdf, HeaderQchip },
+    props: {
+    },
     data() {
       return {
         pdfData: {},
@@ -64,7 +66,10 @@
       };
     },
     mounted() {
-      get(this.$axios, `/api/payments/pdf/${this.$route.params.invoiceId}`, (res: any) => {
+      const uri: string = this.$route.query.isBitteryInvoice ?
+        `/api/account/subscription/pdf/${this.$route.params.invoiceId}` :
+        `/api/payments/pdf/${this.$route.params.invoiceId}`;
+      get(this.$axios, uri, (res: any) => {
         this.showLoading = false;
         this.pdfData = {
           data: res.data,

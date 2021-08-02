@@ -26,6 +26,15 @@ export const getDaysBetweenTwoDates = (date: number, date2: number): number => {
   return dayjs(date).diff(dayjs(date2), 'day');
 };
 
+export const getHoursBetweenTwoDates = (date: number, date2: number): number => {
+  return dayjs(date).diff(dayjs(date2), 'hour');
+};
+
+export const getMillisecondsBetweenTwoDates = (date: number, date2: number): number => {
+  return dayjs(date).diff(dayjs(date2), 'millisecond');
+};
+
+
 export const isDateExpired = (date: number): boolean => {
   return dayjs(date).isBefore(dayjs());
 };
