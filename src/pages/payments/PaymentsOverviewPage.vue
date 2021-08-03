@@ -4,12 +4,12 @@
       <loader :show="showLoading"></loader>
       <div class="col-lg-4 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
         <create-invoice-form-card
-          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
-          @invoiceCreated="onInvoiceCreated" v-sticky="{ zIndex: 999, stickyTop: 70}"></create-invoice-form-card>
+          class="q-ma-xs"
+          @invoiceCreated="onInvoiceCreated" v-sticky="{ zIndex: 999, stickyTop: 60 }"></create-invoice-form-card>
       </div>
       <div class="col-lg-8 col-xs-grow" :class="{ 'q-pa-xs': !$q.platform.is.mobile }">
         <invoices-table-card
-          :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
+          class="q-ma-xs"
           :reload-invoices="someInvoiceWasCreated"></invoices-table-card>
       </div>
     </div>

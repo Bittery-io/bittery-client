@@ -1,6 +1,6 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <q-card>
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
+    <q-card class="bg-grey-2">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -12,7 +12,7 @@
             <div class="text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Lightning Network (LN) is required for payments
             </div>
-            <div class="text-primary text-primary text-center text-body1">
+            <div class="text-primary text-primary text-center text-subtitle2">
               You must setup Lightning Network before you will start accepting Bitcoin payments.
             </div>
           </div>

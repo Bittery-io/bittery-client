@@ -1,5 +1,5 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <provide-master-password-popup :show="showConfirmMasterPasswordPopup"
                                    subheader="It is required for decrypting your standard wallet seed"
                                    @passwordConfirmed="onPasswordConfirmed"
@@ -9,7 +9,7 @@
                        header="Your standard wallet seed"
                        subheader="Your standard wallet 12 words mnemonic seed.">
     </wallet-seed-popup>
-    <q-card>
+    <q-card class="bg-grey-2">
       <q-card-section v-if="this.userBtcWalletDto">
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -18,7 +18,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-bold text-center">
+            <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
             <q-icon  size="md" name="mdi-bitcoin" color="orange"/>
               <span class="vertical-middle"> Your standard wallet</span>
             </div>

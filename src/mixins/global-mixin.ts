@@ -60,7 +60,7 @@ export default Vue.extend({
           this.errorBannerMessage = err.response.data.errorMessage;
         }
       } else if (this.isHttpError(err) && this.isHttpErrorStatus(err, 401)) {
-        this.errorBannerMessage = 'Given credentials are incorrect';
+        this.errorBannerMessage = 'Login failed - given credentials are incorrect';
       } else {
         this.errorBannerMessage = 'Request failed. Unexpected server error.';
       }

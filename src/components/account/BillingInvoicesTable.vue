@@ -4,10 +4,32 @@
       <header-qchip text="Your billing invoices" icon="mdi-table-large" size="md"></header-qchip>
     </q-card-section>
     <q-card-section style="padding-top: 0;margin-top:0;">
-      <div class="row q-pb-lg q-pl-md">
+      <div class="row" v-if="isMobile">
+        <div class="col-xs-grow">
+          <q-input dense debounce="800" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search"/>
+            </template>
+          </q-input>
+        </div>
+      </div>
+      <div class="row" v-if="isMobile">
+        <div class="col-xs-grow">
+          <div class="q-pa-xs" debounce="400">
+            <q-select v-model="invoiceStatus" dense :options="invoiceStatuses" label="Billing status"/>
+          </div>
+        </div>
+      </div>
+      <div class="row q-pb-lg " v-if="isMobile">
+        <div class="col-xs-grow">
+          <div class="q-pa-xs" debounce="400">
+            <q-select v-model="orderByDate" dense :options="orderByDateOptions" label="Order by date"/>
+          </div>
+        </div>
+      </div>
+      <div class="row q-pb-lg q-pl-md" v-else>
         <div class="col-lg-auto col-xs-grow">
-          <q-input dense debounce="800" :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : ''"
-                   v-model="filter" placeholder="Search">
+          <q-input dense debounce="800" v-model="filter" placeholder="Search">
             <template v-slot:append>
               <q-icon name="search"/>
             </template>
@@ -15,16 +37,12 @@
         </div>
         <div class="col-grow"></div>
         <div class="col-lg-auto col-xs-grow">
-          <div class="q-pa-xs"
-               :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'"
-               debounce="400">
+          <div class="q-pa-xs" :style="$q.platform.is.mobile ? `` : 'width: 200px;height:100%;'" debounce="400">
             <q-select v-model="invoiceStatus" dense :options="invoiceStatuses" label="Billing status"/>
           </div>
         </div>
         <div class="col-lg-auto col-xs-grow">
-          <div class="q-pa-xs"
-               :style="$q.platform.is.mobile ? `width: ${screenWidth * 0.75}px` : 'width: 200px;height:100%;'"
-               debounce="400">
+          <div class="q-pa-xs" :style="$q.platform.is.mobile ? `` : 'width: 200px;height:100%;'" debounce="400">
             <q-select v-model="orderByDate" dense :options="orderByDateOptions" label="Order by date"/>
           </div>
         </div>

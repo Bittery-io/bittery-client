@@ -1,5 +1,5 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <provide-master-password-popup :show="showConfirmMasterPasswordPopup"
                                    subheader="It is required for decrypting your LN Node wallet seed"
                                    @passwordConfirmed="onPasswordConfirmed"
@@ -8,7 +8,7 @@
     <wallet-seed-popup :show="showSeedPopup" :seed="lnWalletSeed"
                        header="Your LN Node wallet seed"
                        subheader="Your LN Node wallet 24 words mnemonic seed."></wallet-seed-popup>
-    <q-card>
+    <q-card class="bg-grey-2">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -17,7 +17,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-bold text-center">
+            <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               <q-icon  size="md" name="mdi-flash" color="yellow-7"/>
               <span class="vertical-middle"> Your LN Node wallet</span>
             </div>

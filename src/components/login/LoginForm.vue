@@ -1,5 +1,5 @@
 <template>
-  <div class="row q-pa-xs">
+  <div class="row">
     <div class="col-grow">
       <loader :show="showLoading"></loader>
       <error-popup header="Login failed"

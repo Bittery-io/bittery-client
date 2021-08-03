@@ -1,12 +1,12 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <loader :show="showLoading"></loader>
     <provide-master-password-popup :show="showConfirmMasterPasswordPopup"
                                    subheader="It is required for decrypting your LN Node backup components"
                                    @passwordConfirmed="onPasswordConfirmed"
                                    loader-header="Decrypting backup components">
     </provide-master-password-popup>
-    <q-card class="bg-grey-2">
+    <q-card class="bg-grey-2 text-subtitle2">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -15,10 +15,10 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-bold text-center">
+            <div class="text-primary text-bold" :class="isMobile ? 'text-h6' : 'text-h5'">
               Download latest LN Node backup
             </div>
-            <div class="text-subtitle1 text-primary text-center">
+            <div class="text-subtitle2 text-primary text-center">
               Choose the components of your LN Node backup
             </div>
           </div>

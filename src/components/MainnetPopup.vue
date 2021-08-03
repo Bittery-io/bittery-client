@@ -1,5 +1,5 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <loader :show="showLoading" message="Bittery is loading"></loader>
     <q-card class="bg-lime-4">
       <q-card-section>
@@ -10,7 +10,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h4 text-primary text-center q-pa-xs">
+            <div class="text-h4 text-bold text-primary text-center q-pa-xs">
               Bitcoin Mainnet
             </div>
             <div class="text-primary text-bold text-primary text-center text-body1">

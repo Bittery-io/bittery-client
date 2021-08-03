@@ -1,5 +1,5 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <loader :show="showLoading"></loader>
     <q-card class="bg-grey-2">
       <q-card-section>
@@ -10,7 +10,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-bold text-center">
+            <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Customize your Bittery subscription plan
             </div>
             <div class="text-subtitle1 text-primary text-center">

@@ -1,7 +1,7 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <loader :show="showLoading"></loader>
-    <q-card>
+    <q-card class="bg-grey-2">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -10,10 +10,10 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-bold text-center" v-if="turnedOff">
+            <div class="text-primary text-bold text-center" v-if="turnedOff" :class="isMobile ? 'text-h6' : 'text-h5'">
              Do you really want to turn on your LN Node?
             </div>
-            <div class="text-h5 text-primary text-bold text-center" v-else>
+            <div class="text-primary text-bold text-center" v-else :class="isMobile ? 'text-h6' : 'text-h5'">
               Do you really want to restart your LN Node?
             </div>
             <div class="text-primary text-center text-subtitle2 q-pt-xs">
@@ -26,8 +26,8 @@
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
         <q-btn outline @click="close()" text-color="primary">Close</q-btn>
-        <q-btn @click="restartClicked=true" v-if="!restartClicked" color="primary" text-color="white" :disable="restartButtonDisabled">{{ turnedOff ? 'Turn on' : 'Restart'}}</q-btn>
-        <q-btn @click="restartLnd()" v-else color="red" text-color="white" :disable="restartButtonDisabled">Confirm</q-btn>
+        <q-btn @click="restartClicked=true" v-if="!restartClicked" color="primary" icon="mdi-restart" text-color="white" :disable="restartButtonDisabled">{{ turnedOff ? 'Turn on' : 'Restart'}}</q-btn>
+        <q-btn @click="restartLnd()" v-else color="red" icon="mdi-restart" text-color="white" :disable="restartButtonDisabled">Confirm</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

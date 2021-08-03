@@ -3,3 +3,4 @@
 # example:
 # PORT=8080
 BTCPAY_URL=http://localhost
+CLIENT_URL=http://localhost:8080

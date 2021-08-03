@@ -1,7 +1,7 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <loader :show="showLoading" :message="loaderHeader"></loader>
-    <q-card class="bg-primary">
+    <q-card class="bg-primary" style="border: 2px solid #001f10">
       <q-card-section style="padding-bottom: 0 !important;">
         <div class="row justify-center">
           <div class="col-auto">
@@ -10,7 +10,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-white text-center">
+            <div class="text-bold text-white text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Provide your <b>master password</b>
             </div>
             <div class="text-subtitle2 text-white text-center">

@@ -1,6 +1,6 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <q-card>
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
+    <q-card class="bg-grey-2">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -9,7 +9,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-bold text-center">
+            <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               <span class="vertical-middle">RTL self signed SSL certificate</span>
             </div>
             <div class="text-primary text-left text-subtitle2 q-pt-xs">

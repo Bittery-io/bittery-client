@@ -1,5 +1,5 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <q-card class="bg-primary text-white">
       <q-card-section>
         <div class="row justify-center">
@@ -12,7 +12,7 @@
             <div class="text-center text-bold" :class="isMobile ? 'text-h6' : 'text-h5'">
               Your master password is set
             </div>
-            <div class="text-center text-body1">
+            <div class="text-center text-subtitle2">
               <span class="text-red text-bold">Don't lose this password.</span><br>
               Now you are ready to start accepting Bitcoin payments with Bittery.
             </div>

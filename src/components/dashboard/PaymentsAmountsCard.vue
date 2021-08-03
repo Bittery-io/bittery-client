@@ -35,37 +35,51 @@
             </q-item>
           </q-list>
         </div>
-        <div class="col-auto" :class="$q.platform.is.mobile ? '' : 'q-pa-lg'">
-          <q-list>
-            <q-item :style="isMobile ? '': 'margin: 0; padding: 0;'">
+        <div class="col-grow" v-if="!isMobile"></div>
+
+        <div class="col-lg-auto col-xs-6  justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
+          <q-list dense separator class="vertical-align">
+            <q-item>
+              <q-item-section avatar>
+                <q-icon color="orange-8" name="mdi-bitcoin" size="md"/>
+              </q-item-section>
               <q-item-section>
-                <q-item-label>
-                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsStandardWalletBtc"></span>
-                  <span class="text-subtitle2"> BTC </span>
-                  <q-chip outline color="primary" text-color="white" square
-                          icon="mdi-wallet" icon-right="mdi-bitcoin" clickable @click="showStandardWalletInfoPopup = !showStandardWalletInfoPopup">
-                    Standard wallet
-                  </q-chip>
+                <q-item-label class="text-subtitle2">
+                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsStandardWalletBtc"></span> BTC
                 </q-item-label>
+                <q-item-label style="margin-top: 0; padding-top: 0;" caption>Standard wallet</q-item-label>
               </q-item-section>
             </q-item>
-            <q-item :style="isMobile ? '': 'margin: 0; padding: 0;'">
+            <q-item>
+              <q-item-section avatar>
+                <q-icon color="yellow-7" name="mdi-flash" size="md"/>
+              </q-item-section>
               <q-item-section>
-                <q-item-label>
-                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsLnNodeWalletBtc"></span>
-                  <span class="text-subtitle2"> BTC </span>
-                  <q-chip outline color="primary" text-color="white" square
-                          icon="mdi-wallet" icon-right="mdi-flash" clickable @click="showLndWalleInfoPopup = !showLndWalleInfoPopup">
-                    LN Node wallet
-                  </q-chip>
+                <q-item-label class="text-subtitle2">
+                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsLnNodeWalletBtc"></span> BTC
                 </q-item-label>
+                <q-item-label style="margin-top: 0; padding-top: 0;" caption>LN Node wallet</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
         </div>
-        <div class="col-grow"></div>
-
-        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
+        <div class="col-lg-auto col-xs-6 justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
+          <q-list dense separator class="vertical-align justify-right">
+            <q-item>
+              <q-chip class="vertical-middle" color="primary" text-color="white" square
+                      icon="mdi-wallet" clickable @click="showStandardWalletInfoPopup = !showStandardWalletInfoPopup">
+                Standard wallet
+              </q-chip>
+            </q-item>
+            <q-item>
+              <q-chip class="vertical-middle" color="primary" text-color="white" square
+                      icon="mdi-wallet" clickable @click="showLndWalleInfoPopup = !showLndWalleInfoPopup">
+                LN Node wallet
+              </q-chip>
+            </q-item>
+          </q-list>
+        </div>
+        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-lg' : ''">
           <q-list dense separator class="vertical-align">
             <statistic-item
               icon="mdi-cash-plus"
@@ -92,7 +106,7 @@
             </statistic-item>
           </q-list>
         </div>
-        <div class="col-auto justify-center">
+        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
           <q-list dense separator class="vertical-align">
             <statistic-item
               icon="mdi-file-plus"

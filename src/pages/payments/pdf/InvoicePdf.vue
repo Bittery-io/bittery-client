@@ -2,7 +2,7 @@
   <q-page padding>
     <div class="row justify-center">
       <div class="col-lg-8 col-xs-12 justify-center">
-        <q-card class="q-ma-md shadow-10">
+        <q-card class="shadow-10">
           <q-card-section>
             <div class="row" v-if="!$q.platform.is.mobile">
               <div class="col-grow">

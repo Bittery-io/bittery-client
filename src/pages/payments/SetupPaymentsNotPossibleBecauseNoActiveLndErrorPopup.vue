@@ -1,6 +1,6 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <q-card>
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
+    <q-card class="bg-grey-2">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -9,10 +9,10 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
+            <div class="text-bold text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Payments cannot be setup
             </div>
-            <div class="text-primary text-primary text-center text-body1">
+            <div class="text-primary text-primary text-center text-subtitle2">
               Payments setup is not possible because your subscription is expired. Please renew your subscription first.
             </div>
           </div>

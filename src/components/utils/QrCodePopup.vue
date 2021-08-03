@@ -1,6 +1,6 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <q-card>
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
+    <q-card class="bg-grey-2">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -9,7 +9,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-primary text-center">
+            <div class="text-bold text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               {{header}}
             </div>
             <qr-code class="q-mt-xs" :width="500" :height="500" id="big-qr-code" :text="qrCode"></qr-code>

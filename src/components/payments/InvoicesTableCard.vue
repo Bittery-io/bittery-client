@@ -1,6 +1,7 @@
 <template>
   <div>
     <loader :show="showLoading"></loader>
+    <share-invoice-payment-widget-popup :show="showShareInvoicePaymentWidgetPopup" :invoice-id="invoiceId"></share-invoice-payment-widget-popup>
     <q-card class="shadow-10 bg-grey-2">
       <q-card-section>
         <header-qchip text="Your invoices" icon="mdi-file-multiple"></header-qchip>
@@ -184,10 +185,13 @@
                         </q-item-section>
                       </q-item>
                       <q-item class="justify-center q-mt-md">
-                          <q-btn class="text-su" color="primary" label="Invoice PDF" :style="$q.platform.is.mobile ? 'width: 100%' : 'width: 80%'" icon="mdi-file-pdf" @click="$router.push(`/payments/pdf/${props.row.id}`)"/>
+                        <q-btn  color="primary" outline label="Payment preview" dense style="width:100%" icon="mdi-contactless-payment" @click="openPayInvoiceInCurrentTab(props.row.id)"/>
                       </q-item>
                       <q-item class="justify-center">
-                            <q-btn  color="primary" label="Payment" :style="$q.platform.is.mobile ? 'width: 100%' : 'width: 80%'" icon="mdi-contactless-payment" @click="openPayInvoiceInNewTab(props.row.id)"/>
+                        <q-btn  color="primary" label="Share payment" dense style="width:100%" icon="mdi-share-all-outline" @click="showSharePaymentWidgetPopup(props.row.id)"/>
+                      </q-item>
+                      <q-item class="justify-center">
+                        <q-btn class="text-su" color="primary" dense label="Invoice PDF" style="width:100%" icon="mdi-file-pdf" @click="$router.push(`/payments/pdf/${props.row.id}`)"/>
                       </q-item>
                     </q-list>
                   </q-card-section>
@@ -207,9 +211,10 @@ import Loader from 'components/utils/Loader.vue';
 import { get } from 'src/api/http-service';
 import HeaderQchip from 'components/utils/HeaderQchip.vue';
 import { getDaysBetweenTwoDates, getHoursBetweenTwoDates, getMillisecondsBetweenTwoDates } from 'src/api/date-service';
+import ShareInvoicePaymentWidgetPopup from 'components/payments/ShareInvoicePaymentWidgetPopup.vue';
 
 export default InvoicesMixin.extend({
-    components: { Loader, HeaderQchip },
+    components: { ShareInvoicePaymentWidgetPopup, Loader, HeaderQchip },
     name: 'InvoicesTableCard',
     props: {
       reloadInvoices: {
@@ -220,13 +225,19 @@ export default InvoicesMixin.extend({
     },
     data() {
       return {
+        showShareInvoicePaymentWidgetPopup: false,
         validForMilliseconds: 10000,
+        invoiceId: '',
       };
     },
     mounted() {
       this.loadInvoices();
     },
     methods: {
+      showSharePaymentWidgetPopup(invoiceId: string) {
+        this.invoiceId = invoiceId;
+        this.showShareInvoicePaymentWidgetPopup  = !this.showShareInvoicePaymentWidgetPopup;
+      },
       getMillisecondsBetweenNowAndDate(fromDate: number) {
         return getMillisecondsBetweenTwoDates(fromDate, new Date().getTime());
       },

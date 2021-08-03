@@ -94,6 +94,12 @@ export default GlobalMixin.extend({
         window.open(route.href, '_blank');
       }
     },
+    openPayInvoiceInCurrentTab(invoiceId: string) {
+      // @ts-ignore
+      window.btcpay.setApiUrlPrefix(process.env.BTCPAY_URL);
+      // @ts-ignore
+      window.btcpay.showInvoice(invoiceId);
+    },
     saveInvoice() {
       this.showLoading = true;
     },

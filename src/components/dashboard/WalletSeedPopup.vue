@@ -1,5 +1,5 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" class="bg-primary">
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" class="bg-primary" :position="isMobile ? 'bottom' : 'standard'">
     <q-card class="bg-primary">
       <q-card-section>
         <div class="row justify-center">
@@ -9,7 +9,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-h5 text-white text-bold text-center">
+            <div class="text-white text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               <span class="vertical-middle">{{header}}</span>
             </div>
             <q-banner rounded class="text-white text-bold bg-primary q-mt-md">

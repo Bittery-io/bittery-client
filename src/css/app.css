@@ -105,3 +105,7 @@ div.q-item__label.q-item__label--caption.text-caption {
 .mobile-stepper-full .row.flex-center::after{
   content: none !important;
 }
+
+.my-accent-input .q-field__inner {
+  background-color: #eefef5;
+}

@@ -1,6 +1,6 @@
 <template>
-  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false">
-    <q-card>
+  <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
+    <q-card class="bg-grey-2">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -29,7 +29,7 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
+        <q-btn @click="close()" text-color="white" color="primary">Close</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

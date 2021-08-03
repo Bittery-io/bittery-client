@@ -11,7 +11,8 @@
              label="Download latest LN Node backup"
               v-if="!isMobile && filteredData.length > 0">
       </q-btn>
-      <q-chip color="accent" size="md" class="text-subtitle2" icon="mdi-clock" text-color="primary" :class="isMobile ? 'q-pt-md' : ''" v-if="!isExpired">
+      <q-chip square color="accent" size="md" class="text-subtitle2" icon="mdi-clock" text-color="primary" v-if="!isExpired"
+      :style="isMobile ? 'height: 50px': ''">
         <countdown :time="millisecondsToNextBackup">
           <template slot-scope="props">Next scheduled backup: <br v-if="isMobile">
             {{ props.hours }} hours, {{ props.minutes }} minutes, {{ props.seconds }} seconds
@@ -23,8 +24,7 @@
       <div class="row q-pb-lg q-pl-md">
         <div class="col-grow"></div>
         <div class="col-lg-auto col-xs-grow">
-          <div class="q-pa-xs"
-               :style="isMobile ? `` : 'width: 200px;height:100%;'" debounce="400">
+          <div class="q-pa-xs" :style="isMobile ? `` : 'width: 200px;height:100%;'" debounce="400">
             <q-select v-model="orderByDate" dense :options="orderByDateOptions" label="Order by date"/>
           </div>
         </div>
