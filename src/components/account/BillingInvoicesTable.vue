@@ -58,9 +58,7 @@
           <q-tr :props="props">
             <q-td>
               <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoice.invoiceTime) }}
-              <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoice.invoiceTime) }}
-            </q-td>
-            <q-td>
+              <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoice.invoiceTime) }}<br>
               <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoice.expirationTime) }}
               <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoice.expirationTime) }}
             </q-td>
@@ -84,8 +82,13 @@
               </q-chip>
             </q-td>
             <q-td >
+              <q-chip dense square color="primary" class="text-subtitle2" text-color="white">
+                {{ props.row.invoice.btcPrice }} BTC
+              </q-chip>
+            </q-td>
+            <q-td >
               <q-chip dense square color="primary" class="text-subtitle2" outline text-color="white">
-                {{ props.row.invoice.btcPrice }}
+                <q-item-label>{{currentPriceDependingOfCurrency(props.row.invoice.currency, props.row.invoice.rate)}}</q-item-label>
               </q-chip>
             </q-td>
             <q-td >
@@ -111,6 +114,17 @@
               <q-chip square dense  color="primary" text-color="white" class="text-bold" style="margin-left: 0;">
                 {{getValidForString(props.row.invoice.expirationTime, props.row.invoice.invoiceTime)}}
               </q-chip>
+            </q-td>
+            <q-td>
+              <q-input
+                style="min-width:100px !important;"
+                v-if="props.row.id"
+                dense
+                type="text"
+                square
+                onkeypress="return false;"
+                :value="props.row.id">
+              </q-input>
             </q-td>
             <q-td v-if="props.row.status.toUpperCase() === 'COMPLETE'">
               <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(getPaymentDoneDate(props.row)) }}
@@ -144,16 +158,17 @@ export default InvoicesMixin.extend({
   data() {
     return {
       columns: [
-        { label: 'Invoice date', sortable: true, align: 'left' },
-        { label: 'Due date', sortable: true, align: 'left' },
+        { label: 'Invoice date / Due date', sortable: true, align: 'left' },
         { label: 'Description', align: 'left' },
         { label: 'Amount', sortable: true, align: 'left' },
         { label: 'Currency', sortable: true, align: 'left' },
         { label: 'Amount [BTC]', align: 'left' },
+        { label: 'Used price rate', align: 'left' },
         { label: 'Total paid', align: 'center' },
         { label: 'Invoice PDF', align: 'left'},
         { label: 'Payment widget', align: 'left'},
         { label: 'Invoice validity', align: 'left'},
+        { label: 'Invoice ID', align: 'left'},
         { label: 'Paid date/Expiration date', align: 'left'},
         { label: 'Status', align: 'right'},
       ]

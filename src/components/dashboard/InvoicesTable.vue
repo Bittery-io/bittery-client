@@ -60,14 +60,13 @@
             <q-tr :props="props">
               <q-td>
                 <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoiceTime) }}
-                <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoiceTime) }}
-              </q-td>
-              <q-td>
+                <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoiceTime) }}<br>
                 <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.expirationTime) }}
                 <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.expirationTime) }}
               </q-td>
               <q-td>
                 <q-input
+                  style="min-width:150px !important;"
                   v-if="props.row.itemDesc"
                   dense
                   type="text"
@@ -78,6 +77,7 @@
               </q-td>
               <q-td>
                 <q-input
+                  style="min-width:150px !important;"
                   v-if="props.row.buyer.name"
                   dense
                   type="text"
@@ -97,8 +97,13 @@
                 </q-chip>
               </q-td>
               <q-td >
+                <q-chip dense square color="primary" class="text-subtitle2" text-color="white">
+                  {{ props.row.btcPrice }} BTC
+                </q-chip>
+              </q-td>
+              <q-td >
                 <q-chip dense square color="primary" class="text-subtitle2" outline text-color="white">
-                  {{ props.row.btcPrice }}
+                  <q-item-label>{{currentPriceDependingOfCurrency(props.row.currency, props.row.rate)}}</q-item-label>
                 </q-chip>
               </q-td>
               <q-td >
@@ -123,8 +128,16 @@
                   {{getValidForString(props.row.expirationTime, props.row.invoiceTime)}}
                 </q-chip>
               </q-td>
-              <q-td >
-                {{props.row.id}}
+              <q-td>
+                <q-input
+                  style="min-width:100px !important;"
+                  v-if="props.row.id"
+                  dense
+                  type="text"
+                  square
+                  onkeypress="return false;"
+                  :value="props.row.id">
+                </q-input>
               </q-td>
               <q-td v-if="props.row.status.toUpperCase() === 'COMPLETE'">
                 <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(getPaymentDoneDate(props.row)) }}
@@ -168,13 +181,13 @@ export default InvoicesMixin.extend({
   data() {
     return {
       columns: [
-        { label: 'Invoice date', sortable: true, align: 'left' },
-        { label: 'Due date', sortable: true, align: 'left' },
+        { label: 'Invoice date / Due date', sortable: true, align: 'left' },
         { label: 'Description', align: 'left' },
         { label: 'Buyer', align: 'left' },
         { label: 'Amount', sortable: true, align: 'left' },
         { label: 'Currency', sortable: true, align: 'left' },
         { label: 'Amount [BTC]', align: 'left' },
+        { label: 'Used price rate', align: 'left' },
         { label: 'Total paid', align: 'center' },
         { label: 'Invoice PDF', align: 'left'},
         { label: 'Payment widget', align: 'left'},

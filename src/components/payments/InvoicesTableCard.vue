@@ -30,9 +30,7 @@
             </template>
             <template v-slot:item="props">
               <div class="q-pa-md col-xs-12 col-sm-6 col-md-4" :class="{ 'noPaddingRightAndLeft': $q.platform.is.mobile }">
-<!--                <q-card class="shadow-10 grow2 bg-green-2">-->
-                <q-card class="shadow-10 grow2"
-                        :class="getClassDependingOfInvoiceStatus(props.row.status)">
+                <q-card class="shadow-10 grow2" :class="getClassDependingOfInvoiceStatus(props.row.status)">
                   <q-card-section>
                     <q-badge floating :class="getStatusLabelColor(props.row.status)">
                       <div class="text-subtitle2 text-uppercase">
@@ -44,19 +42,30 @@
                           <q-icon color="primary" name="mdi-cash-multiple"/>
                         </q-item-section>
                         <q-item-section>
-                          <q-item-label><span v-bind:style="{'font-size': `${getPriceFontSize(props.row.id)}px`}">{{Number(props.row.price).toFixed(2)}}</span>
-                            {{props.row.currency}}
+                          <q-item-label>
+                            <span v-bind:style="{'font-size': `${getPriceFontSize(props.row.id)}px`}">
+                              {{currentPriceDependingOfCurrency(props.row.currency, props.row.price)}}
+                            </span>
                           </q-item-label>
                           <q-item-label caption>Amount currency</q-item-label>
                         </q-item-section>
                       </q-item>
                       <q-item>
                         <q-item-section avatar>
-                          <q-icon color="primary" name="ion-logo-bitcoin"/>
+                          <q-icon color="primary" name="mdi-bitcoin"/>
                         </q-item-section>
                         <q-item-section>
                           <q-item-label>{{props.row.btcPrice}} BTC</q-item-label>
                           <q-item-label caption>Amount BTC</q-item-label>
+                        </q-item-section>
+                      </q-item>
+                      <q-item>
+                        <q-item-section avatar>
+                          <q-icon color="primary" name="mdi-currency-usd-circle-outline"/>
+                        </q-item-section>
+                        <q-item-section>
+                          <q-item-label>{{currentPriceDependingOfCurrency(props.row.currency, props.row.rate)}}</q-item-label>
+                          <q-item-label caption>Used price rate</q-item-label>
                         </q-item-section>
                       </q-item>
                       <q-item dense>

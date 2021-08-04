@@ -1,6 +1,7 @@
 import GlobalMixin from "./global-mixin";
 import { get } from 'src/api/http-service';
 import { addDaysToDate, formatDate, getDaysBetweenTwoDates, getHoursBetweenTwoDates } from 'src/api/date-service';
+import { fasUnderline } from '@quasar/extras/fontawesome-v5';
 
 export default GlobalMixin.extend({
   data() {
@@ -15,9 +16,25 @@ export default GlobalMixin.extend({
       filterSavedData: [],
       priceFontSizes: [],
       createInvoiceButtonLocked: false,
+      usdFormatter: undefined,
+      eurFormatter: undefined,
+      plnFormatter: undefined,
     };
   },
-
+  mounted() {
+    this.usdFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+    this.plnFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'PLN',
+    });
+    this.eurFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'EUR',
+    });
+  },
   watch: {
     invoiceStatus() {
       // @ts-ignore
@@ -46,6 +63,15 @@ export default GlobalMixin.extend({
     },
   },
   methods: {
+    currentPriceDependingOfCurrency(currency: string, price: string) {
+      if (currency.toUpperCase() === 'PLN') {
+        return this.plnFormatter.format(price);
+      } else if (currency.toUpperCase() === 'USD') {
+        return this.usdFormatter.format(price);
+      } else if (currency.toUpperCase() === 'EUR') {
+        return this.eurFormatter.format(price);
+      }
+    },
     getPaymentDoneDate(row: any) {
       if (row.status.toUpperCase() === 'COMPLETE') {
         //todo probably should be done better

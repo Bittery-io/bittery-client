@@ -28,7 +28,27 @@
               <q-item-section>
                 <q-item-label>
                   <span :class="isMobile ? 'text-h4': 'text-h2'" id="totalReceivedPaymentsBtc"></span>
-                  <span class="text-h4"> BTC </span>
+                  <span :class="isMobile ? 'text-h5': 'text-h4'"> BTC</span><br>
+                  <div class="row items-baseline">
+                    <div class="col-auto q-pl-xs" v-if="totalReceivedPaymentsBtcInUsd === ''">
+                      <q-skeleton type="text" width="40px" bordered/>
+                    </div>
+                    <div class="col-auto q-pl-xs" v-else>
+                      <span :class="isMobile ? 'text-h6': 'text-h5'">{{totalReceivedPaymentsBtcInUsd}}</span>
+                    </div>
+                    <div class="col-auto q-pl-xs">
+                      <span class="text-bold">at current Bitcoin Price:</span>
+                    </div>
+                    <div class="col-auto q-pl-xs" v-if="totalReceivedPaymentsBtcInUsd === ''">
+                      <q-skeleton type="text" width="40px" bordered/>
+                    </div>
+                    <div class="col-auto q-pl-xs" v-else>
+                      <span class="text-bold">{{currentBitcoinUsdPrice}}</span>
+                    </div>
+                    <div class="col-auto q-pl-xs">
+                      <span class="text-bold">(Coingecko)</span>
+                    </div>
+                  </div>
                 </q-item-label>
                 <q-item-label caption>Total received payments</q-item-label>
               </q-item-section>
@@ -146,6 +166,7 @@ import { CountUp } from 'countup.js';
 import StatisticItem from 'components/dashboard/StatisticItem.vue';
 import StandardWalletInfoPopup from 'components/dashboard/StandardWalletInfoPopup.vue';
 import LnWalletInfoPopup from 'components/dashboard/LnWalletInfoPopup.vue';
+import { get } from 'src/api/http-service';
 
 export default GlobalMixin.extend({
   components: { LnWalletInfoPopup, StandardWalletInfoPopup, QrCode, HeaderQchip, StatisticItem },
@@ -168,10 +189,26 @@ export default GlobalMixin.extend({
     return {
       showStandardWalletInfoPopup: false,
       showLndWalleInfoPopup: false,
-      timeframeValue: ''
+      timeframeValue: '',
+      totalReceivedPaymentsBtcInUsd: '',
+      currentBitcoinUsdPrice: '',
+      usdFormatter: undefined,
     };
   },
   async mounted() {
+    this.usdFormatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    });
+    // it is the same copied in createInvoiceFormCard so fix it to 1 place
+    get(this.$axios, 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_last_updated_at=true', (res) => {
+      const currentPriceInUsd: number = res.data.bitcoin.usd;
+      console.log(currentPriceInUsd, (currentPriceInUsd & this.dashboardInfo.totalReceivedPaymentsBtc));
+      if (currentPriceInUsd) {
+        this.currentBitcoinUsdPrice = this.usdFormatter.format(currentPriceInUsd);
+        this.totalReceivedPaymentsBtcInUsd = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedPaymentsBtc);
+      }
+    });
     console.log(this.dashboardInfo);
     await this.sleep(200); // small sleep required
     this.timeframeValue = this.timeframe;
