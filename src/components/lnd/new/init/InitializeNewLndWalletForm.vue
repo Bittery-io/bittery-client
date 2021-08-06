@@ -30,7 +30,7 @@
           The process below will generate these components for your LN Node.
         </div>
         <q-stepper-navigation>
-          <q-btn @click="generateSeedMnemonic" icon="mdi-cogs" color="primary" label="Generate 24 words mnemonic seed"
+          <q-btn glossy @click="generateSeedMnemonic" icon="mdi-cogs" color="primary" label="Generate 24 words mnemonic seed"
                  :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>
@@ -66,12 +66,12 @@
           </div>
         </q-banner>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1;" color="primary" label="Previous step" :class="isMobile ? 'full-width' : ''"
+          <q-btn glossy outline @click="step = 1;" color="primary" label="Previous step" :class="isMobile ? 'full-width' : ''"
                  icon="mdi-arrow-left-bold"/>
-          <q-btn @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
+          <q-btn glossy @click="isMnemonicPwd = !isMnemonicPwd" color="grey-7"
                  :label="isMnemonicPwd ? 'Show mnemonic' : 'Hide mnemonic'"
                  :icon="isMnemonicPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="generateLnPassword()" color="primary" v-show="seedMnemonicText" label="NEXT STEP"
+          <q-btn glossy @click="generateLnPassword()" color="primary" v-show="seedMnemonicText" label="NEXT STEP"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold">
           </q-btn>
         </q-stepper-navigation>
@@ -155,14 +155,14 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 2;lnPassword = '';isMnemonicPwd=true;" color="primary" label="Previous step"
+          <q-btn glossy outline @click="step = 2;lnPassword = '';isMnemonicPwd=true;" color="primary" label="Previous step"
                  :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
-          <q-btn @click="isPwd = !isPwd" color="grey-7"
+          <q-btn glossy @click="isPwd = !isPwd" color="grey-7"
                  :label="isPwd ? 'Show password' : 'Hide password'"
                  :icon="isPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="generateLnPassword" color="grey-7" label="Regenerate" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"
+          <q-btn glossy @click="generateLnPassword" color="grey-7" label="Regenerate" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"
            icon="mdi-cog-clockwise"/>
-          <q-btn @click="step = 4;lnPasswordConfirmation=''" color="primary" label="Next step"
+          <q-btn glossy @click="step = 4;lnPasswordConfirmation=''" color="primary" label="Next step"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
@@ -220,13 +220,13 @@
           Bittery will store the data encrypted as your <b>backup</b> and will be able to provide it to you when needed.<br>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3;masterPassword='';isPwd=true" color="primary" label="Previous step"
+          <q-btn glossy outline @click="step = 3;masterPassword='';isPwd=true" color="primary" label="Previous step"
                  :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
-          <q-btn @click="showMasterPasswordPopup = !showMasterPasswordPopup"
+          <q-btn glossy @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
                  :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword === '' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn @click="step = 5" :disable="masterPassword === ''" color="primary" label="Next step"
+          <q-btn glossy @click="step = 5" :disable="masterPassword === ''" color="primary" label="Next step"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
@@ -241,9 +241,9 @@
           Please don't close the browser and wait until the finish.
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 4" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"
+          <q-btn glossy outline @click="step = 4" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"
                  icon="mdi-arrow-left-bold"/>
-          <q-btn @click="initializeLnd" icon="mdi-wallet-plus" color="primary" label="Initialize LND wallet" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn glossy @click="initializeLnd" icon="mdi-wallet-plus" color="primary" label="Initialize LND wallet" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
@@ -255,7 +255,7 @@ import GlobalMixin from "../../../../mixins/global-mixin";
 import ErrorPopup from 'components/utils/ErrorPopup.vue';
 import Loader from 'components/utils/Loader.vue';
 import { get, post } from 'src/api/http-service';
-import { showNotificationInfo } from 'src/api/notificatios-api';
+import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
 import { BitcoinWallet } from 'src/model/bitcoin-wallet';
 import { LndInitWalletDto } from 'src/dto/lnd/lnd-init-wallet-dto';
 import WarningInfoBanner from 'components/utils/WarningInfoBanner.vue';
@@ -264,21 +264,23 @@ import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPassword
 import { encryptSymmetricCtr } from 'src/api/encryption-service';
 import { SaveEncryptedAdminMacaroonDto } from 'src/dto/lnd/save-encrypted-admin-macaroon-dto';
 import { v4 as uuidv4 } from 'uuid';
-// 20ee27cd-5368-4a74-9390-004ff229858c
+import { lndGenSeed } from 'src/api/lnd/lnd-api-service';
+import { initLndWallet } from 'src/api/lnd/lnd-service';
+import { LndInitWalletInput } from 'src/api/lnd/lnd-init-wallet-input';
+
 export default GlobalMixin.extend({
   name: 'InitializeNewLndWalletForm',
   components: { ProvideMasterPasswordPopup, WarningInfoBanner, ErrorPopup, Loader },
   data() {
     return {
+      lnRestAddress: '',
       showMasterPasswordPopup: false,
       lnSeedState: {},
       lnPasswordState: {},
       isPwd: true,
       isMnemonicPwd: true,
       bitcoinWallet: <BitcoinWallet> {},
-      seedMnemonic: [],
-      seedMnemonicText: '',
-      seedMnemonicTextEncrypted: '',
+      seedMnemonic: <string[]> [],
       step: 1,
       errorBannerMessage: '',
       bitcoinLndCheckbox: true,
@@ -292,69 +294,62 @@ export default GlobalMixin.extend({
     if (this.$route.query.electrum && this.$route.query.electrum === 'true') {
       this.userHasElectrum = true;
     }
+    this.showLoading = true;
+    get(this.$axios, `/api/lnd/${this.$route.params.lndId}/rest-address`, (res: any) => {
+      this.lnRestAddress = res.data.restAddress;
+      this.showLoading = false;
+    }, () => {
+      this.showLoading = false;
+      showNotificationError('Getting LN node info failed', 'Server error occurred on beginning of init process. Try again later.')
+    });
   },
   methods: {
     onMasterPasswordConfirmed(masterPassword: string) {
       showNotificationInfo('Components successfully encrypted', 'The data is encrypted with your master password');
       this.masterPassword = masterPassword;
     },
-    generateSeedMnemonic() {
+    async generateSeedMnemonic() {
       this.masterPassword = '';
       this.showLoading = true;
-      setTimeout((() => {
-        get(this.$axios, `/api/lnd/${this.$route.params.lndId}/seed`, (res: any) => {
-          this.isMnemonicPwd = true;
-          this.seedMnemonicText = '';
-          this.seedMnemonicTextEncrypted = '';
-          this.seedMnemonic = res.data;
-          this.seedMnemonic.map(singleMnemonic => {
-            this.seedMnemonicText = `${this.seedMnemonicText}${singleMnemonic} `;
-          })
-          this.step = 2;
-          this.showLoading = false;
-        }, (err: any) => {
-          this.showLoading = false;
-          console.log(err);
-        });
-
-      }), 500);
+      const genSeed: string[] | undefined = await lndGenSeed(this.lnRestAddress);
+      if (genSeed) {
+        this.isMnemonicPwd = true;
+        this.seedMnemonic = genSeed;
+        this.step = 2;
+        this.showLoading = false;
+        showNotificationInfo('Generating seed succeed', 'Seed was successfully generated by your LN node');
+      } else {
+        showNotificationError('Generating seed failed!', 'There was an error when requesting your LN node.');
+      }
     },
-    initializeLnd() {
+    async initializeLnd() {
       this.errorBannerMessage = '';
       this.showLoading = true;
-      console.log(`'${this.lnPassword}'`);
-      console.log(sha256(this.lnPassword));
-      console.log(sha256(this.lnPassword));
-      const lndInitWalletDto: LndInitWalletDto = new LndInitWalletDto(
-        sha256(this.lnPassword),
-        this.seedMnemonic,
-        encryptSymmetricCtr(this.lnPassword, this.masterPassword),
-        encryptSymmetricCtr(this.seedMnemonic.toString(), this.masterPassword));
-      post(this.$axios, `/api/lnd/${this.$route.params.lndId}/initwallet`, lndInitWalletDto, async (res: any) => {
-        const saveEncryptedAdminMacaroonDto: SaveEncryptedAdminMacaroonDto =
-          new SaveEncryptedAdminMacaroonDto(encryptSymmetricCtr(res.data.adminMacaroonHex, this.masterPassword));
-        post(this.$axios, `/api/lnd/${this.$route.params.lndId}/adminmacaroon`, saveEncryptedAdminMacaroonDto, async () => {
+      try {
+        this.showLoading = true;
+        const lndInitWalletDto: LndInitWalletDto = await initLndWallet(this.masterPassword, new LndInitWalletInput(
+          this.lnRestAddress,
+          this.lnPassword,
+          this.seedMnemonic
+        ));
+        post(this.$axios, `/api/lnd/${this.$route.params.lndId}/initwallet`, lndInitWalletDto, async (res: any) => {
           this.showLoading = false;
-          await this.sleep(200); // small sleep required
           showNotificationInfo('LN Node wallet init succeed', 'Your LN Node is now ready to use');
-          await this.$router.push('/ln/overview');
         }, (err: any) => {
           this.showLoading = false;
-          this.errorBannerMessage = 'Internal server error occurred. Please try again later.';
+          this.errorBannerMessage = 'LN Node wallet init succeed. Internal server error occurred. Please try again later.';
           console.log(err);
         });
-      }, (err: any) => {
+      } catch (err) {
         this.showLoading = false;
-        this.errorBannerMessage = 'Internal server error occurred. Please try again later.';
-        console.log(err);
-      });
+      }
     },
     generateLnPassword() {
       if (this.lnPassword !== '') {
         showNotificationInfo('LN Node password regenerated', 'New random password was generated');
       }
       this.isPwd = true;
-      this.lnPassword = uuidv4();
+      this.lnPassword = sha256(uuidv4());
       this.step = 3;
     }
   },

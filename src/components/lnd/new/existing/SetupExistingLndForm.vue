@@ -24,7 +24,7 @@
         </div>
         Your LN node must be accessible through the Internet in order to be used with Bittery.<br>
         <q-stepper-navigation>
-          <q-btn @click="step = 2" color="primary" label="SETUP" icon="mdi-cog" :class="isMobile ? 'full-width' : ''"/>
+          <q-btn @click="step = 2" glossy color="primary" label="SETUP" icon="mdi-cog" :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -61,9 +61,9 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
+          <q-btn glossy outline @click="step = 1" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
                  icon="mdi-arrow-left-bold"/>
-          <q-btn @click="step = 3" color="primary" :disabled="lndRestAddress === '' || lndRestAddress.toUpperCase().startsWith('HTTP')"
+          <q-btn glossy @click="step = 3" color="primary" :disabled="lndRestAddress === '' || lndRestAddress.toUpperCase().startsWith('HTTP')"
                  label="NEXT STEP" :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"
                  icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
@@ -123,9 +123,9 @@
           </div>
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
+          <q-btn glossy outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
                  icon="mdi-arrow-left-bold"/>
-          <q-btn @click="step = 4" color="primary" :disabled="!(macaroonHex !== '' && isMacaroonHex)" label="NEXT STEP"
+          <q-btn glossy @click="step = 4" color="primary" :disabled="!(macaroonHex !== '' && isMacaroonHex)" label="NEXT STEP"
                  :class="isMobile ? 'q-mt-xs full-width' : 'q-ml-sm'"
                  icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
@@ -145,9 +145,9 @@
                      class="q-pt-md"
                      @onFileUploaded="tlsCertFileUploaded"></file-reader>
         <q-stepper-navigation>
-          <q-btn outline @click="step = 3" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
+          <q-btn glossy outline @click="step = 3" color="primary" label="Previous step" :class="isMobile ? 'full-width' : 'q-ml-sm'"
                  icon="mdi-arrow-left-bold"/>
-          <q-btn @click="setupExistingLndNode"
+          <q-btn glossy @click="setupExistingLndNode"
                  color="primary"
                  label="SETUP YOUR LN NODE"
                  icon="mdi-cog-box"

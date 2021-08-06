@@ -50,8 +50,8 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn @click="confirmPassword" color="white" text-color="primary" :disable="!passwordMatchingPasswordProof">Submit</q-btn>
-        <q-btn outline @click="close()" color="white">Close</q-btn>
+        <q-btn glossy @click="confirmPassword" color="white" text-color="primary" :disable="!passwordMatchingPasswordProof">Submit</q-btn>
+        <q-btn glossy outline @click="close()" color="white">Close</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

@@ -112,7 +112,7 @@
           </div>
         </vue-form>
         <q-stepper-navigation class="text-center">
-          <q-btn @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup"
+          <q-btn glossy @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup"
                  icon="mdi-key" :disable="!masterPasswordIsCorrect || !understandRules || (masterPassword === '' || (masterPassword !== masterPasswordRepeat))"
                  color="primary" label="Setup master password"
                  :class="isMobile ? 'full-width q-mt-xs' : ''"/>

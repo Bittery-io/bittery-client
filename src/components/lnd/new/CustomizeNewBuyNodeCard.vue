@@ -66,7 +66,7 @@
           </q-item>
         </q-list>
         <q-stepper-navigation>
-          <q-btn @click="setupNewLndNode" color="primary" icon="mdi-flash" label="Setup personal LN Node"
+          <q-btn glossy @click="setupNewLndNode" glossy color="primary" icon="mdi-flash" label="Setup personal LN Node"
                  :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>

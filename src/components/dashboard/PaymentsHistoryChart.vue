@@ -5,7 +5,7 @@
                     icon="mdi-chart-timeline-variant" size="md"></header-qchip>
     </q-card-section>
     <q-card-section style="padding-top: 0;margin-top:0;">
-      <apexchart height="200" :options="chartOptions" :series="series"></apexchart>
+      <apexchart height="220" :options="chartOptions" :series="series"></apexchart>
     </q-card-section>
   </q-card>
 </template>
@@ -26,9 +26,6 @@ export default GlobalMixin.extend({
       type: Object,
       required: true,
     },
-  },
-  mounted() {
-    console.log(this.dashboardInfo.paidInvoicesAmountTimeframesValues);
   },
   data: function() {
     return {
@@ -84,7 +81,7 @@ export default GlobalMixin.extend({
       },
       series: [{
         name: 'Received payment [BTC]',
-        data: this.dashboardInfo.paidInvoicesAmountTimeframesValues,
+        data: this.dashboardInfo.paidInvoicesAmountTimeframesValues.map(_ => _.toFixed(8)),
       }]
     }
   },

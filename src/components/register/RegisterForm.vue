@@ -104,7 +104,7 @@
         </div>
         <div class="row q-pt-md">
           <div class="col-grow">
-            <q-btn type="submit"
+            <q-btn glossy type="submit"
                    color="primary"
                    icon="mdi-account-plus"
                    label="Sign up"

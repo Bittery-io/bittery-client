@@ -60,7 +60,7 @@
         </div>
         <div class="row q-pa-xs">
           <div class="col-grow">
-            <q-btn type="submit"
+            <q-btn glossy type="submit"
                    color="primary"
                    icon="mdi-login"
                    label="SIGN IN"

@@ -1,6 +1,6 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
-    <q-card class="bg-grey-2">
+    <q-card class="bg-grey-2" :style="isMobile ? '' : 'width: 50% !important'">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -8,13 +8,13 @@
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
-          <div class="col-auto items-center">
+          <div class="col-12 justify-center items-center">
             <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               <span class="vertical-middle">Share payment widget</span>
             </div>
-            <div class="text-primary text-left text-subtitle2 q-pt-xs">
+            <div class="text-primary text-center text-subtitle2 q-pt-xs">
               <div class="text-center">Invoice ID: <span class="text-bold">{{invoiceId}}</span></div><br>
-              This sharable link allows anybody to access your payment widget.
+              This sharable link below allows anybody to access your payment widget.
             </div>
             <q-input
               class="q-pt-md my-accent-input"
@@ -30,15 +30,15 @@
                 <q-icon style="width:50px;" color="primary" name="mdi-link-variant" />
               </template>
               <template v-slot:after>
-                <q-btn outline dense color="primary" icon="mdi-content-copy" @click="copyToClipboard"/>
-                <q-btn dense color="primary" icon="mdi-open-in-new" @click="openPayInvoiceInNewTab(invoiceId)"/>
+                <q-btn outline glossy dense color="primary" icon="mdi-content-copy" @click="copyToClipboard"/>
+                <q-btn dense glossy color="primary" icon="mdi-open-in-new" @click="openPayInvoiceInNewTab(invoiceId)"/>
               </template>
             </q-input>
           </div>
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn color="primary" @click="close()" text-color="white">Close</q-btn>
+        <q-btn glossy color="primary" @click="close()" text-color="white">Close</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

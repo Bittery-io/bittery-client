@@ -82,7 +82,7 @@
         </div>
         <div class="row">
           <div class="col-grow q-pt-md">
-            <q-btn type="submit"
+            <q-btn glossy type="submit"
                    color="primary"
                    icon="mdi-lock-reset"
                    label="CHANGE PASSWORD"

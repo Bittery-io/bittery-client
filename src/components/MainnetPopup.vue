@@ -21,7 +21,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn @click="close()" color="primary" text-color="white">I UNDERSTAND</q-btn>
+            <q-btn glossy @click="close()" color="primary" text-color="white">I UNDERSTAND</q-btn>
           </div>
         </div>
       </q-card-section>

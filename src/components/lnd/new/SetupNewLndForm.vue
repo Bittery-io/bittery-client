@@ -25,7 +25,7 @@
         <span class="text-bold">Having LN node gives you the ability to utilize Lightning Network payments. </span><br>
           You will be able to use your LN node with external services like any LN crypto wallet.
         <q-stepper-navigation>
-          <q-btn @click="setupNewLndNode" color="primary" icon="mdi-flash" label="Initialize new LND"/>
+          <q-btn glossy @click="setupNewLndNode" glossy color="primary" icon="mdi-flash" label="Initialize new LND"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>

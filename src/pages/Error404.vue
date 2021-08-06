@@ -10,6 +10,7 @@
       Sorry, nothing here...<strong>(404)</strong>
     </p>
     <q-btn
+      glossy
       color="secondary"
       style="width:200px;"
       to="/"

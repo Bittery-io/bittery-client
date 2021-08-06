@@ -64,6 +64,7 @@
         <div class="col-auto justify-end">
           <q-field dense readonly borderless label="" stack-label>
             <q-btn
+              glossy
               label="RENEW SUBSCRIPTION"
               class="full-width"
               color="red-8"

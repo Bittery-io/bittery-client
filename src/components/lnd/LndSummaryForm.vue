@@ -123,6 +123,7 @@
         <div class="col-auto justify-end">
           <q-field readonly borderless label="" stack-label v-if="userLndDto">
             <q-btn
+              glossy
               :label="userLndDto.lndStatus !== 'TURNED_OFF' ? 'RESTART': 'TURN ON'"
               color="primary"
               icon="mdi-restart"
@@ -134,6 +135,7 @@
         <div class="col-12">
           <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'INIT_REQUIRED'">
             <q-btn
+              glossy
               :disable="userLndDto && !userLndDto.lndId"
               label="INITIALIZE LN WALLET"
               class="full-width"
@@ -145,6 +147,7 @@
           </q-field>
           <q-field readonly borderless label="" stack-label v-if="userLndDto && userLndDto.lndStatus === 'UNLOCK_REQUIRED'">
             <q-btn
+              glossy
               :disable="userLndDto && !userLndDto.lndId"
               label="UNLOCK LN NODE"
               class="full-width"

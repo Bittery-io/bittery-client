@@ -19,7 +19,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto text-primary">
-            <q-btn outlined @click="close()" color="red">Close</q-btn>
+            <q-btn glossy outlined @click="close()" color="red">Close</q-btn>
           </div>
         </div>
       </q-card-section>

@@ -42,8 +42,8 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn @click="unlockLnd" color="white" text-color="primary" :disable="password !== masterPassword">Confirm</q-btn>
-        <q-btn outline @click="close()" text-color="white">Close</q-btn>
+        <q-btn glossy @click="unlockLnd" color="white" text-color="primary" :disable="password !== masterPassword">Confirm</q-btn>
+        <q-btn glossy outline @click="close()" text-color="white">Close</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

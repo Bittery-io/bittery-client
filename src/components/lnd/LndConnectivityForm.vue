@@ -229,6 +229,7 @@ import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPassword
 import { decryptSymmetricCtr } from 'src/api/encryption-service';
 import { getLndConnectUri } from 'src/api/ln-connect-uri-service';
 import sha256 from 'js-sha256';
+import axios from 'boot/axios';
 
 export default GlobalMixin.extend({
   components: { ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip },
@@ -261,13 +262,21 @@ export default GlobalMixin.extend({
   methods: {
     onMasterPasswordConfirmed(masterPassword: string) {
       if (this.encryptedAction === 'macaroon' || this.encryptedAction === 'macaroon_hex') {
-        get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/files//macaroon`, (res: any) => {
+        get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/files//macaroon`, async (res: any) => {
           const encryptedMacaroonHex: string = res.data.encryptedArtefact;
           const decryptedMacaroonFile: string = decryptSymmetricCtr(encryptedMacaroonHex, masterPassword);
           if (this.encryptedAction === 'macaroon') {
             this.downloadFile(decryptedMacaroonFile, 'admin.macaroon', 'hex');
           } else {
             this.adminMacaroonHex = decryptedMacaroonFile;
+            const res = await this.$axios.get(`https://4ac4e8a7bd0d6e5c219efe124d0079e6.akceptujbitcoin.pl/lnd-rest/btc/v1/getinfo`, {
+              headers: {
+                'Grpc-Metadata-macaroon': decryptedMacaroonFile,
+              },
+              // 10 secs
+              timeout: 2000,
+            });
+            console.log('kurwaaa mam ten output borze', res);
           }
         }, () => {
           showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');

@@ -25,9 +25,9 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
-        <q-btn @click="restartClicked=true" v-if="!restartClicked" color="primary" icon="mdi-restart" text-color="white" :disable="restartButtonDisabled">{{ turnedOff ? 'Turn on' : 'Restart'}}</q-btn>
-        <q-btn @click="restartLnd()" v-else color="red" icon="mdi-restart" text-color="white" :disable="restartButtonDisabled">Confirm</q-btn>
+        <q-btn glossy outline @click="close()" text-color="primary">Close</q-btn>
+        <q-btn glossy @click="restartClicked=true" v-if="!restartClicked" color="primary" icon="mdi-restart" text-color="white" :disable="restartButtonDisabled">{{ turnedOff ? 'Turn on' : 'Restart'}}</q-btn>
+        <q-btn glossy @click="restartLnd()" v-else color="red" icon="mdi-restart" text-color="white" :disable="restartButtonDisabled">Confirm</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

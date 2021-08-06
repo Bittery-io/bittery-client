@@ -8,6 +8,7 @@
              class="float-right"
              color="primary"
              icon="mdi-download"
+             glossy
              label="Download latest LN Node backup"
               v-if="!isMobile && filteredData.length > 0">
       </q-btn>
@@ -61,6 +62,7 @@
              color="primary"
              icon="mdi-download"
              label="Download latest LN Node backup"
+             glossy
              v-if="isMobile && filteredData.length > 0">
       </q-btn>
     </q-card-section>

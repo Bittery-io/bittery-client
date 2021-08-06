@@ -19,7 +19,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn @click="closeAndGoToSetupPayments()" color="primary" text-color="white">SETUP PAYMENTS</q-btn>
+            <q-btn glossy @click="closeAndGoToSetupPayments()" color="primary" text-color="white">SETUP PAYMENTS</q-btn>
           </div>
         </div>
       </q-card-section>

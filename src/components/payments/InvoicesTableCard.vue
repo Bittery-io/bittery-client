@@ -194,13 +194,13 @@
                         </q-item-section>
                       </q-item>
                       <q-item class="justify-center q-mt-md">
-                        <q-btn  color="primary" outline label="Payment preview" dense style="width:100%" icon="mdi-contactless-payment" @click="openPayInvoiceInCurrentTab(props.row.id)"/>
+                        <q-btn  glossy color="primary" outline label="Payment preview" dense style="width:100%" icon="mdi-contactless-payment" @click="openPayInvoiceInCurrentTab(props.row.id)"/>
                       </q-item>
                       <q-item class="justify-center">
-                        <q-btn  color="primary" label="Share payment" dense style="width:100%" icon="mdi-share-all-outline" @click="showSharePaymentWidgetPopup(props.row.id)"/>
+                        <q-btn  glossy color="primary" label="Share payment" dense style="width:100%" icon="mdi-share-all-outline" @click="showSharePaymentWidgetPopup(props.row.id)"/>
                       </q-item>
                       <q-item class="justify-center">
-                        <q-btn class="text-su" color="primary" dense label="Invoice PDF" style="width:100%" icon="mdi-file-pdf" @click="$router.push(`/payments/pdf/${props.row.id}`)"/>
+                        <q-btn glossy class="text-su" color="primary" dense label="Invoice PDF" style="width:100%" icon="mdi-file-pdf" @click="$router.push(`/payments/pdf/${props.row.id}`)"/>
                       </q-item>
                     </q-list>
                   </q-card-section>

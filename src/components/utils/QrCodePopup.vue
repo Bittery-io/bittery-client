@@ -10,14 +10,25 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-bold text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
-              {{header}}
+              LN Node connect Qr Code
+            </div>
+            <div class="text-bold text-primary text-center text-subtitle2">
+              Scan this QR code in Zap Wallet (mobile) <br>
+              in order to connect with your Lightning Network node.
             </div>
             <qr-code class="q-mt-xs" :width="500" :height="500" id="big-qr-code" :text="qrCode"></qr-code>
           </div>
         </div>
+        <div class="row justify-center">
+          <a target="_blank" href='https://zaphq.io/'>
+            <q-chip clickable class="shadow-10" icon="info" color="grey-8" text-color="white">
+              <span> Zap Wallet https://zaphq.io/</span>
+            </q-chip>
+          </a>
+        </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto text-primary">
-            <q-btn @click="close()" color="primary">Close</q-btn>
+            <q-btn glossy @click="close()" color="primary">Close</q-btn>
           </div>
         </div>
       </q-card-section>
@@ -48,7 +59,6 @@
     data() {
       return {
         showPopup: false,
-        header: 'LN Node connect Qr Code',
       };
     },
     watch: {

@@ -38,6 +38,7 @@
         <div class="row q-pt-md">
           <div class="col-grow">
             <q-btn type="submit"
+                   glossy
                    color="primary"
                    icon="mdi-lock-reset"
                    label="RESET PASSWORD"

@@ -19,7 +19,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn @click="closeAndGoToLoginView()" color="primary" text-color="white">Sign in</q-btn>
+            <q-btn glossy @click="closeAndGoToLoginView()" color="primary" text-color="white">Sign in</q-btn>
           </div>
         </div>
       </q-card-section>

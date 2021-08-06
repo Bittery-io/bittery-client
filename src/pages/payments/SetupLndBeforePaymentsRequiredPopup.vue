@@ -19,7 +19,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn @click="close()" color="primary" text-color="white">SETUP LIGHTNING NETWORK</q-btn>
+            <q-btn glossy @click="close()" color="primary" text-color="white">SETUP LIGHTNING NETWORK</q-btn>
           </div>
         </div>
       </q-card-section>

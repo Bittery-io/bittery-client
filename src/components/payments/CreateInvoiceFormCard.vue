@@ -129,7 +129,7 @@
           </div>
           <div class="row q-pa-md justify-center">
             <div class="col-auto justify-center">
-              <q-btn color="primary" icon="mdi-file-plus" text-color="white" label="Create invoice" @click="saveInvoice"
+              <q-btn color="primary" icon="mdi-file-plus" text-color="white" glossy label="Create invoice" @click="saveInvoice"
                      :disabled="amount <= 0 || createInvoiceButtonLocked"/>
             </div>
           </div>
@@ -148,6 +148,7 @@
   import HeaderQchip from 'components/utils/HeaderQchip.vue';
   import { addMonthsToDate } from 'src/api/date-service';
   import { currentVM } from '@vue/composition-api/dist/runtimeContext';
+  import axios from 'boot/axios';
 
   export default GlobalMixin.extend({
     components: { Loader, HeaderQchip },

@@ -51,8 +51,8 @@
       </q-card-section>
 
       <q-card-actions align="center" class="text-primary">
-        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
-        <q-btn @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup"
+        <q-btn glossy outline @click="close()" text-color="primary">Close</q-btn>
+        <q-btn glossy @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup"
                color="primary"
                :disable="!(lnSeedBackup || lnNodePasswordBackup || lnScbBackup || adminMacaroonBackup || tlsCertBackup)">
           <q-icon left name="mdi-download" />

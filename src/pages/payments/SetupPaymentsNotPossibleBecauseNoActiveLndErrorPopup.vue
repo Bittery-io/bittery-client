@@ -19,7 +19,7 @@
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto text-primary">
-            <q-btn outlined @click="closeAndGoToAccount()" color="red">RENEW SUBSCRIPTION</q-btn>
+            <q-btn glossy outlined @click="closeAndGoToAccount()" color="red">RENEW SUBSCRIPTION</q-btn>
           </div>
         </div>
       </q-card-section>

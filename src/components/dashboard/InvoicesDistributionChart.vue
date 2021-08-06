@@ -4,7 +4,7 @@
       <header-qchip :text="`All invoices [${timeframe}]`" icon="mdi-chart-timeline" size="md"></header-qchip>
     </q-card-section>
     <q-card-section style="padding-top: 0;margin-top:0;">
-      <apexchart height="200" :options="chartOptions" :series="series" style="padding: 0 !important; margin: 0 !important;"></apexchart>
+      <apexchart height="220" :options="chartOptions" :series="series" style="padding: 0 !important; margin: 0 !important;"></apexchart>
     </q-card-section>
   </q-card>
 </template>
@@ -39,7 +39,12 @@ export default GlobalMixin.extend({
             text: 'All invoices',
           },
           labels: {
-            formatter: (value) => { return value.toFixed(0) },
+            formatter: (value) => {
+              if (value) {
+                return value.toFixed(0)
+              }
+              return '';
+            },
           },
         },
         xaxis: {

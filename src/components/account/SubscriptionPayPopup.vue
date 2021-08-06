@@ -84,8 +84,8 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn outline @click="close()" text-color="primary">Close</q-btn>
-        <q-btn @click="extendSubscription()" color="primary">
+        <q-btn glossy outline @click="close()" text-color="primary">Close</q-btn>
+        <q-btn glossy @click="extendSubscription()" color="primary">
           <q-icon left name="mdi-bitcoin" />
           Renew and pay
         </q-btn>

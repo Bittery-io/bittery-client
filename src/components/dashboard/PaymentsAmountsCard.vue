@@ -3,7 +3,7 @@
     <standard-wallet-info-popup :show="showStandardWalletInfoPopup"></standard-wallet-info-popup>
     <ln-wallet-info-popup :show="showLndWalleInfoPopup" ></ln-wallet-info-popup>
     <q-card-section>
-      <div class="row">
+      <div class="row items-center">
         <div class="col-auto">
           <header-qchip :text="`Your payments details [ ${timeframeValue} ]`" icon="mdi-calculator" size="md"></header-qchip>
         </div>
@@ -18,8 +18,8 @@
       </div>
     </q-card-section>
     <q-card-section style="padding-top: 0;margin-top:0;">
-      <div class="row justify-center">
-        <div class="col-auto" :class="$q.platform.is.mobile ? '' : 'q-pa-lg'">
+      <div class="row justify-center items-center">
+        <div class="col-auto" :class="$q.platform.is.mobile ? '' : 'q-pt-lg q-pb-lg'">
           <q-list>
             <q-item>
               <q-item-section avatar>
@@ -33,7 +33,7 @@
                     <div class="col-auto q-pl-xs" v-if="totalReceivedPaymentsBtcInUsd === ''">
                       <q-skeleton type="text" width="40px" bordered/>
                     </div>
-                    <div class="col-auto q-pl-xs" v-else>
+                    <div class="col-auto" v-else>
                       <span :class="isMobile ? 'text-h6': 'text-h5'">{{totalReceivedPaymentsBtcInUsd}}</span>
                     </div>
                     <div class="col-auto q-pl-xs">
@@ -45,7 +45,7 @@
                     <div class="col-auto q-pl-xs" v-else>
                       <span class="text-bold">{{currentBitcoinUsdPrice}}</span>
                     </div>
-                    <div class="col-auto q-pl-xs">
+                    <div class="col-auto" :class="isMobile ? '' : 'q-pl-xs'">
                       <span class="text-bold">(Coingecko)</span>
                     </div>
                   </div>
@@ -55,10 +55,8 @@
             </q-item>
           </q-list>
         </div>
-        <div class="col-grow" v-if="!isMobile"></div>
-
-        <div class="col-lg-auto col-xs-6  justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
-          <q-list dense separator class="vertical-align">
+        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
+          <q-list dense separator>
             <q-item>
               <q-item-section avatar>
                 <q-icon color="orange-8" name="mdi-bitcoin" size="md"/>
@@ -66,8 +64,13 @@
               <q-item-section>
                 <q-item-label class="text-subtitle2">
                   <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsStandardWalletBtc"></span> BTC
+                  <br>
+                  <div class="col-auto" v-if="totalReceivedPaymentsBtcInUsdTransactions === ''">
+                    <q-skeleton type="text" width="40px" bordered/>
+                  </div>
+                  <span class="text-bold" v-else>{{totalReceivedPaymentsBtcInUsdTransactions}}</span>
                 </q-item-label>
-                <q-item-label style="margin-top: 0; padding-top: 0;" caption>Standard wallet</q-item-label>
+                <q-item-label caption>Standard wallet</q-item-label>
               </q-item-section>
             </q-item>
             <q-item>
@@ -76,31 +79,43 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label class="text-subtitle2">
-                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsLnNodeWalletBtc"></span> BTC
+                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsLnNodeWalletBtc"></span> BTC <br>
+                  <div class="col-auto" v-if="totalReceivedPaymentsBtcInUsdLightning === ''">
+                    <q-skeleton type="text" width="40px" bordered/>
+                  </div>
+                  <span class="text-bold" v-else>{{totalReceivedPaymentsBtcInUsdLightning}}</span>
                 </q-item-label>
-                <q-item-label style="margin-top: 0; padding-top: 0;" caption>LN Node wallet</q-item-label>
+                <q-item-label caption>LN Node wallet</q-item-label>
               </q-item-section>
             </q-item>
           </q-list>
         </div>
-        <div class="col-lg-auto col-xs-6 justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
-          <q-list dense separator class="vertical-align justify-right">
+        <div class="col-auto" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
+          <q-list separator>
             <q-item>
-              <q-chip class="vertical-middle" color="primary" text-color="white" square
-                      icon="mdi-wallet" clickable @click="showStandardWalletInfoPopup = !showStandardWalletInfoPopup">
-                Standard wallet
-              </q-chip>
+              <q-item-section>
+                <q-chip v-if="!isMobile" color="primary" text-color="white" square
+                        icon="mdi-wallet" clickable @click="showStandardWalletInfoPopup = !showStandardWalletInfoPopup">
+                  Standard wallet
+                </q-chip>
+                <q-btn  glossy v-else square color="primary" text-color="orange-8" icon="mdi-wallet" @click="showStandardWalletInfoPopup = !showStandardWalletInfoPopup" />
+              </q-item-section>
             </q-item>
             <q-item>
-              <q-chip class="vertical-middle" color="primary" text-color="white" square
-                      icon="mdi-wallet" clickable @click="showLndWalleInfoPopup = !showLndWalleInfoPopup">
-                LN Node wallet
-              </q-chip>
+              <q-item-section>
+                <q-chip v-if="!isMobile" color="primary" text-color="white" square
+                        icon="mdi-wallet" clickable @click="showLndWalleInfoPopup = !showLndWalleInfoPopup">
+                  LN Node wallet
+                </q-chip>
+                <q-btn glossy v-else square color="primary"  text-color="yellow-7" icon="mdi-wallet" @click="showLndWalleInfoPopup = !showLndWalleInfoPopup" />
+                <q-item-label caption></q-item-label>
+              </q-item-section>
             </q-item>
           </q-list>
         </div>
+        <div class="col-grow" v-if="!isMobile"></div>
         <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-lg' : ''">
-          <q-list dense separator class="vertical-align">
+          <q-list dense separator>
             <statistic-item
               icon="mdi-cash-plus"
               :value="`${dashboardInfo.totalInvoicedAmountBtc.toFixed(8)} BTC`"
@@ -126,8 +141,8 @@
             </statistic-item>
           </q-list>
         </div>
-        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-xs' : ''">
-          <q-list dense separator class="vertical-align">
+        <div class="col-auto justify-center" :class="$q.platform.is.mobile ? 'q-pt-lg' : ''">
+          <q-list dense separator class="">
             <statistic-item
               icon="mdi-file-plus"
               :value="`${dashboardInfo.invoicesQuantity}`"
@@ -191,6 +206,8 @@ export default GlobalMixin.extend({
       showLndWalleInfoPopup: false,
       timeframeValue: '',
       totalReceivedPaymentsBtcInUsd: '',
+      totalReceivedPaymentsBtcInUsdLightning: '',
+      totalReceivedPaymentsBtcInUsdTransactions: '',
       currentBitcoinUsdPrice: '',
       usdFormatter: undefined,
     };
@@ -203,10 +220,11 @@ export default GlobalMixin.extend({
     // it is the same copied in createInvoiceFormCard so fix it to 1 place
     get(this.$axios, 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_last_updated_at=true', (res) => {
       const currentPriceInUsd: number = res.data.bitcoin.usd;
-      console.log(currentPriceInUsd, (currentPriceInUsd & this.dashboardInfo.totalReceivedPaymentsBtc));
       if (currentPriceInUsd) {
         this.currentBitcoinUsdPrice = this.usdFormatter.format(currentPriceInUsd);
         this.totalReceivedPaymentsBtcInUsd = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedPaymentsBtc);
+        this.totalReceivedPaymentsBtcInUsdLightning = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedViaLightning);
+        this.totalReceivedPaymentsBtcInUsdTransactions = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedViaTransactions);
       }
     });
     console.log(this.dashboardInfo);

@@ -15,7 +15,7 @@
               <div class="col-grow">
                 <div class="row justify-end">
                   <div class="col-auto justify-end">
-                    <q-btn color="primary" class="q-ma-xs" icon="mdi-download" @click="downloadPdf">Download</q-btn>
+                    <q-btn glossy color="primary" class="q-ma-xs" icon="mdi-download" @click="downloadPdf">Download</q-btn>
                   </div>
                 </div>
               </div>
@@ -25,7 +25,7 @@
                 <header-qchip text="Invoice PDF" icon="mdi-file-pdf"></header-qchip>
               </div>
               <div class="col-auto justify-center">
-                <q-btn color="primary" class="q-ma-md" icon="mdi-download" @click="downloadPdf">Download</q-btn>
+                <q-btn glossy color="primary" class="q-ma-md" icon="mdi-download" @click="downloadPdf">Download</q-btn>
               </div>
             </div>
             <div class="row justify-center" v-if="!this.$q.platform.is.mobile">

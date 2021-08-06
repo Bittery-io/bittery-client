@@ -98,6 +98,7 @@
         <div class="col-auto justify-end">
           <q-field readonly borderless label="" stack-label>
             <q-btn
+              glossy
               :label="isSubscriptionExpired ? 'Renew subscription' : 'Extend subscription'"
               :color="isSubscriptionExpired ? 'red-8' : 'primary'"
               icon="mdi-bitcoin"
