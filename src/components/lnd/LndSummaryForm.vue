@@ -214,7 +214,7 @@
         this.showLoading = true;
         get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/password`, async (res: any) => {
           await sleep(100);
-          post(this.$axios, `/api/lnd/${this.userLndDto.lndId}/unlock`, { password: sha256(decryptSymmetricCtr(res.data.encryptedArtefact, masterPassword)) }, async (res: any) => {
+          post(this.$axios, `/api/lnd/${this.userLndDto.lndId}/unlock`, { password: decryptSymmetricCtr(res.data.encryptedArtefact, masterPassword) }, async (res: any) => {
             showNotificationInfo('LN Node successfully unlocked.', 'Your node is now ready to use.')
             await sleep(3000);
             this.showLoading = false;

@@ -269,21 +269,13 @@ export default GlobalMixin.extend({
             this.downloadFile(decryptedMacaroonFile, 'admin.macaroon', 'hex');
           } else {
             this.adminMacaroonHex = decryptedMacaroonFile;
-            const res = await this.$axios.get(`https://4ac4e8a7bd0d6e5c219efe124d0079e6.akceptujbitcoin.pl/lnd-rest/btc/v1/getinfo`, {
-              headers: {
-                'Grpc-Metadata-macaroon': decryptedMacaroonFile,
-              },
-              // 10 secs
-              timeout: 2000,
-            });
-            console.log('kurwaaa mam ten output borze', res);
           }
         }, () => {
           showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');
         });
       } else if (this.encryptedAction === 'password') {
         get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/password`, (res: any) => {
-          this.lnPassword = sha256(decryptSymmetricCtr(res.data.encryptedArtefact, masterPassword));
+          this.lnPassword = decryptSymmetricCtr(res.data.encryptedArtefact, masterPassword);
         }, () => {
           showNotificationError('Downloading admin.macaroon failed', 'Internal server error occurred');
         });

@@ -212,9 +212,9 @@
           Please don't close the browser and wait until the finish.
         </div>
         <q-stepper-navigation>
-          <q-btn outline @click="goToPreviousStepFromLastStep" color="primary" label="Previous step"
+          <q-btn glossy outline @click="goToPreviousStepFromLastStep" color="primary" label="Previous step"
                  :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
-          <q-btn @click="setupNewBtcpayServices" icon="mdi-contactless-payment-circle" color="primary" label="Initialize Payments" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn glossy @click="setupNewBtcpayServices" icon="mdi-contactless-payment-circle" color="primary" label="Initialize Payments" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
