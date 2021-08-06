@@ -76,49 +76,49 @@
           </q-btn>
         </q-stepper-navigation>
       </q-step>
-<!--      <q-step-->
-<!--        :name="3"-->
-<!--        title="24 words mnemonic seed - confirm and save"-->
-<!--        icon="info"-->
-<!--        class="text-left"-->
-<!--        :done="step > 3">-->
-<!--        <div class="text-body1 q-pb-md">-->
-<!--          Please provide generated 24 words mnemonic seed in order <b>to confirm</b> you saved it correctly.-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--          <div class="col-12">-->
-<!--            <vue-form :state='lnSeedState' @submit.prevent="() => {}">-->
-<!--              <validate>-->
-<!--                <q-input-->
-<!--                  v-model="seedMnemonicConfirmationText"-->
-<!--                  outlined-->
-<!--                  square-->
-<!--                  :dense="isMobile"-->
-<!--                  name="seedMnemonicConfirmationText"-->
-<!--                  ref="seedMnemonicConfirmationText"-->
-<!--                  bg-color="accent"-->
-<!--                  label="24 words mnemonic seed"-->
-<!--                  required-->
-<!--                  :rules="[ val => (-->
-<!--                              lnSeedState.seedMnemonicConfirmationText !== undefined &&-->
-<!--                              lnSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 24 words mnemonic seed',-->
-<!--                              val => (seedMnemonicText.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic seed does not match generated!']"-->
-<!--                  type='text'>-->
-<!--                  <template v-slot:prepend>-->
-<!--                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>-->
-<!--                  </template>-->
-<!--                </q-input>-->
-<!--              </validate>-->
-<!--            </vue-form>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <q-stepper-navigation>-->
-<!--          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>-->
-<!--          <q-btn @click="generateLnPassword" color="primary"-->
-<!--                 :disable="seedMnemonicText.trim() !== seedMnemonicConfirmationText.trim()"-->
-<!--                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>-->
-<!--        </q-stepper-navigation>-->
-<!--      </q-step>-->
+      <!--      <q-step-->
+      <!--        :name="3"-->
+      <!--        title="24 words mnemonic seed - confirm and save"-->
+      <!--        icon="info"-->
+      <!--        class="text-left"-->
+      <!--        :done="step > 3">-->
+      <!--        <div class="text-body1 q-pb-md">-->
+      <!--          Please provide generated 24 words mnemonic seed in order <b>to confirm</b> you saved it correctly.-->
+      <!--        </div>-->
+      <!--        <div class="row">-->
+      <!--          <div class="col-12">-->
+      <!--            <vue-form :state='lnSeedState' @submit.prevent="() => {}">-->
+      <!--              <validate>-->
+      <!--                <q-input-->
+      <!--                  v-model="seedMnemonicConfirmationText"-->
+      <!--                  outlined-->
+      <!--                  square-->
+      <!--                  :dense="isMobile"-->
+      <!--                  name="seedMnemonicConfirmationText"-->
+      <!--                  ref="seedMnemonicConfirmationText"-->
+      <!--                  bg-color="accent"-->
+      <!--                  label="24 words mnemonic seed"-->
+      <!--                  required-->
+      <!--                  :rules="[ val => (-->
+      <!--                              lnSeedState.seedMnemonicConfirmationText !== undefined &&-->
+      <!--                              lnSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 24 words mnemonic seed',-->
+      <!--                              val => (seedMnemonicText.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic seed does not match generated!']"-->
+      <!--                  type='text'>-->
+      <!--                  <template v-slot:prepend>-->
+      <!--                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>-->
+      <!--                  </template>-->
+      <!--                </q-input>-->
+      <!--              </validate>-->
+      <!--            </vue-form>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <q-stepper-navigation>-->
+      <!--          <q-btn outline @click="step = 2" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>-->
+      <!--          <q-btn @click="generateLnPassword" color="primary"-->
+      <!--                 :disable="seedMnemonicText.trim() !== seedMnemonicConfirmationText.trim()"-->
+      <!--                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>-->
+      <!--        </q-stepper-navigation>-->
+      <!--      </q-step>-->
       <q-step
         :name="3"
         title="Generate LN Node password"
@@ -161,54 +161,54 @@
                  :label="isPwd ? 'Show password' : 'Hide password'"
                  :icon="isPwd ? 'mdi-eye' : 'mdi-eye-off'" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
           <q-btn glossy @click="generateLnPassword" color="grey-7" label="Regenerate" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"
-           icon="mdi-cog-clockwise"/>
+                 icon="mdi-cog-clockwise"/>
           <q-btn glossy @click="step = 4;lnPasswordConfirmation=''" color="primary" label="Next step"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
-<!--      <q-step-->
-<!--        :name="5"-->
-<!--        title="LN Node password - confirm and save"-->
-<!--        icon="info"-->
-<!--        class="text-left"-->
-<!--        :done="step > 5">-->
-<!--        <div class="text-body1 q-pb-md">-->
-<!--          Please provide generate LN Node password in order <b>to confirm</b> you saved it correctly.-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--          <div class="col-12">-->
-<!--            <vue-form :state='lnPasswordState' @submit.prevent="() => {}">-->
-<!--              <validate>-->
-<!--                <q-input-->
-<!--                  v-model="lnPasswordConfirmation"-->
-<!--                  outlined-->
-<!--                  square-->
-<!--                  :dense="isMobile"-->
-<!--                  name="lnPasswordConfirmation"-->
-<!--                  ref="lnPasswordConfirmation"-->
-<!--                  bg-color="accent"-->
-<!--                  label="LN Node password"-->
-<!--                  required-->
-<!--                  :rules="[ val => (-->
-<!--                              lnPasswordState.lnPasswordConfirmation !== undefined &&-->
-<!--                              lnPasswordState.lnPasswordConfirmation.$valid) || 'Please confirm your LN Node password',-->
-<!--                              val => (lnPassword.trim() === lnPasswordConfirmation.trim()) || 'Given password does not match generated!']"-->
-<!--                  type='text'>-->
-<!--                  <template v-slot:prepend>-->
-<!--                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>-->
-<!--                  </template>-->
-<!--                </q-input>-->
-<!--              </validate>-->
-<!--            </vue-form>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <q-stepper-navigation>-->
-<!--          <q-btn outline @click="step = 4" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>-->
-<!--          <q-btn @click="step = 6" color="primary"-->
-<!--                 :disable="lnPassword.trim() !== lnPasswordConfirmation.trim()"-->
-<!--                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>-->
-<!--        </q-stepper-navigation>-->
-<!--      </q-step>-->
+      <!--      <q-step-->
+      <!--        :name="5"-->
+      <!--        title="LN Node password - confirm and save"-->
+      <!--        icon="info"-->
+      <!--        class="text-left"-->
+      <!--        :done="step > 5">-->
+      <!--        <div class="text-body1 q-pb-md">-->
+      <!--          Please provide generate LN Node password in order <b>to confirm</b> you saved it correctly.-->
+      <!--        </div>-->
+      <!--        <div class="row">-->
+      <!--          <div class="col-12">-->
+      <!--            <vue-form :state='lnPasswordState' @submit.prevent="() => {}">-->
+      <!--              <validate>-->
+      <!--                <q-input-->
+      <!--                  v-model="lnPasswordConfirmation"-->
+      <!--                  outlined-->
+      <!--                  square-->
+      <!--                  :dense="isMobile"-->
+      <!--                  name="lnPasswordConfirmation"-->
+      <!--                  ref="lnPasswordConfirmation"-->
+      <!--                  bg-color="accent"-->
+      <!--                  label="LN Node password"-->
+      <!--                  required-->
+      <!--                  :rules="[ val => (-->
+      <!--                              lnPasswordState.lnPasswordConfirmation !== undefined &&-->
+      <!--                              lnPasswordState.lnPasswordConfirmation.$valid) || 'Please confirm your LN Node password',-->
+      <!--                              val => (lnPassword.trim() === lnPasswordConfirmation.trim()) || 'Given password does not match generated!']"-->
+      <!--                  type='text'>-->
+      <!--                  <template v-slot:prepend>-->
+      <!--                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>-->
+      <!--                  </template>-->
+      <!--                </q-input>-->
+      <!--              </validate>-->
+      <!--            </vue-form>-->
+      <!--          </div>-->
+      <!--        </div>-->
+      <!--        <q-stepper-navigation>-->
+      <!--          <q-btn outline @click="step = 4" color="primary" label="Previous step" :class="isMobile ? 'full-width q-mt-xs' : ''"/>-->
+      <!--          <q-btn @click="step = 6" color="primary"-->
+      <!--                 :disable="lnPassword.trim() !== lnPasswordConfirmation.trim()"-->
+      <!--                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>-->
+      <!--        </q-stepper-navigation>-->
+      <!--      </q-step>-->
       <q-step
         :name="4"
         title="Encrypt components"
@@ -255,7 +255,7 @@ import GlobalMixin from "../../../../mixins/global-mixin";
 import ErrorPopup from 'components/utils/ErrorPopup.vue';
 import Loader from 'components/utils/Loader.vue';
 import { get, post } from 'src/api/http-service';
-import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
+import { showNotificationInfo } from 'src/api/notificatios-api';
 import { BitcoinWallet } from 'src/model/bitcoin-wallet';
 import { LndInitWalletDto } from 'src/dto/lnd/lnd-init-wallet-dto';
 import WarningInfoBanner from 'components/utils/WarningInfoBanner.vue';
@@ -264,23 +264,21 @@ import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPassword
 import { encryptSymmetricCtr } from 'src/api/encryption-service';
 import { SaveEncryptedAdminMacaroonDto } from 'src/dto/lnd/save-encrypted-admin-macaroon-dto';
 import { v4 as uuidv4 } from 'uuid';
-import { lndGenSeed } from 'src/api/lnd/lnd-api-service';
-import { initLndWallet } from 'src/api/lnd/lnd-service';
-import { LndInitWalletInput } from 'src/api/lnd/lnd-init-wallet-input';
-
+// 20ee27cd-5368-4a74-9390-004ff229858c
 export default GlobalMixin.extend({
   name: 'InitializeNewLndWalletForm',
   components: { ProvideMasterPasswordPopup, WarningInfoBanner, ErrorPopup, Loader },
   data() {
     return {
-      lnRestAddress: '',
       showMasterPasswordPopup: false,
       lnSeedState: {},
       lnPasswordState: {},
       isPwd: true,
       isMnemonicPwd: true,
       bitcoinWallet: <BitcoinWallet> {},
-      seedMnemonic: <string[]> [],
+      seedMnemonic: [],
+      seedMnemonicText: '',
+      seedMnemonicTextEncrypted: '',
       step: 1,
       errorBannerMessage: '',
       bitcoinLndCheckbox: true,
@@ -294,55 +292,60 @@ export default GlobalMixin.extend({
     if (this.$route.query.electrum && this.$route.query.electrum === 'true') {
       this.userHasElectrum = true;
     }
-    this.showLoading = true;
-    get(this.$axios, `/api/lnd/${this.$route.params.lndId}/rest-address`, (res: any) => {
-      this.lnRestAddress = res.data.restAddress;
-      this.showLoading = false;
-    }, () => {
-      this.showLoading = false;
-      showNotificationError('Getting LN node info failed', 'Server error occurred on beginning of init process. Try again later.')
-    });
   },
   methods: {
     onMasterPasswordConfirmed(masterPassword: string) {
       showNotificationInfo('Components successfully encrypted', 'The data is encrypted with your master password');
       this.masterPassword = masterPassword;
     },
-    async generateSeedMnemonic() {
+    generateSeedMnemonic() {
       this.masterPassword = '';
       this.showLoading = true;
-      const genSeed: string[] | undefined = await lndGenSeed(this.lnRestAddress);
-      if (genSeed) {
-        this.isMnemonicPwd = true;
-        this.seedMnemonic = genSeed;
-        this.step = 2;
-        this.showLoading = false;
-        showNotificationInfo('Generating seed succeed', 'Seed was successfully generated by your LN node');
-      } else {
-        showNotificationError('Generating seed failed!', 'There was an error when requesting your LN node.');
-      }
-    },
-    async initializeLnd() {
-      this.errorBannerMessage = '';
-      this.showLoading = true;
-      try {
-        this.showLoading = true;
-        const lndInitWalletDto: LndInitWalletDto = await initLndWallet(this.masterPassword, new LndInitWalletInput(
-          this.lnRestAddress,
-          this.lnPassword,
-          this.seedMnemonic
-        ));
-        post(this.$axios, `/api/lnd/${this.$route.params.lndId}/initwallet`, lndInitWalletDto, async (res: any) => {
+      setTimeout((() => {
+        get(this.$axios, `/api/lnd/${this.$route.params.lndId}/seed`, (res: any) => {
+          this.isMnemonicPwd = true;
+          this.seedMnemonicText = '';
+          this.seedMnemonicTextEncrypted = '';
+          this.seedMnemonic = res.data;
+          this.seedMnemonic.map(singleMnemonic => {
+            this.seedMnemonicText = `${this.seedMnemonicText}${singleMnemonic} `;
+          })
+          this.step = 2;
           this.showLoading = false;
-          showNotificationInfo('LN Node wallet init succeed', 'Your LN Node is now ready to use');
         }, (err: any) => {
           this.showLoading = false;
-          this.errorBannerMessage = 'LN Node wallet init succeed. Internal server error occurred. Please try again later.';
           console.log(err);
         });
-      } catch (err) {
+
+      }), 500);
+    },
+    initializeLnd() {
+      this.errorBannerMessage = '';
+      this.showLoading = true;
+      console.log(`'${this.lnPassword}'`);
+      const lndInitWalletDto: LndInitWalletDto = new LndInitWalletDto(
+        this.lnPassword,
+        this.seedMnemonic,
+        encryptSymmetricCtr(this.lnPassword, this.masterPassword),
+        encryptSymmetricCtr(this.seedMnemonic.toString(), this.masterPassword));
+      post(this.$axios, `/api/lnd/${this.$route.params.lndId}/initwallet`, lndInitWalletDto, async (res: any) => {
+        const saveEncryptedAdminMacaroonDto: SaveEncryptedAdminMacaroonDto =
+          new SaveEncryptedAdminMacaroonDto(encryptSymmetricCtr(res.data.adminMacaroonHex, this.masterPassword));
+        post(this.$axios, `/api/lnd/${this.$route.params.lndId}/adminmacaroon`, saveEncryptedAdminMacaroonDto, async () => {
+          this.showLoading = false;
+          await this.sleep(200); // small sleep required
+          showNotificationInfo('LN Node wallet init succeed', 'Your LN Node is now ready to use');
+          await this.$router.push('/ln/overview');
+        }, (err: any) => {
+          this.showLoading = false;
+          this.errorBannerMessage = 'Internal server error occurred. Please try again later.';
+          console.log(err);
+        });
+      }, (err: any) => {
         this.showLoading = false;
-      }
+        this.errorBannerMessage = 'Internal server error occurred. Please try again later.';
+        console.log(err);
+      });
     },
     generateLnPassword() {
       if (this.lnPassword !== '') {

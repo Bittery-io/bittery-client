@@ -1,16 +1,14 @@
 export class LndInitWalletDto {
 
+  password: string;
+  seedMnemonic: string[];
   passwordEncrypted: string;
   seedMnemonicEncrypted: string;
-  adminMacaroonHexEncrypted: string;
-  bitteryBakedMacaroonHex: string
-  nodePublicKey: string;
 
-  constructor(passwordEncrypted: string, seedMnemonicEncrypted: string, adminMacaroonHexEncrypted: string, bitteryBakedMacaroonHex: string, nodePublicKey: string) {
+  constructor(password: string, seedMnemonic: string[], passwordEncrypted: string, seedMnemonicEncrypted: string) {
+    this.password = password;
+    this.seedMnemonic = seedMnemonic;
     this.passwordEncrypted = passwordEncrypted;
     this.seedMnemonicEncrypted = seedMnemonicEncrypted;
-    this.adminMacaroonHexEncrypted = adminMacaroonHexEncrypted;
-    this.bitteryBakedMacaroonHex = bitteryBakedMacaroonHex;
-    this.nodePublicKey = nodePublicKey;
   }
 }
