@@ -9,7 +9,8 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <billing-invoices-table :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"></billing-invoices-table>
+        <invoices-table :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'" :invoices="invoices" v-if="invoices"></invoices-table>
+<!--        <billing-invoices-table :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"></billing-invoices-table>-->
       </div>
     </div>
   </q-page>
@@ -20,14 +21,26 @@
 import GlobalMixin from "../../mixins/global-mixin";
 import Loader from 'components/utils/Loader.vue';
 import YourSubscriptionForm from 'components/account/YourSubscriptionForm.vue';
-import BillingInvoicesTable from 'components/account/BillingInvoicesTable.vue';
+import InvoicesTable from 'components/dashboard/InvoicesTable.vue';
+import { get } from 'src/api/http-service';
 
 export default GlobalMixin.extend({
   name: 'AccountDetailsPage',
-  components: { BillingInvoicesTable, YourSubscriptionForm, Loader },
+  components: { InvoicesTable, YourSubscriptionForm, Loader },
+  data() {
+    return {
+      invoices: undefined,
+    };
+  },
   mounted() {
-    // this.showLoading = true;
-
+    this.showLoading = true;
+    get(this.$axios, '/api/account/subscription/billings', (res: any) => {
+      this.showLoading = false;
+      this.invoices = res.data.map(billing => billing.invoice);
+    }, async (err: any) => {
+      this.showLoading = false;
+      console.log('Getting billing dtos failed with err', err);
+    })
   },
 });
 </script>

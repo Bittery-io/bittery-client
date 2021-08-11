@@ -36,10 +36,10 @@
                         counter
                         v-model="lnAlias"
                         hint="Friendly name of your Lightning Network visible for other network participants (OPTIONAL)"
-                        label="LN Alias (by default random value will be generated)"
+                        label="Lightning Node Alias (by default random value will be generated)"
                         maxlength="32">
                         <template v-slot:prepend>
-                          <q-icon color="primary" name="mdi-key"/>
+                          <q-icon color="primary" name="mdi-card-account-details"/>
                         </template>
                       </q-input>
                     </validate>
@@ -66,7 +66,7 @@
           </q-item>
         </q-list>
         <q-stepper-navigation>
-          <q-btn glossy @click="setupNewLndNode" glossy color="primary" icon="mdi-flash" label="Setup personal LN Node"
+          <q-btn glossy @click="setupNewLndNode" color="primary" icon="mdi-flash" label="Setup personal LN Node"
                  :class="isMobile ? 'full-width' : ''"/>
         </q-stepper-navigation>
       </q-step>

@@ -77,11 +77,11 @@ export default Vue.extend({
     sleep(ms: number) {
       return sleep(ms);
     },
-    timeFormatOnly(date: number) {
-      return formatOnlyTime(date);
+    timeFormatOnly(epochMillisecs: number) {
+      return formatOnlyTime(epochMillisecs);
     },
-    dateFormatOnly(date: number) {
-      return formatOnlyDate(date);
+    dateFormatOnly(epochMillisecs: number) {
+      return formatOnlyDate(epochMillisecs);
     },
   },
 });

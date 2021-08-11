@@ -58,7 +58,7 @@ export default GlobalMixin.extend({
           invoice.status.toLowerCase().includes(filter) ||
           invoice.itemDesc.toLowerCase().includes(filter) ||
           invoice.id.toLowerCase().includes(filter) ||
-          (invoice.buyer.name && invoice.buyer.name.toLowerCase().includes(filter)));
+          (props.row.invoiceData.metadata.buyerName && props.row.invoiceData.metadata.buyerName.toLowerCase().includes(filter)));
       }
     },
   },
@@ -73,15 +73,15 @@ export default GlobalMixin.extend({
       }
     },
     getPaymentDoneDate(row: any) {
-      if (row.status.toUpperCase() === 'COMPLETE') {
+      if (props.row.invoiceData.status.toLowerCase() === 'settled') {
         //todo probably should be done better
         console.log(row.cryptoInfo[0].payments[0].receivedDate);
         return new Date(row.cryptoInfo[0].payments[0].receivedDate).getTime();
       }
     },
     getClassDependingOfInvoiceStatus(status: string) {
-      switch (status) {
-        case 'complete':
+      switch (status.toLowerCase()) {
+        case 'settled':
           return 'bg-green-2';
         case 'expired':
           return 'bg-red-2';

@@ -28,7 +28,7 @@
       <div class="col-lg-12 col-xs-grow">
         <invoices-table
           :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"
-          :timeframe="timeframe" :dashboard-info="dashboardInfoDto" v-if="dashboardInfoDto"></invoices-table>
+          :timeframe="timeframe" :invoices="dashboardInfoDto.invoices" v-if="dashboardInfoDto"></invoices-table>
       </div>
     </div>
   </q-page>
