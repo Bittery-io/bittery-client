@@ -92,7 +92,7 @@
                 </q-chip>
               </q-td>
               <q-td >
-                <q-chip dense square color="grey" class="text-subtitle2" text-color="white">
+                <q-chip dense square outline class="text-subtitle2">
                   {{ props.row.invoiceData.currency }}
                 </q-chip>
               </q-td>

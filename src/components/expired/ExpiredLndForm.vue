@@ -26,12 +26,11 @@
       <div class="row">
         <div class="col-auto">
           <q-field dense label="Expiration date" stack-label borderless>
-            <q-chip color="grey"
+            <q-chip outline
                     class="text-subtitle2"
                     square
                     dense
-                    style="margin-left: 0;"
-                    text-color="white">
+                    style="margin-left: 0;">
               {{ expirationDate }}
             </q-chip>
             <template v-slot:before>

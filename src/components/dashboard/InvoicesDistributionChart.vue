@@ -33,7 +33,7 @@ export default GlobalMixin.extend({
           id: 'invoices-distribution-chart',
           type: 'bar',
         },
-        colors: ['#FF9800', '#4CAF50', '#9E9E9E'],
+        colors: ['#FF9800', '#4CAF50', '#D32F2F'],
         yaxis: {
           title: {
             text: 'All invoices',

@@ -135,7 +135,7 @@
             </statistic-item>
             <statistic-item
               icon="mdi-cash-plus"
-              icon-color="grey"
+              icon-color="red-8"
               :value="`${dashboardInfo.expiredInvoicedAmountBtc.toFixed(8)} BTC`"
               caption="Expired">
             </statistic-item>
@@ -162,7 +162,7 @@
             </statistic-item>
             <statistic-item
               icon="mdi-file-plus"
-              icon-color="grey"
+              icon-color="red-8"
               :value="`${dashboardInfo.expiredInvoicesQuantity}`"
               caption="Expired">
             </statistic-item>

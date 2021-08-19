@@ -44,7 +44,7 @@
               <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.creationDate) }}
             </q-td>
             <q-td>
-              <q-chip dense square class="bg-grey text-white">
+              <q-chip dense square outline>
                 <div class="text-subtitle2 text-uppercase">{{props.row.type}}</div>
               </q-chip>
             </q-td>
