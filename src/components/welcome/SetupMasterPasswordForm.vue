@@ -51,7 +51,7 @@
                   :type="isPwd ? 'password' : 'text'"
                   :rules="[ val => (passwordState.masterPassword !== undefined && passwordState.masterPassword.$valid) || 'Password is required',
                             val => (masterPassword.trim() !== '') || 'Password cannot be empty',
-                            val => masterPasswordIsCorrect || 'Master password must have at least 10 letters, one number and special character',
+                            val => masterPasswordIsCorrect || 'Master password must have at least 10 letters, 1 digit and 1 special character',
                           ]"
                   required>
                   <template v-slot:prepend>
@@ -143,7 +143,8 @@ export default GlobalMixin.extend({
       masterPasswordRepeat: 'asdfasdf!1',
       isPwd: true,
       understandRules: true,
-      passwordRegexp: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{10,}$/),
+      //10 characters, 1 number and 1 special character
+      passwordRegexp: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\[\]$&+,:;=?@#<>.^*()%!-\\'` ~_-])[A-Za-z\d\[\]$&+,:;=?@#<>.^*()%!-\\'` ~_-]{10,}$/),
     };
   },
   computed: {

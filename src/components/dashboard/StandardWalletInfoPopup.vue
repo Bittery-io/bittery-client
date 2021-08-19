@@ -49,7 +49,8 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn glossy @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup" color="orange-8" text-color="white">
+        <q-btn glossy @click="showConfirmMasterPasswordPopup = !showConfirmMasterPasswordPopup" color="orange-8" text-color="white"
+        v-if="this.userBtcWalletDto.type !== 'ELECTRUM'">
           <q-icon left name="mdi-eye" />
           Show seed
         </q-btn>

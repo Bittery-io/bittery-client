@@ -247,9 +247,6 @@ export default InvoicesMixin.extend({
         this.invoiceId = invoiceId;
         this.showShareInvoicePaymentWidgetPopup  = !this.showShareInvoicePaymentWidgetPopup;
       },
-      getMillisecondsBetweenNowAndDate(fromDate: number) {
-        return getMillisecondsBetweenTwoDates(fromDate, new Date().getTime());
-      },
       loadInvoices() {
         get(this.$axios, '/api/payments/invoices', async (res: any) => {
           await this.sleep(200); // small sleep required
@@ -267,16 +264,6 @@ export default InvoicesMixin.extend({
           this.showLoading = false;
           console.log(err);
         });
-      },
-      getClassDependingOfInvoiceStatus(status: string) {
-        switch (status) {
-          case 'complete':
-            return 'bg-green-2';
-          case 'expired':
-            return 'bg-red-2';
-          default:
-            return '';
-        }
       },
       // min 14px, max 50px
       setPriceFontSizes() {

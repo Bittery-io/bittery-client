@@ -29,7 +29,7 @@
         </div>
       </q-card-section>
       <q-card-actions align="center" class="text-primary">
-        <q-btn @click="close()" text-color="white" color="primary">Close</q-btn>
+        <q-btn @click="close()" glossy text-color="white" color="primary">Close</q-btn>
       </q-card-actions>
     </q-card>
   </q-dialog>

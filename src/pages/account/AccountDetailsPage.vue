@@ -9,7 +9,8 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <invoices-table :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'" :invoices="invoices" v-if="invoices"></invoices-table>
+        <invoices-table :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'" :invoices="invoices" v-if="invoices"
+        :is-billing-invoices="true"></invoices-table>
 <!--        <billing-invoices-table :class="$q.platform.is.mobile ? 'q-ma-xs' : 'q-ma-md'"></billing-invoices-table>-->
       </div>
     </div>

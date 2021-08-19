@@ -79,8 +79,8 @@
         <q-stepper-navigation>
           <q-btn glossy outline @click="step = 1" color="primary" label="Previous step"
                  :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
-          <q-btn glossy @click="step = 3" color="primary" :disabled="electrumMasterPublicKey === ''" label="NEXT STEP"
-                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
+          <q-btn glossy @click="setupNewBtcpayServices" color="primary" :disabled="electrumMasterPublicKey === ''" label="Initialize payments"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-contactless-payment-circle"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -134,87 +134,27 @@
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
-<!--      <q-step-->
-<!--        v-if="!userHasElectrum"-->
-<!--        :name="3"-->
-<!--        title="Confirm seed"-->
-<!--        icon="info"-->
-<!--        class="text-left"-->
-<!--        :done="step > 3">-->
-<!--        <div class="text-body1 q-pb-md">-->
-<!--          Please provide your 12 words mnemonic seed in order <b>to confirm</b> you saved your Bitcoin standard wallet seed correctly.-->
-<!--        </div>-->
-<!--        <div class="row">-->
-<!--          <div class="col-12">-->
-<!--            <vue-form :state='bipSeedState' @submit.prevent="() => {}">-->
-<!--              <validate>-->
-<!--                <q-input-->
-<!--                  v-model="seedMnemonicConfirmationText"-->
-<!--                  outlined-->
-<!--                  square-->
-<!--                  :dense="isMobile"-->
-<!--                  name="seedMnemonicConfirmationText"-->
-<!--                  ref="seedMnemonicConfirmationText"-->
-<!--                  bg-color="accent"-->
-<!--                  label="12 words mnemonic seed"-->
-<!--                  required-->
-<!--                  :rules="[ val => (-->
-<!--                              bipSeedState.seedMnemonicConfirmationText !== undefined &&-->
-<!--                              bipSeedState.seedMnemonicConfirmationText.$valid) || 'Please confirm your 12 words mnemonic seed',-->
-<!--                              val => (bitcoinWallet.seed && bitcoinWallet.seed.trim() === seedMnemonicConfirmationText.trim()) || 'Given mnemonic seed does not match generated!']"-->
-<!--                  type='text'>-->
-<!--                  <template v-slot:prepend>-->
-<!--                    <q-icon color="primary" name="mdi-format-list-numbered-rtl"/>-->
-<!--                  </template>-->
-<!--                </q-input>-->
-<!--              </validate>-->
-<!--            </vue-form>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <q-stepper-navigation>-->
-<!--          <q-btn outline @click="step = 2" color="primary" label="Previous step"-->
-<!--                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>-->
-<!--          <q-btn @click="step = 4" color="primary"-->
-<!--                 :disable="bitcoinWallet.seed && bitcoinWallet.seed.trim() !== seedMnemonicConfirmationText.trim()"-->
-<!--                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>-->
-<!--        </q-stepper-navigation>-->
-<!--      </q-step>-->
       <q-step
         v-if="!userHasElectrum"
         :name="3"
-        title="Encrypt your data"
+        title="Encrypt your data and setup payments"
         icon="info"
         class="text-left"
         :done="step > 3">
         <div class="text-body1">
           Your <b>seed</b> will be now encrypted in your browser using your <b>master password</b>.<br>
           Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
+          Just after successful encryption you can initialize payments.
         </div>
         <q-stepper-navigation>
           <q-btn glossy outline @click="step = 2;bitcoinWallet.seed = ''" color="primary" label="Previous step"
                  :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
           <q-btn glossy @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
-                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt data` : `Successfully encrypted`" icon="mdi-lock"
+                 :color="masterPassword === '' ? `grey-7` : `primary`" :label="masterPassword ==='' ? `Encrypt seed` : `Successfully encrypted`" icon="mdi-lock"
                  :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
-          <q-btn glossy @click="step = 4" :disable="masterPassword === ''" color="primary" label="Next step"
-                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
-        </q-stepper-navigation>
-      </q-step>
-      <q-step
-        :name="userHasElectrum? 3 : 4"
-        title="Initialize payment services"
-        icon="info"
-        class="text-left"
-        :done="userHasElectrum? (step > 2) : (step > 4)">
-        <div class="text-body1 q-pb-xs">
-          Initializing your personal Bitcoin payment services can take up to 30 seconds. <br>
-          Please don't close the browser and wait until the finish.
-        </div>
-        <q-stepper-navigation>
-          <q-btn glossy outline @click="goToPreviousStepFromLastStep" color="primary" label="Previous step"
-                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
-          <q-btn glossy @click="setupNewBtcpayServices" icon="mdi-contactless-payment-circle" color="primary" label="Initialize Payments" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"/>
+          <q-btn glossy @click="setupNewBtcpayServices" :disable="masterPassword === ''" color="primary" label="Initialize payments"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-contactless-payment-circle"/>
         </q-stepper-navigation>
       </q-step>
     </q-stepper>
@@ -273,14 +213,6 @@
           this.bitcoinWallet = generateBitcoinWallet();
           this.showLoading = false;
         }), 500);
-      },
-      goToPreviousStepFromLastStep() {
-        this.masterPassword = '';
-        if (this.userHasElectrum) {
-          this.step = 2;
-        } else {
-          this.step = 3;
-        }
       },
       setupNewBtcpayServices() {
         this.errorBannerMessage = '';

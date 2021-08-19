@@ -23,7 +23,9 @@
                     text-color="white">
               {{getLabelDependingOfStatus(this.userLndDto.lndStatus)}}
             </q-chip>
-            <q-chip dense
+            <q-chip
+                    v-show="!isMobile"
+                    dense
                     v-if="getLndStatusCommentDependingOfStatus(this.userLndDto.lndStatus) !== ''"
                     square
                     outline
@@ -38,6 +40,26 @@
             <q-tooltip>
               Your LN Node working status.
             </q-tooltip>
+          </q-field>
+        </div>
+      </div>
+      <div class="row" v-if="isMobile">
+        <div class="col-12">
+          <q-field dense stack-label borderless>
+            <q-chip
+              dense
+              v-if="getLndStatusCommentDependingOfStatus(this.userLndDto.lndStatus) !== ''"
+              square
+              outline
+              style="margin-left: 0;"
+              color="primary"
+              class="text-subtitle2"
+              text-color="white">
+              {{getLndStatusCommentDependingOfStatus(this.userLndDto.lndStatus)}}
+            </q-chip>
+            <template v-slot:before>
+              <q-icon style="width:50px;" color="primary" name=""/>
+            </template>
           </q-field>
         </div>
       </div>

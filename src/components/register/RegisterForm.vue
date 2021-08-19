@@ -30,7 +30,7 @@
             </validate>
           </div>
         </div>
-        <div class="row q-pa-xs" >
+        <div class="row q-pa-xs q-pt-md">
           <div class="col-grow">
             <validate>
                 <q-input
@@ -45,7 +45,7 @@
                   :rules="[ val => (
                           registerformstate.password !== undefined &&
                           registerformstate.password.$valid) || 'Password is required',
-                          val => (password.trim().length >= 6) || 'Password must have at least 6 characters',
+                          val => passwordIsCorrect || 'Password must have at least 8 characters including 1 digit and 1 special character',
                           val => (password.trim() !== '') || 'Password cannot be empty',]"
                   required>
                   <template v-slot:prepend>
@@ -62,7 +62,7 @@
             </validate>
           </div>
         </div>
-        <div class="row q-pa-xs" >
+        <div class="row q-pa-xs q-pt-md" >
           <div class="col-grow">
             <validate>
               <q-input
@@ -158,8 +158,14 @@
       isPwd: true,
       isPwd2: true,
       resetRecaptcha: true,
+      registerPasswordRegexp: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\[\]$&+,:;=?@#<>.^*()%!-\\'` ~_-])[A-Za-z\d\[\]$&+,:;=?@#<>.^*()%!-\\'` ~_-]{8,}$/),
     }),
     name: 'RegisterForm',
+    computed: {
+      passwordIsCorrect() {
+        return this.registerPasswordRegexp.test(this.password);
+      },
+    },
     watch: {
       // These watchers are for password validation, when one changes -> check second.
       password() {

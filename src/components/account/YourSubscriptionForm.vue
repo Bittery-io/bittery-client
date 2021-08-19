@@ -6,7 +6,7 @@
                             @extendSubscriptionRequested="onExtendSubscriptionRequested">
     </subscription-pay-popup>
     <q-card-section>
-      <header-qchip text="Your Bittery subscription" icon="mdi-flash"></header-qchip>
+      <header-qchip text="Your Bittery subscription" icon="mdi-card-account-details"></header-qchip>
     </q-card-section>
     <q-card-section>
       <div class="row" v-if="subscriptionRemainingDays <= 7 && subscriptionDto.subscriptionPlan !== 'FREE' && !isSubscriptionExpired">
@@ -172,7 +172,7 @@ export default GlobalMixin.extend({
         this.showLoading = false;
         console.log(res);
         await sleep(100);
-        this.$router.push(`/invoices/${res.data.invoiceId}`);
+        this.openPayInvoiceInCurrentTab(res.data.invoiceId);
       }, async () => {
         showNotificationError('Subscription renewal failed', 'Probably subscription is already expired');
         await sleep(100);

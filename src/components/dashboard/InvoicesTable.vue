@@ -1,7 +1,7 @@
 <template>
   <q-card class="shadow-10 bg-grey-2">
     <q-card-section>
-      <header-qchip :text="`Invoices [ ${timeframe} ]`" icon="mdi-table-large" size="md"></header-qchip>
+      <header-qchip :text="timeframe ? `Invoices [ ${timeframe} ]` : 'Billing invoices'" icon="mdi-table-large" size="md"></header-qchip>
     </q-card-section>
     <q-card-section style="padding-top: 0;margin-top:0;">
       <div class="row" v-if="isMobile">
@@ -98,7 +98,7 @@
               </q-td>
               <q-td >
                 <q-chip dense square color="primary" class="text-subtitle2" text-color="white">
-                  {{ props.row.invoicePayments[0].amount }} BTC
+                  {{ getAmountInBitcoin(props.row)}} BTC
                 </q-chip>
               </q-td>
               <q-td >
@@ -114,7 +114,7 @@
                   flat
                   color="primary"
                   icon="mdi-download"
-                  @click="$router.push(`/payments/pdf/${props.row.invoiceData.id}`)"/>
+                  @click="openPdfInvoiceInNewTabDependingOfType(props.row.invoiceData.id)"/>
               </q-td>
               <q-td>
                 <q-btn
@@ -139,15 +139,17 @@
                   :value="props.row.invoiceData.id">
                 </q-input>
               </q-td>
-              <q-td v-if="props.row.invoiceData.status.toUpperCase() === 'COMPLETE'">
+              <q-td v-if="props.row.invoiceData.status.toUpperCase() === 'SETTLED'">
                 <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(getPaymentDoneDate(props.row)) }}
                 <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(getPaymentDoneDate(props.row)) }}
               </q-td>
               <q-td v-else>
-                <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoiceData.expirationTime) }}
-                <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoiceData.expirationTime) }}
+                <countdown :time="getMillisecondsBetweenNowAndDate(props.row.invoiceData.expirationTime)" class="text-bold">
+                  <template slot-scope="props">
+                    <span v-if="props.days > 0">{{props.days}} days</span><span v-if="props.hours > 0"> {{props.hours}} hours</span> {{ props.minutes }} minutes {{ props.seconds }} seconds
+                  </template>
+                </countdown>
               </q-td>
-
               <q-td>
                 <q-badge class="float-right" :class="getStatusLabelColor(props.row.invoiceData.status)">
                   <div class="text-subtitle2 text-uppercase">
@@ -178,11 +180,16 @@ export default InvoicesMixin.extend({
       type: Array,
       required: true,
     },
+    isBillingInvoices: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   data() {
     return {
       columns: [
-        { label: 'Invoice date / Due date', sortable: true, align: 'left' },
+        { label: 'Invoice date & Due date', sortable: true, align: 'left' },
         { label: 'Description', align: 'left' },
         { label: 'Buyer', align: 'left' },
         { label: 'Amount', sortable: true, align: 'left' },
@@ -194,7 +201,7 @@ export default InvoicesMixin.extend({
         { label: 'Payment widget', align: 'left'},
         { label: 'Invoice validity', align: 'left'},
         { label: 'Invoice ID', align: 'left'},
-        { label: 'Paid date/Expiration date', align: 'left'},
+        { label: 'Paid date | Expiration time left', align: 'left'},
         { label: 'Status', align: 'right'},
       ]
     };
@@ -215,6 +222,17 @@ export default InvoicesMixin.extend({
       this.filteredData.sort((a: any, b: any) => b.invoiceTime - a.invoiceTime);
       this.filterSavedData = this.filteredData;
     },
+    getAmountInBitcoin(row) {
+      const amount: string = row.invoicePayments[0].amount;
+      if (amount === "0") {
+        return row.invoicePayments[0].totalPaid;
+      } else {
+        return amount;
+      }
+    },
+    openPdfInvoiceInNewTabDependingOfType(invoiceId: string) {
+      this.$router.push(`/payments/pdf/${invoiceId}?isBillingInvoice=${this.isBillingInvoices ?? false}`)
+    }
   },
 });
 </script>

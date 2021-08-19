@@ -4,7 +4,7 @@
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
-            <q-icon size="xl" name="mdi-checkbox-marked-circle" color="primary"/>
+            <q-icon size="xl" name="mdi-account-check" color="primary"/>
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
@@ -12,7 +12,7 @@
             <div class="text-bold text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Registration confirmed
             </div>
-            <div class="text-primary text-primary text-center text-body2">
+            <div class="text-primary text-center text-subtitle2">
               Your registration is now confirmed and account is activated.  <br> You can sign in.
             </div>
           </div>

@@ -157,7 +157,7 @@
     data() {
       return {
         amount: '0',
-        currency: 'PLN',
+        currency: 'USD',
         currencies: ['PLN', 'USD', 'EUR'],
         invoiceValidity: { label: '7 days', value: '7d' },
         invoiceValidityOptions: [

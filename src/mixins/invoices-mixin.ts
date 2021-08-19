@@ -1,6 +1,12 @@
 import GlobalMixin from "./global-mixin";
 import { get } from 'src/api/http-service';
-import { addDaysToDate, formatDate, getDaysBetweenTwoDates, getHoursBetweenTwoDates } from 'src/api/date-service';
+import {
+  addDaysToDate,
+  formatDate,
+  getDaysBetweenTwoDates,
+  getHoursBetweenTwoDates,
+  getMillisecondsBetweenTwoDates
+} from 'src/api/date-service';
 import { fasUnderline } from '@quasar/extras/fontawesome-v5';
 
 export default GlobalMixin.extend({
@@ -8,7 +14,7 @@ export default GlobalMixin.extend({
     return {
       filter: '',
       invoiceStatus: 'all',
-      invoiceStatuses: ['all', 'new', 'expired', 'complete'],
+      invoiceStatuses: ['all', 'new', 'expired', 'settled'],
       orderByDate: 'newest first',
       orderByDateOptions: ['newest first', 'oldest first'],
       data: [],
@@ -63,6 +69,9 @@ export default GlobalMixin.extend({
     },
   },
   methods: {
+    getMillisecondsBetweenNowAndDate(fromDate: number) {
+      return getMillisecondsBetweenTwoDates(fromDate, new Date().getTime());
+    },
     currentPriceDependingOfCurrency(currency: string, price: string) {
       if (currency.toUpperCase() === 'PLN') {
         return this.plnFormatter.format(price);
@@ -73,10 +82,9 @@ export default GlobalMixin.extend({
       }
     },
     getPaymentDoneDate(row: any) {
-      if (props.row.invoiceData.status.toLowerCase() === 'settled') {
-        //todo probably should be done better
-        console.log(row.cryptoInfo[0].payments[0].receivedDate);
-        return new Date(row.cryptoInfo[0].payments[0].receivedDate).getTime();
+      if (row.invoiceData.status.toLowerCase() === 'settled') {
+        row.invoicePayments.filter(invoicePayment => invoicePayment.payments.length > 0)[0].payments[0].receivedDate;
+        return new Date(row.invoicePayments.filter(invoicePayment => invoicePayment.payments.length > 0)[0].payments[0].receivedDate).getTime();
       }
     },
     getClassDependingOfInvoiceStatus(status: string) {
@@ -119,12 +127,6 @@ export default GlobalMixin.extend({
         const route = this.$router.resolve({ path: `/invoices/${invoiceId}` });
         window.open(route.href, '_blank');
       }
-    },
-    openPayInvoiceInCurrentTab(invoiceId: string) {
-      // @ts-ignore
-      window.btcpay.setApiUrlPrefix(process.env.BTCPAY_URL);
-      // @ts-ignore
-      window.btcpay.showInvoice(invoiceId);
     },
     saveInvoice() {
       this.showLoading = true;

@@ -26,16 +26,21 @@ export default Vue.extend({
     },
   },
   methods: {
+    //possible statuses:
+    // NEW = 'New',
+    // PROCESSING = 'Processing',
+    // EXPIRED = 'Expired',
+    // INVALID = 'Invalid',
+    // SETTLED = 'Settled',
     getStatusLabelColor(status: string) {
       switch (status.toLowerCase()) {
         case 'new':
-        case 'pending':
+        case 'processing':
           return 'bg-orange text-primary';
-        case 'complete':
-        case 'paid':
-        case 'confirmed':
+        case 'settled':
           return 'text-white bg-green';
         case 'expired':
+        case 'invalid':
           return 'text-white bg-red-8';
         case 'replaced_by_newer':
           return 'text-white bg-grey';
@@ -82,6 +87,12 @@ export default Vue.extend({
     },
     dateFormatOnly(epochMillisecs: number) {
       return formatOnlyDate(epochMillisecs);
+    },
+    openPayInvoiceInCurrentTab(invoiceId: string) {
+      // @ts-ignore
+      window.btcpay.setApiUrlPrefix(process.env.BTCPAY_URL);
+      // @ts-ignore
+      window.btcpay.showInvoice(invoiceId);
     },
   },
 });

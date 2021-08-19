@@ -13,7 +13,7 @@
               <span class="vertical-middle">Share payment widget</span>
             </div>
             <div class="text-primary text-center text-subtitle2 q-pt-xs">
-              <div class="text-center">Invoice ID: <span class="text-bold">{{invoiceId}}</span></div><br>
+              <div class="text-center">Invoice ID: <span class="text-bold">{{invoiceId}}</span></div>
               This sharable link below allows anybody to access your payment widget.
             </div>
             <q-input
@@ -30,7 +30,7 @@
                 <q-icon style="width:50px;" color="primary" name="mdi-link-variant" />
               </template>
               <template v-slot:after>
-                <q-btn outline glossy dense color="primary" icon="mdi-content-copy" @click="copyToClipboard"/>
+                <q-btn flat glossy dense color="primary" icon="mdi-content-copy" @click="copyToClipboard"/>
                 <q-btn dense glossy color="primary" icon="mdi-open-in-new" @click="openPayInvoiceInNewTab(invoiceId)"/>
               </template>
             </q-input>
