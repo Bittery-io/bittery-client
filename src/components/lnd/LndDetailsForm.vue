@@ -116,7 +116,7 @@
               Number of inactive, closed lightning channels of your LN Node.
             </q-tooltip>
             <template v-slot:before>
-              <q-icon style="width:50px" color="primary" name="mdi-lan-disconnect"/>
+              <q-icon style="width:50px" color="red-8" name="mdi-lan-disconnect"/>
             </template>
           </q-input>
         </div>
@@ -131,7 +131,7 @@
               Number of waiting to be opened lightning channels of your LN Node.
             </q-tooltip>
             <template v-slot:before>
-              <q-icon style="width:50px" color="primary" name="mdi-lan-pending"/>
+              <q-icon style="width:50px" color="orange-8" name="mdi-lan-pending"/>
             </template>
           </q-input>
         </div>

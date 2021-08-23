@@ -45,7 +45,7 @@
             </q-td>
             <q-td>
               <q-chip dense square outline>
-                <div class="text-subtitle2 text-uppercase">{{props.row.type}}</div>
+                <div class="text-subtitle2 text-uppercase">{{props.row.type.replaceAll('_', ' ')}}</div>
               </q-chip>
             </q-td>
             <q-td>

@@ -123,13 +123,13 @@
             </statistic-item>
             <statistic-item
               icon="mdi-cash-plus"
-              icon-color="orange"
+              icon-color="orange-8"
               :value="`${dashboardInfo.newInvoicedAmountBtc.toFixed(8)} BTC`"
               caption="New">
             </statistic-item>
             <statistic-item
               icon="mdi-cash-plus"
-              icon-color="green"
+              icon-color="green-8"
               :value="`${dashboardInfo.paidInvoicedAmountBtc.toFixed(8)} BTC`"
               caption="Paid">
             </statistic-item>
@@ -150,13 +150,13 @@
             </statistic-item>
             <statistic-item
               icon="mdi-file-plus"
-              icon-color="orange"
+              icon-color="orange-8"
               :value="`${dashboardInfo.newInvoicesQuantity}`"
               caption="New">
             </statistic-item>
             <statistic-item
               icon="mdi-file-plus"
-              icon-color="green"
+              icon-color="green-8"
               :value="`${dashboardInfo.paidInvoicesQuantity}`"
               caption="Paid">
             </statistic-item>

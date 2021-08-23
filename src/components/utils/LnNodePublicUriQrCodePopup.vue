@@ -8,27 +8,27 @@
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
-          <div class="col-auto items-center">
+          <div class="col-auto justify-center">
             <div class="text-bold text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
-              LN Node connect Qr Code
+              LN Node URI QR Code
             </div>
             <div class="text-bold text-primary text-center text-subtitle2">
-              Scan this QR code in Zap Wallet (mobile) <br>
-              in order to connect with your Lightning Network node.
+              This is QR code of your public node URI address. <br>
+              Can be used/shared for opening channel to your node.
             </div>
             </div>
           </div>
         <div class="row justify-center q-pt-xs">
-          <div class="col-auto items-center">
-            <qr-code class="q-mt-xs" :width="500" :height="500" id="big-qr-code" :text="qrCode"></qr-code>
+          <div class="col-auto justify-center">
+            <qr-code
+              class="q-mt-xs"
+              :width="500"
+              :height="500"
+              id="big-qr-code-ln-node-public-uri"
+              :text="qrCode"
+              :min-width="200"
+              :min-height="200"></qr-code>
           </div>
-        </div>
-        <div class="row justify-center">
-          <a target="_blank" href='https://zaphq.io/'>
-            <q-chip clickable class="shadow-10" icon="info" color="grey-8" text-color="white">
-              <span> Zap Wallet https://zaphq.io/</span>
-            </q-chip>
-          </a>
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto text-primary">
@@ -47,7 +47,7 @@
   import Vue from 'vue';
   import QrCode from 'components/utils/QrCode.vue';
   export default Vue.extend({
-    name: 'QrCodePopup',
+    name: 'LnNodePublicUriQrCodePopup',
     components: { QrCode },
     props: {
       show: {

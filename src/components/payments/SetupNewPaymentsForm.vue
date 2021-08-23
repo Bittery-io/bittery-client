@@ -79,8 +79,8 @@
         <q-stepper-navigation>
           <q-btn glossy outline @click="step = 1" color="primary" label="Previous step"
                  :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
-          <q-btn glossy @click="setupNewBtcpayServices" color="primary" :disabled="electrumMasterPublicKey === ''" label="Initialize payments"
-                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-contactless-payment-circle"/>
+          <q-btn glossy @click="step=3" :disabled="electrumMasterPublicKey === ''" color="primary" label="NEXT STEP"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-arrow-right-bold"/>
         </q-stepper-navigation>
       </q-step>
       <q-step
@@ -135,19 +135,71 @@
         </q-stepper-navigation>
       </q-step>
       <q-step
-        v-if="!userHasElectrum"
         :name="3"
+        title="Set your store name"
+        icon="mdi-store"
+        class="text-left"
+        :done="step > 3">
+        <div class="text-body1 q-pb-md">
+          Provide your <b>store name</b>. It should be a short description of your service. The name will be visible on
+          payment widgets (like on a preview below) and PDF invoices.
+        </div>
+        <div class="row items-center justify-center">
+          <div class="col-lg-4 col-xs-auto q-pa-xs">
+            <q-img src="statics/store-name.png" class="shadow-8" style="width:250px; height:100%;">
+            </q-img>
+          </div>
+          <div class="col-lg-8 col-xs-12 q-pa-xs">
+            <vue-form :state='storeNameState' @submit.prevent="() => {}">
+              <validate>
+                <q-input
+                  v-model="storeName"
+                  outlined
+                  square
+                  :dense="isMobile"
+                  name="storeName"
+                  ref="storeName"
+                  bg-color="accent"
+                  label="Your store name"
+                  counter
+                  maxlength="50"
+                  required
+                  :rules="[ val => (storeNameState.storeName !== undefined && storeNameState.storeName.$valid) || 'Store name is required - it is visible in payment widgets like in the preview.']"
+                  type='text'>
+                  <template v-slot:prepend>
+                    <q-icon color="primary" name="mdi-store"/>
+                  </template>
+                </q-input>
+              </validate>
+            </vue-form>
+          </div>
+        </div>
+        <q-stepper-navigation>
+          <q-btn glossy outline @click="step = 2" color="primary" label="Previous step"
+                 :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
+          <q-btn glossy @click="setupNewBtcpayServices" color="primary" label="Initialize payments"
+                 :disable="storeNameState.storeName !== undefined && !storeNameState.storeName.$valid"
+                 :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'" icon-right="mdi-contactless-payment-circle" v-if="userHasElectrum"/>
+          <q-btn glossy @click="step = 4" color="primary" v-else
+                 :disable="storeNameState.storeName !== undefined && !storeNameState.storeName.$valid"
+                 label="NEXT STEP" :class="isMobile ? 'full-width q-mt-xs' : 'q-ml-sm'"
+                 icon-right="mdi-arrow-right-bold"/>
+        </q-stepper-navigation>
+      </q-step>
+      <q-step
+        v-if="!userHasElectrum"
+        :name="4"
         title="Encrypt your data and setup payments"
         icon="info"
         class="text-left"
-        :done="step > 3">
+        :done="step > 4">
         <div class="text-body1">
           Your <b>seed</b> will be now encrypted in your browser using your <b>master password</b>.<br>
           Bittery will store the data encrypted and will be able to provide it to you when needed. <br>
           Just after successful encryption you can initialize payments.
         </div>
         <q-stepper-navigation>
-          <q-btn glossy outline @click="step = 2;bitcoinWallet.seed = ''" color="primary" label="Previous step"
+          <q-btn glossy outline @click="step = 3;bitcoinWallet.seed = ''" color="primary" label="Previous step"
                  :class="isMobile ? 'full-width q-mt-xs' : ''" icon="mdi-arrow-left-bold"/>
           <q-btn glossy @click="showMasterPasswordPopup = !showMasterPasswordPopup"
                  :disable="masterPassword !== ''"
@@ -186,8 +238,9 @@
     },
     data() {
       return {
-        bipSeedState: {},
+        storeNameState: {},
         seedMnemonicConfirmationText: '',
+        storeName: '',
         electrumPublicKeyState: {},
         bitcoinWallet: <BitcoinWallet> {},
         step: 1,
@@ -219,9 +272,10 @@
         this.showLoading = true;
         let createUserBtcpayDto: CreateUserBtcpayDto;
         if (this.userHasElectrum) {
-          createUserBtcpayDto = new CreateUserBtcpayDto(undefined, undefined, this.electrumMasterPublicKey);
+          createUserBtcpayDto = new CreateUserBtcpayDto(this.storeName, undefined, undefined, this.electrumMasterPublicKey);
         } else {
           createUserBtcpayDto = new CreateUserBtcpayDto(
+            this.storeName,
             this.bitcoinWallet.rootPublicKey,
             encryptSymmetricCtr(this.bitcoinWallet.seed, this.masterPassword),
             undefined);
@@ -233,7 +287,11 @@
           await this.$router.push('/payments/overview');
         }, (err: any) => {
           this.showLoading = false;
-          this.errorBannerMessage = 'Internal server error occurred. Please try again later.';
+          if (this.userHasElectrum) {
+            this.errorBannerMessage = 'Setup payments failed. Is your Electrum Master Public Key correct?';
+          } else {
+            this.errorBannerMessage = 'Setup payments failed. Internal server error. Please try again later.';
+          }
           console.log(err);
         });
       },

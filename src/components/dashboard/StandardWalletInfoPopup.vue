@@ -19,7 +19,7 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
-            <q-icon  size="md" name="mdi-bitcoin" color="orange"/>
+            <q-icon  size="md" name="mdi-bitcoin" color="orange-8"/>
               <span class="vertical-middle"> Your standard wallet</span>
             </div>
             <div class="text-primary text-left text-subtitle2 q-pt-xs">

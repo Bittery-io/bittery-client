@@ -1,6 +1,6 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
-    <q-card class="bg-grey-2" :style="isMobile ? '' : 'width: 50% !important'" style="border: 2px solid #001f10">
+    <q-card class="bg-grey-2 shadow-8" :style="isMobile ? '' : 'width: 50% !important'">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">

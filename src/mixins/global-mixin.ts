@@ -36,9 +36,9 @@ export default Vue.extend({
       switch (status.toLowerCase()) {
         case 'new':
         case 'processing':
-          return 'bg-orange text-primary';
+          return 'bg-orange-8 text-grey-1';
         case 'settled':
-          return 'text-white bg-green';
+          return 'text-white bg-green-8';
         case 'expired':
         case 'invalid':
           return 'text-white bg-red-8';

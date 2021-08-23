@@ -6,6 +6,7 @@
                                    @passwordConfirmed="onMasterPasswordConfirmed">
     </provide-master-password-popup>
     <qr-code-popup :show="showQrCodePopup" :qr-code="connectUri"></qr-code-popup>
+    <ln-node-public-uri-qr-code-popup :show="showUriQrCodePopup" :qr-code="this.userLndDto.lndUri"></ln-node-public-uri-qr-code-popup>
     <q-card-section>
       <header-qchip text="LN Node Connectivity" icon="mdi-contactless-payment"></header-qchip>
     </q-card-section>
@@ -24,6 +25,13 @@
             </q-tooltip>
             <template v-slot:before>
               <q-icon style="width:50px; color: gold" name="mdi-flash"/>
+            </template>
+            <template v-slot:after>
+              <q-btn
+                flat
+                color="primary"
+                icon="mdi-qrcode"
+                @click="showUriQrCodePopup = !showUriQrCodePopup"/>
             </template>
           </q-input>
         </div>
@@ -230,9 +238,10 @@ import { decryptSymmetricCtr } from 'src/api/encryption-service';
 import { getLndConnectUri } from 'src/api/ln-connect-uri-service';
 import sha256 from 'js-sha256';
 import axios from 'boot/axios';
+import LnNodePublicUriQrCodePopup from 'components/utils/LnNodePublicUriQrCodePopup.vue';
 
 export default GlobalMixin.extend({
-  components: { ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip },
+  components: { LnNodePublicUriQrCodePopup, ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip },
   name: 'LndConnectivityForm',
   mixins: [ LndFormMixin ],
   props: {

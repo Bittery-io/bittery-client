@@ -83,7 +83,7 @@
                         </q-item-section>
                         <q-item-section>
                           <q-item-label>
-                            <q-chip square dense  color="primary" text-color="white" class="text-bold" style="margin-left: 0;">
+                            <q-chip square dense  color="primary" text-color="white" class="text-bold" style="margin-left: 0; margin-bottom: 0 !important;">
                               <q-tooltip>
                                 Validity of your invoice. After that time invoice will be expired.
                               </q-tooltip>
