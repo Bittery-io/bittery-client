@@ -82,7 +82,10 @@ export default GlobalMixin.extend({
       }
     },
     getPaymentDoneDate(row: any) {
-      if (row.invoiceData.status.toLowerCase() === 'settled') {
+      // todo tutaj nalezy wyfiltorwac te ktore maja w dodatku status Marked bo te sa oznaczone jako zaplacone
+      // todo takzze wtedy ni emają listy payments (bo nie bylo platnosci)
+      if (row.invoiceData.status.toLowerCase() === 'settled' && !row.invoiceData.additionalStatus) {
+        console.log(row);
         row.invoicePayments.filter(invoicePayment => invoicePayment.payments.length > 0)[0].payments[0].receivedDate;
         return new Date(row.invoicePayments.filter(invoicePayment => invoicePayment.payments.length > 0)[0].payments[0].receivedDate).getTime();
       }
