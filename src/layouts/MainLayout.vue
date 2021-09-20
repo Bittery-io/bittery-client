@@ -18,7 +18,7 @@
             <bittery-logo></bittery-logo>
           </router-link>
           <q-chip color="lime-4" text-color="primary" square class="text-bold"
-                  icon="mdi-bitcoin" size="md" clickable @click="showPopup">Mainnet
+                  icon="mdi-bitcoin" size="md" clickable @click="showPopup">BETA Mainnet
           </q-chip>
         </q-toolbar-title>
 

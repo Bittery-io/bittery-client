@@ -11,11 +11,11 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h4 text-bold text-primary text-center q-pa-xs">
-              Bitcoin Mainnet
+              BETA MAINNET
             </div>
             <div class="text-primary text-bold text-primary text-center text-body1">
-              Bittery is operating on Bitcoin Mainnet Network. <br>
-              Please be aware, that Bittery is still under active development and uses technology which is still also experimental.<br>
+              Bittery is now beta version and uses Bitcoin Mainnet Network. <br>
+              Using Bittery please be aware that it's still under active development and uses experimental technology.<br>
             </div>
           </div>
         </div>

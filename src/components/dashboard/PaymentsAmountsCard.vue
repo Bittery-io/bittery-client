@@ -230,6 +230,7 @@ export default GlobalMixin.extend({
     console.log(this.dashboardInfo);
     await this.sleep(200); // small sleep required
     this.timeframeValue = this.timeframe;
+    console.log('siemka', this.dashboardInfo);
     const countUp = new CountUp('totalReceivedPaymentsBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
       decimalPlaces: 8,
     });

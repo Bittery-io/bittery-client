@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-3">
+        <div class="col-lg-3 col-xs-auto">
           <q-input dense
             type="text"
             onkeypress="return false;"
@@ -90,7 +90,7 @@
             </template>
           </q-input>
         </div>
-        <div class="col-3">
+        <div class="col-lg-3 col-xs-auto">
           <q-input dense
                    type="text"
                    onkeypress="return false;"
@@ -105,7 +105,7 @@
             </template>
           </q-input>
         </div>
-        <div class="col-3">
+        <div class="col-lg-3 col-xs-auto">
           <q-input dense
                    type="text"
                    onkeypress="return false;"
@@ -120,7 +120,7 @@
             </template>
           </q-input>
         </div>
-        <div class="col-3">
+        <div class="col-lg-3 col-xs-auto">
           <q-input dense
                    type="text"
                    onkeypress="return false;"
