@@ -57,7 +57,7 @@
           row-key="name"
         >
           <template v-slot:body="props">
-            <q-tr :props="props">
+            <q-tr :props="props" :class="getClassDependingOfInvoiceStatus(props.row.invoiceData.status)">
               <q-td>
                 <q-icon name="mdi-calendar" color="primary"/> {{ dateFormatOnly(props.row.invoiceData.createdTime) }}
                 <q-icon name="mdi-clock" color="primary" /> {{ timeFormatOnly(props.row.invoiceData.createdTime) }}<br>
@@ -151,9 +151,29 @@
                 </countdown>
               </q-td>
               <q-td>
-                <q-badge class="float-right" :class="getStatusLabelColor(props.row.invoiceData.status)">
+                <q-badge :class="getStatusLabelColor(props.row.invoiceData.status)">
                   <div class="text-subtitle2 text-uppercase">
-                    <q-icon name="mdi-file" /> {{props.row.invoiceData.status}}</div>
+                    <q-icon name="mdi-file-sync" /> {{props.row.invoiceData.status}}</div>
+                </q-badge>
+              </q-td>
+              <q-td>
+                <q-badge class="text-bold float-left" v-if="
+                props.row.invoiceData.status.toLowerCase() &&
+                props.row.invoicePayments.filter(_ => _.paymentMethod === 'BTC-LightningNetwork').length > 0 &&
+                props.row.invoicePayments.filter(_ => _.paymentMethod === 'BTC-LightningNetwork')[0].paymentMethodPaid !== '0'" style="margin: 1px"> <q-icon size="xs" name="mdi-flash" color="yellow-7"></q-icon>
+                  <q-tooltip>
+                    Invoice was paid with Lightning Network.
+                  </q-tooltip>
+                  LIGHTNING
+                </q-badge>
+                <q-badge class="text-bold float-left" v-if="
+                props.row.invoiceData.status.toLowerCase() === 'settled' &&
+                props.row.invoicePayments.filter(_ => _.paymentMethod === 'BTC').length > 0 &&
+                props.row.invoicePayments.filter(_ => _.paymentMethod === 'BTC')[0].paymentMethodPaid !== '0'" style="margin: 1px"> <q-icon size="xs" name="mdi-bitcoin" color="orange-8"></q-icon>
+                  <q-tooltip>
+                    Invoice was paid with standard Bitcoin transaction.
+                  </q-tooltip>
+                  BITCOIN
                 </q-badge>
               </q-td>
             </q-tr>
@@ -202,7 +222,8 @@ export default InvoicesMixin.extend({
         { label: 'Invoice validity', align: 'left'},
         { label: 'Invoice ID', align: 'left'},
         { label: 'Paid date | Expiration time left', align: 'left'},
-        { label: 'Status', align: 'right'},
+        { label: 'Status', align: 'left'},
+        { label: 'Payment done method', align: 'left'},
       ]
     };
   },
@@ -219,8 +240,9 @@ export default InvoicesMixin.extend({
     loadInvoices() {
       this.data = this.invoices;
       this.filteredData = this.data;
-      this.filteredData.sort((a: any, b: any) => b.invoiceTime - a.invoiceTime);
+      this.filteredData.sort((a: any, b: any) => b.invoiceData.createdTime - a.invoiceData.createdTime);
       this.filterSavedData = this.filteredData;
+      console.log(this.filteredData);
     },
     getAmountInBitcoin(row) {
       const amount: string = row.invoicePayments[0].amount;

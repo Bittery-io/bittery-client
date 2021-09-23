@@ -27,19 +27,19 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>
-                  <span :class="isMobile ? 'text-h4': 'text-h2'" id="totalReceivedPaymentsBtc"></span>
+                  <span :class="isMobile ? 'text-h4': 'text-h2'" id="totalPaidInUsd"></span>
                   <span :class="isMobile ? 'text-h5': 'text-h4'"> BTC</span><br>
                   <div class="row items-baseline">
-                    <div class="col-auto q-pl-xs" v-if="totalReceivedPaymentsBtcInUsd === ''">
+                    <div class="col-auto q-pl-xs" v-if="totalPaidInUsd === ''">
                       <q-skeleton type="text" width="40px" bordered/>
                     </div>
                     <div class="col-auto" v-else>
-                      <span :class="isMobile ? 'text-h6': 'text-h5'">{{totalReceivedPaymentsBtcInUsd}}</span>
+                      <span :class="isMobile ? 'text-h6': 'text-h5'">{{ totalPaidInUsd }}</span>
                     </div>
                     <div class="col-auto q-pl-xs">
                       <span class="text-bold">at current Bitcoin Price:</span>
                     </div>
-                    <div class="col-auto q-pl-xs" v-if="totalReceivedPaymentsBtcInUsd === ''">
+                    <div class="col-auto q-pl-xs" v-if="totalPaidInUsd === ''">
                       <q-skeleton type="text" width="40px" bordered/>
                     </div>
                     <div class="col-auto q-pl-xs" v-else>
@@ -63,12 +63,12 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label class="text-subtitle2">
-                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsStandardWalletBtc"></span> BTC
+                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalPaidInUsdTransactions"></span> BTC
                   <br>
-                  <div class="col-auto" v-if="totalReceivedPaymentsBtcInUsdTransactions === ''">
+                  <div class="col-auto" v-if="totalPaidInUsdTransactions === ''">
                     <q-skeleton type="text" width="40px" bordered/>
                   </div>
-                  <span class="text-bold" v-else>{{totalReceivedPaymentsBtcInUsdTransactions}}</span>
+                  <span class="text-bold" v-else>{{ totalPaidInUsdTransactions }}</span>
                 </q-item-label>
                 <q-item-label caption>Standard wallet</q-item-label>
               </q-item-section>
@@ -79,11 +79,11 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label class="text-subtitle2">
-                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalReceivedPaymentsLnNodeWalletBtc"></span> BTC <br>
-                  <div class="col-auto" v-if="totalReceivedPaymentsBtcInUsdLightning === ''">
+                  <span :class="isMobile ? 'text-h6': 'text-h5'" class="vertical-middle" id="totalPainInUsdLightning"></span> BTC <br>
+                  <div class="col-auto" v-if="totalPainInUsdLightning === ''">
                     <q-skeleton type="text" width="40px" bordered/>
                   </div>
-                  <span class="text-bold" v-else>{{totalReceivedPaymentsBtcInUsdLightning}}</span>
+                  <span class="text-bold" v-else>{{ totalPainInUsdLightning }}</span>
                 </q-item-label>
                 <q-item-label caption>LN Node wallet</q-item-label>
               </q-item-section>
@@ -205,9 +205,9 @@ export default GlobalMixin.extend({
       showStandardWalletInfoPopup: false,
       showLndWalleInfoPopup: false,
       timeframeValue: '',
-      totalReceivedPaymentsBtcInUsd: '',
-      totalReceivedPaymentsBtcInUsdLightning: '',
-      totalReceivedPaymentsBtcInUsdTransactions: '',
+      totalPaidInUsd: '',
+      totalPainInUsdLightning: '',
+      totalPaidInUsdTransactions: '',
       currentBitcoinUsdPrice: '',
       usdFormatter: undefined,
     };
@@ -222,22 +222,20 @@ export default GlobalMixin.extend({
       const currentPriceInUsd: number = res.data.bitcoin.usd;
       if (currentPriceInUsd) {
         this.currentBitcoinUsdPrice = this.usdFormatter.format(currentPriceInUsd);
-        this.totalReceivedPaymentsBtcInUsd = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedPaymentsBtc);
-        this.totalReceivedPaymentsBtcInUsdLightning = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedViaLightning);
-        this.totalReceivedPaymentsBtcInUsdTransactions = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedViaTransactions);
+        this.totalPaidInUsd = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.paidInvoicedAmountBtc);
+        this.totalPainInUsdLightning = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedViaLightning);
+        this.totalPaidInUsdTransactions = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedViaTransactions);
       }
     });
-    console.log(this.dashboardInfo);
     await this.sleep(200); // small sleep required
     this.timeframeValue = this.timeframe;
-    console.log('siemka', this.dashboardInfo);
-    const countUp = new CountUp('totalReceivedPaymentsBtc', this.dashboardInfo.totalReceivedPaymentsBtc, {
+    const countUp = new CountUp('totalPaidInUsd', this.dashboardInfo.paidInvoicedAmountBtc, {
       decimalPlaces: 8,
     });
-    const countUp2 = new CountUp('totalReceivedPaymentsStandardWalletBtc', this.dashboardInfo.totalReceivedViaTransactions, {
+    const countUp2 = new CountUp('totalPaidInUsdTransactions', this.dashboardInfo.totalReceivedViaTransactions, {
       decimalPlaces: 8,
     });
-    const countUp3 = new CountUp('totalReceivedPaymentsLnNodeWalletBtc', this.dashboardInfo.totalReceivedViaLightning, {
+    const countUp3 = new CountUp('totalPainInUsdLightning', this.dashboardInfo.totalReceivedViaLightning, {
       decimalPlaces: 8,
     });
 

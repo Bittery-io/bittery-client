@@ -34,7 +34,7 @@
                   <q-card-section>
                     <q-badge floating :class="getStatusLabelColor(props.row.invoiceData.status)">
                       <div class="text-subtitle2 text-uppercase">
-                        <q-icon name="mdi-file" /> {{props.row.invoiceData.status}}</div>
+                        <q-icon name="mdi-file-sync" /> {{props.row.invoiceData.status}}</div>
                     </q-badge>
                     <q-list class="text-subtitle2" dense>
                       <q-item class="q-pt-md">

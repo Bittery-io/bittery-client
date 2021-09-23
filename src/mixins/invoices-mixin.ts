@@ -13,8 +13,8 @@ export default GlobalMixin.extend({
   data() {
     return {
       filter: '',
-      invoiceStatus: 'all',
-      invoiceStatuses: ['all', 'new', 'expired', 'settled'],
+      invoiceStatus: 'ALL',
+      invoiceStatuses: ['ALL', 'NEW', 'EXPIRED', 'SETTLED'],
       orderByDate: 'newest first',
       orderByDateOptions: ['newest first', 'oldest first'],
       data: [],
@@ -53,18 +53,20 @@ export default GlobalMixin.extend({
       this.reorderByDate(this.filteredData);
     },
     filter() {
+      console.log(this.data);
       if (this.filter === '') {
         this.filteredData = this.data;
       } else {
         const filter: string = this.filter.toLowerCase();
         this.filteredData = this.data.filter((invoice: any) =>
-          invoice.currency.toLowerCase().includes(filter) ||
-          String(invoice.price).toLowerCase().includes(filter) ||
-          invoice.btcPrice.toLowerCase().includes(filter) ||
-          invoice.status.toLowerCase().includes(filter) ||
-          invoice.itemDesc.toLowerCase().includes(filter) ||
-          invoice.id.toLowerCase().includes(filter) ||
-          (props.row.invoiceData.metadata.buyerName && props.row.invoiceData.metadata.buyerName.toLowerCase().includes(filter)));
+          invoice.invoiceData.currency.toLowerCase().includes(filter) ||
+          String(invoice.invoiceData.amount).toLowerCase().includes(filter) ||
+          // invoice.btcPrice.toLowerCase().includes(filter) ||
+          invoice.invoiceData.status.toLowerCase().includes(filter) ||
+          invoice.invoiceData.id.toLowerCase().includes(filter) ||
+          (invoice.invoiceData.metadata && invoice.invoiceData.metadata.buyerName && invoice.invoiceData.metadata.buyerName.toLowerCase().includes(filter)) ||
+          (invoice.invoiceData.metadata && invoice.invoiceData.metadata.itemDesc && invoice.invoiceData.metadata.itemDesc.toLowerCase().includes(filter))
+        );
       }
     },
   },
@@ -104,14 +106,14 @@ export default GlobalMixin.extend({
     },
     reorderByDate(data: any[]) {
       if (this.orderByDate === 'newest first') {
-        data = data.sort((a: any, b: any) => b.invoiceTime - a.invoiceTime);
+        data = data.sort((a: any, b: any) => b.invoiceData.createdTime - a.invoiceData.createdTime);
       } else {
-        data = data.sort((a: any, b: any) => a.invoiceTime - b.invoiceTime);
+        data = data.sort((a: any, b: any) => a.invoiceData.createdTime - b.invoiceData.createdTime);
       }
     },
     reorderByStatus(data: any[]): any[] {
-      if (this.invoiceStatus !== 'all') {
-        return data.filter((invoice: any) => invoice.status.toLowerCase() === this.invoiceStatus.toLowerCase());
+      if (this.invoiceStatus !== 'ALL') {
+        return data.filter((invoice: any) => invoice.invoiceData.status.toLowerCase() === this.invoiceStatus.toLowerCase());
       } else {
         return this.data;
       }
