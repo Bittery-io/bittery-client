@@ -4,3 +4,5 @@
 # PORT=8080
 BTCPAY_URL=http://localhost
 CLIENT_URL=http://localhost:8080
+MASTER_PASSWORD=asdfasdf!1
+UNDERSTAND_MASTER_PASSWORD_CHECKBOX=true

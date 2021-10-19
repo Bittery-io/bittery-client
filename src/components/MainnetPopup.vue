@@ -1,7 +1,8 @@
 <template>
   <q-dialog persistent v-model="showPopup" v-if="showPopup" @hide="showPopup=false" :position="isMobile ? 'bottom' : 'standard'">
     <loader :show="showLoading" message="Bittery is loading"></loader>
-    <q-card class="bg-lime-4">
+<!--    <q-card class="bg-lime-4">-->
+    <q-card class="bg-orange-4">
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
@@ -11,10 +12,11 @@
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-h4 text-bold text-primary text-center q-pa-xs">
-              BETA MAINNET
+<!--              BETA MAINNET-->
+              BETA TESTNET
             </div>
             <div class="text-primary text-bold text-primary text-center text-body1">
-              Bittery is now beta version and uses Bitcoin Mainnet Network. <br>
+              Bittery is now beta version and uses Bitcoin Testnet Network. <br>
               Using Bittery please be aware that it's still under active development and uses experimental technology.<br>
             </div>
           </div>

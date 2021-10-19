@@ -12,7 +12,7 @@
             <div class="text-bold text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Registration succeed
             </div>
-            <div class="text-primary text-primary text-center text-body2">
+            <div class="text-primary text-center text-subtitle2">
               We've sent you account activation e-mail. Please check your inbox.
             </div>
           </div>

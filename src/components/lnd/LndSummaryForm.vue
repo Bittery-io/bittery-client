@@ -141,7 +141,7 @@
           </q-input>
         </div>
       </div>
-      <div class="row justify-end">
+      <div class="row justify-end" v-if="userLndDto.hostedLndType">
         <div class="col-auto justify-end">
           <q-field readonly borderless label="" stack-label v-if="userLndDto">
             <q-btn

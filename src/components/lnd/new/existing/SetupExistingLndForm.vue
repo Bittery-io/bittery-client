@@ -51,7 +51,7 @@
                   required
                   label="Your LN node REST API address"
                   :rules="[ val => (lnRestState.lndRestAddress !== undefined && lnRestState.lndRestAddress.$valid) || 'REST API address is required',
-                            val => (lnRestState.lndRestAddress !== undefined && !lndRestAddress.toUpperCase().startsWith('HTTP')) || 'Please skip the http/https prefix in the address.']">
+                            val => (lnRestState.lndRestAddress !== undefined && !(lndRestAddress.toUpperCase().startsWith('HTTP') || lndRestAddress.includes('://'))) || 'Please skip the http/https prefix in the address.']">
                   <template v-slot:before>
                     https://
                   </template>

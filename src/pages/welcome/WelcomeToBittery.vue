@@ -8,8 +8,7 @@
           <div class="col-12">
             <div class="text-center" :class="isMobile ? 'text-h3' : 'text-h2'">Welcome to <b>Bittery.io</b></div>
             <div class="text-center text-h5">
-              We are glad that you joined. <br>
-              We want enable everyone to accept <span class="text-bold text-orange-8">Bitcoin</span> payments easily.
+              We want to enable everyone accepting <span class="text-bold text-orange-8">Bitcoin</span> payments easily.
               <br>
               Please start by setting your master password.
             </div>

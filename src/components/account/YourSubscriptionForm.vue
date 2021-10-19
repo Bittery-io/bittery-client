@@ -6,37 +6,45 @@
                             @extendSubscriptionRequested="onExtendSubscriptionRequested">
     </subscription-pay-popup>
     <q-card-section>
-      <header-qchip text="Your Bittery subscription" icon="mdi-card-account-details"></header-qchip>
+      <header-qchip text="Your Bittery plan" icon="mdi-card-account-details"></header-qchip>
     </q-card-section>
     <q-card-section>
-      <div class="row" v-if="subscriptionRemainingDays <= 7 && subscriptionDto.subscriptionPlan !== 'FREE' && !isSubscriptionExpired">
+      <div class="row"
+           v-if="subscriptionRemainingDays <= 7 && subscriptionDto.subscriptionPlan !== 'FREE' && !isSubscriptionExpired">
         <div class="col-12">
           <warning-info-banner
             :icon-flash="true"
             class="q-mt-xs"
-            :text="`Your subscription will end at ${subscriptionEndDate} (${subscriptionRemainingDays} days left). Extend your subscription in order to remain Bittery services active.`">
+            :text="`Your subscription will end at ${subscriptionEndDate} (${subscriptionRemainingDays} days left). Extend your subscription in order to remain full Bittery payment services active.`">
           </warning-info-banner>
         </div>
       </div>
 
       <div class="row" v-if="subscriptionDto.subscriptionPlan !== 'FREE' && isSubscriptionExpired">
         <div class="col-12">
-          <warning-info-banner
-            class="q-mt-xs"
-            :text="`Your subscription is expired. Renew your subscription in order to use Bittery services.`">
-          </warning-info-banner>
+          <q-banner class="text-white text-bold bg-orange-8 q-mb-xs">
+            <template v-slot:avatar>
+              <q-icon name="error" color="white"/>
+            </template>
+            <div class="text-subtitle2">
+              Your subscription is expired. <br>
+              Currently you can receive Bitcoin payments only via standard transactions. <br>
+              Renew your subscription to restore full Bittery payment services (transactions and Lightning Network).
+            </div>
+          </q-banner>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
-          <q-field dense label="Subscription status" stack-label borderless>
-            <q-chip :color="subscriptionDto.subscriptionPlan !== 'FREE' ? (isSubscriptionExpired ? 'red-8' : 'primary') : 'primary'"
-                    dense
-                    class="text-subtitle2"
-                    square
-                    style="margin-left: 0;"
-                    text-color="white">
-              {{subscriptionDto.subscriptionStatus}}
+          <q-field dense label="Professional subscription status" stack-label borderless v-if="subscriptionDto.subscriptionPlan !== 'FREE'">
+            <q-chip
+              :color="subscriptionDto.subscriptionPlan !== 'FREE' ? (isSubscriptionExpired ? 'red-8' : 'primary') : 'primary'"
+              dense
+              class="text-subtitle2"
+              square
+              style="margin-left: 0;"
+              text-color="white">
+              {{ subscriptionDto.subscriptionStatus }}
             </q-chip>
             <template v-slot:before>
               <q-icon style="width:50px;padding-top:20%" color="primary" name="mdi-calendar"/>
@@ -49,12 +57,13 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <q-field dense label="Subscription plan" stack-label borderless>
-            <q-chip dense square color="primary"  class="" style="margin-left: 0;" text-color="white">
-              {{subscriptionDto.subscriptionPlan}}
+          <q-field dense label="Professional subscription plan" class="text-subtitle2" stack-label borderless>
+            <q-chip dense square color="primary" class="" style="margin-left: 0;" text-color="white">
+              {{ subscriptionDto.subscriptionPlan }}
             </q-chip>
-            <q-chip dense square color="primary" class="text-subtitle2" outline style="margin-left: 0;" text-color="white">
-              {{Number(subscriptionDto.monthlyPrice).toFixed(2)}} USD / month
+            <q-chip dense square color="primary" class="text-subtitle2" outline style="margin-left: 0;"
+                    text-color="white" v-if="subscriptionDto.subscriptionPlan !== 'FREE'">
+              {{ Number(subscriptionDto.monthlyPrice).toFixed(2) }} USD / month
             </q-chip>
             <template v-slot:before>
               <q-icon style="width:50px;" color="primary" name="mdi-order-bool-descending"/>
@@ -67,7 +76,7 @@
       </div>
       <div class="row" v-if="subscriptionDto.subscriptionPlan !== 'FREE' && !isSubscriptionExpired">
         <div class="col-12">
-          <q-field dense label="Active to" stack-label borderless>
+          <q-field dense label="Professional subscription active to" stack-label borderless>
             <q-chip color="red-8"
                     class="text-subtitle2"
                     square
@@ -93,19 +102,48 @@
           </q-field>
         </div>
       </div>
+      <hr>
 
+
+      <div class="row">
+        <div class="col-12">
+          <q-field dense label="Available receive payments methods" stack-label borderless>
+            <div style="padding-top:2px">
+              <q-badge class="text-bold " style="margin: 1px"
+                       v-if="subscriptionDto.subscriptionPlan === 'FREE' || (subscriptionDto.subscriptionPlan !== 'FREE' && !isSubscriptionExpired)">
+                <q-icon size="xs" name="mdi-flash" color="yellow-7"></q-icon>
+                LIGHTNING
+                <q-tooltip>
+                  You can receive instant payments via Lightning Network.
+                </q-tooltip>
+              </q-badge>
+              <q-badge class="text-bold " style="margin: 1px">
+                <q-icon size="xs" name="mdi-bitcoin" color="orange-8"></q-icon>
+                BITCOIN
+                <q-tooltip>
+                  You can receive standard Bitcoin transaction based payments.
+                </q-tooltip>
+              </q-badge>
+            </div>
+            <template v-slot:before>
+              <q-icon style="width:50px;padding-top:5px" color="primary" name="mdi-contactless-payment-circle"/>
+            </template>
+          </q-field>
+        </div>
+      </div>
       <div class="row justify-end" v-if="subscriptionDto.subscriptionPlan !== 'FREE'">
         <div class="col-auto justify-end">
           <q-field readonly borderless label="" stack-label>
             <q-btn
               glossy
               :label="isSubscriptionExpired ? 'Renew subscription' : 'Extend subscription'"
-              :color="isSubscriptionExpired ? 'red-8' : 'primary'"
+              :color="isSubscriptionExpired ? 'orange-8' : 'primary'"
               icon="mdi-bitcoin"
               @click="showSubscriptionPayPopup = !showSubscriptionPayPopup"/>
           </q-field>
         </div>
       </div>
+
     </q-card-section>
   </q-card>
 </template>
@@ -129,7 +167,16 @@ import SubscriptionPayPopup from 'components/account/SubscriptionPayPopup.vue';
 import WarningInfoBanner from 'components/utils/WarningInfoBanner.vue';
 
 export default GlobalMixin.extend({
-  components: { WarningInfoBanner, SubscriptionPayPopup, ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip, ConfirmLndRestartPopup, Loader },
+  components: {
+    WarningInfoBanner,
+    SubscriptionPayPopup,
+    ProvideMasterPasswordPopup,
+    QrCode,
+    QrCodePopup,
+    HeaderQchip,
+    ConfirmLndRestartPopup,
+    Loader
+  },
   name: 'YourSubscriptionForm',
   mixins: [LndFormMixin],
   data() {

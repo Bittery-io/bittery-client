@@ -158,6 +158,7 @@
       isPwd: true,
       isPwd2: true,
       resetRecaptcha: true,
+      //todo poprawic
       registerPasswordRegexp: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\[\]$&+,:;=?@#<>.^*()%!-\\'` ~_-])[A-Za-z\d\[\]$&+,:;=?@#<>.^*()%!-\\'` ~_-]{8,}$/),
     }),
     name: 'RegisterForm',

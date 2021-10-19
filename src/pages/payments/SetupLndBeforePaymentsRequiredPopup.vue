@@ -12,7 +12,7 @@
             <div class="text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Lightning Network (LN) is required for payments
             </div>
-            <div class="text-primary text-primary text-center text-subtitle2">
+            <div class="text-primary text-center text-subtitle2">
               You must setup Lightning Network before you will start accepting Bitcoin payments.
             </div>
           </div>

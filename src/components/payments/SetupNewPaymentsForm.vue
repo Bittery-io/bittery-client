@@ -164,7 +164,7 @@
                   counter
                   maxlength="50"
                   required
-                  :rules="[ val => (storeNameState.storeName !== undefined && storeNameState.storeName.$valid) || 'Store name is required - it is visible in payment widgets like in the preview.']"
+                  :rules="[ val => (storeNameState.storeName !== undefined && storeNameState.storeName.$valid && storeName.trim().length > 0) || 'Store name is required - it is visible in payment widgets like in the preview.']"
                   type='text'>
                   <template v-slot:prepend>
                     <q-icon color="primary" name="mdi-store"/>
@@ -272,7 +272,7 @@
         this.showLoading = true;
         let createUserBtcpayDto: CreateUserBtcpayDto;
         if (this.userHasElectrum) {
-          createUserBtcpayDto = new CreateUserBtcpayDto(this.storeName, undefined, undefined, this.electrumMasterPublicKey);
+          createUserBtcpayDto = new CreateUserBtcpayDto(this.storeName.trim(), undefined, undefined, this.electrumMasterPublicKey);
         } else {
           createUserBtcpayDto = new CreateUserBtcpayDto(
             this.storeName,

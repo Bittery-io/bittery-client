@@ -221,7 +221,7 @@ export default InvoicesMixin.extend({
         { label: 'Payment widget', align: 'left'},
         { label: 'Invoice validity', align: 'left'},
         { label: 'Invoice ID', align: 'left'},
-        { label: 'Paid date | Expiration time left', align: 'left'},
+        { label: 'Expiration time left | Paid date', align: 'left'},
         { label: 'Status', align: 'left'},
         { label: 'Payment done method', align: 'left'},
       ]

@@ -17,16 +17,10 @@
           <router-link to="/payments/overview">
             <bittery-logo></bittery-logo>
           </router-link>
-          <q-chip color="lime-4" text-color="primary" square class="text-bold"
-                  icon="mdi-bitcoin" size="md" clickable @click="showPopup">BETA Mainnet
+          <q-chip color="orange-4" text-color="primary" square class="text-bold"
+                  icon="mdi-bitcoin" size="md" clickable @click="showPopup">BETA Testnet
           </q-chip>
         </q-toolbar-title>
-
-<!--        <q-toolbar-title class="text-bold text-right" v-if="!$q.platform.is.mobile">-->
-<!--          <q-chip clickable color="accent" text-color="primary"-->
-<!--                  @click="openUrlTheSameTab('https://bittery.io')"-->
-<!--                  outline icon="mdi-home-circle" size="md">HOMEPAGE</q-chip>-->
-<!--        </q-toolbar-title>-->
       </q-toolbar>
     </q-header>
 

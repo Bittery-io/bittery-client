@@ -89,7 +89,7 @@ export default GlobalMixin.extend({
     return {
       isPwd: true,
       showPopup: false,
-      password: 'asdfasdf!1',
+      password: process.env.MASTER_PASSWORD ?? '',
       masterPasswordState: {},
       unlockButtonDisabled: false,
     };

@@ -103,7 +103,7 @@
             </div>
           </div>
           <div class="row" :class="isMobile ? 'q-pt-md' : `q-pt-xs`">
-            <div class="col-12">
+            <div class="col-12 text-bold text-body1">
               <validate>
                 <q-checkbox v-model="understandRules" label="I understand I cannot lose my master password because there is no technical possibility to reset, restore or remind it">
                 </q-checkbox>
@@ -139,12 +139,12 @@ export default GlobalMixin.extend({
       passwordState: {},
       showConfirmMasterPasswordPopup: false,
       showMasterPasswordSuccessfullySetPopup: false,
-      masterPassword: 'asdfasdf!1',
-      masterPasswordRepeat: 'asdfasdf!1',
+      masterPassword: process.env.MASTER_PASSWORD ?? '',
+      masterPasswordRepeat: process.env.MASTER_PASSWORD ?? '',
       isPwd: true,
-      understandRules: true,
+      understandRules: process.env.UNDERSTAND_MASTER_PASSWORD_CHECKBOX === 'true',
       //10 characters, 1 number and 1 special character
-      passwordRegexp: new RegExp(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[\[\]$&+,:;=?@#<>.^*()%!-\\'` ~_-])[A-Za-z\d\[\]$&+,:;=?@#<>.^*()%!-\\'` ~_-]{10,}$/),
+      passwordRegexp: new RegExp(/^(?=[^A-Z\s]*[A-Z])(?=[^a-z\s]*[a-z])(?=[^\d\s]*\d)(?=\w*[\W_])\S{10,}$/),
     };
   },
   computed: {

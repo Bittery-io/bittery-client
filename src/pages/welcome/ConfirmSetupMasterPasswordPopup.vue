@@ -79,7 +79,7 @@ export default WelcomeMixin.extend({
     return {
       isPwd: true,
       showPopup: false,
-      password: 'asdfasdf!1',
+      password: process.env.MASTER_PASSWORD ?? '',
       unlockButtonDisabled: false,
     };
   },

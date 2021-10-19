@@ -4,3 +4,5 @@
 # PORT=8080
 BTCPAY_URL=https://btcpay.bittery.io
 CLIENT_URL=https://app.bittery.io
+MASTER_PASSWORD=
+UNDERSTAND_MASTER_PASSWORD_CHECKBOX=false

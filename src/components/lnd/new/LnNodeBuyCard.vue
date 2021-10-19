@@ -32,7 +32,7 @@
             <q-item-label>
               3 days free trial
             </q-item-label>
-            <q-item-label caption class="text-red-8">Try Bittery then use discounts for longer subscription plans</q-item-label>
+            <q-item-label caption class="text-red-8">Try Bittery then use discounts for longer subscription plans or simply switch to Bittery free plan</q-item-label>
           </q-item-section>
         </q-item>
         <q-item>

@@ -12,7 +12,7 @@
             <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Payments are required for dashboard
             </div>
-            <div class="text-primary text-primary text-center text-subtitle2">
+            <div class="text-primary text-center text-subtitle2">
               You must setup your payments before you can access the dashboard.
             </div>
           </div>
