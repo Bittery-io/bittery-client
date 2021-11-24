@@ -100,8 +100,6 @@
 <script lang="ts">
 
 import GlobalMixin from 'src/mixins/global-mixin';
-import { get } from 'src/api/http-service';
-import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
 import Loader from 'components/utils/Loader.vue';
 import { sleep } from 'src/api/sleep-service';
 import BitteryLogo from 'components/utils/BitteryLogo.vue';
