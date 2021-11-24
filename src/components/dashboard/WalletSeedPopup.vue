@@ -101,6 +101,7 @@ export default GlobalMixin.extend({
   methods: {
     close() {
       // niepoprawne ale odswieza strone - wiec okej
+      // @ts-ignore
       this.$router.go('/dashboard');
     },
   },

@@ -263,6 +263,7 @@ import sha256 from 'js-sha256';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
 import { encryptSymmetricCtr } from 'src/api/encryption-service';
 import { SaveEncryptedAdminMacaroonDto } from 'src/dto/lnd/save-encrypted-admin-macaroon-dto';
+// @ts-ignore
 import { v4 as uuidv4 } from 'uuid';
 // 20ee27cd-5368-4a74-9390-004ff229858c
 export default GlobalMixin.extend({
@@ -352,6 +353,7 @@ export default GlobalMixin.extend({
         showNotificationInfo('LN Node password regenerated', 'New random password was generated');
       }
       this.isPwd = true;
+      // @ts-ignore
       this.lnPassword = sha256(uuidv4());
       this.step = 3;
     }

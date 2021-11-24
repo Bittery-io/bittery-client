@@ -96,17 +96,21 @@ export default GlobalMixin.extend({
   },
   watch: {
     show() {
+      // @ts-ignore
       this.showPopup = true;
     },
   },
   computed: {
     passwordMatchingPasswordProof() {
-      return isPasswordMatchingProof(this.password, getPasswordProof());
+      // @ts-ignore
+      return isPasswordMatchingProof(this.password, getPasswordProof()!);
     },
   },
   methods: {
     close() {
+      // @ts-ignore
       this.password = '';
+      // @ts-ignore
       this.showPopup = false;
     },
     async confirmPassword() {
@@ -114,7 +118,9 @@ export default GlobalMixin.extend({
       await this.sleep(1500);
       this.showLoading = false;
       await this.sleep(100);
+      // @ts-ignore
       this.$emit('passwordConfirmed', this.password);
+      // @ts-ignore
       this.close();
     },
   },

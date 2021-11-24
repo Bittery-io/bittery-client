@@ -130,6 +130,7 @@
           '/api/user/login',
           new LoginUserDto(
             this.email.trim(),
+            // @ts-ignore
             sha256(this.password),
           ),
           async (resp: any) => {

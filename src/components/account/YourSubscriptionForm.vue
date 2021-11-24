@@ -190,13 +190,16 @@ export default GlobalMixin.extend({
   },
   computed: {
     subscriptionEndDate() {
-      return formatDate(this.subscriptionDto.paidToDate);
+      // @ts-ignore
+      return formatDate((<any>this.subscriptionDto).paidToDate);
     },
     isSubscriptionExpired() {
-      return isDateExpired(this.subscriptionDto.paidToDate);
+      // @ts-ignore
+      return isDateExpired((<any>this.subscriptionDto).paidToDate);
     },
     subscriptionRemainingDays() {
-      return getDaysBetweenTwoDates(this.subscriptionDto.paidToDate, new Date().getTime());
+      // @ts-ignore
+      return getDaysBetweenTwoDates((<any>this.subscriptionDto).paidToDate, new Date().getTime());
     }
   },
   mounted() {

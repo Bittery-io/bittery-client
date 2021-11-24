@@ -149,6 +149,7 @@ export default GlobalMixin.extend({
   },
   computed: {
     masterPasswordIsCorrect() {
+      // @ts-ignore
       return this.passwordRegexp.test(this.masterPassword);
     },
   },

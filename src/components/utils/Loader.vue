@@ -36,6 +36,7 @@ import { QSpinnerPie } from 'quasar'
               message: `<div class="text-h6 bg-primary" style="padding: 3%;border: 1px solid white;">${this.message}</div>`,
               backgroundColor: 'primary',
             };
+          // @ts-ignore
           this.$q.loading.show(config);
         } else if (this.$q.loading.isActive) {
           this.$q.loading.hide();

@@ -37,7 +37,7 @@ export default GlobalMixin.extend({
     this.showLoading = true;
     get(this.$axios, '/api/account/subscription/billings', (res: any) => {
       this.showLoading = false;
-      this.invoices = res.data.map(billing => billing.invoice);
+      this.invoices = res.data.map((billing: any) => billing.invoice);
     }, async (err: any) => {
       this.showLoading = false;
       console.log('Getting billing dtos failed with err', err);

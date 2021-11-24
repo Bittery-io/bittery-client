@@ -22,9 +22,18 @@ export default GlobalMixin.extend({
       filterSavedData: [],
       priceFontSizes: [],
       createInvoiceButtonLocked: false,
-      usdFormatter: undefined,
-      eurFormatter: undefined,
-      plnFormatter: undefined,
+      usdFormatter: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }),
+      eurFormatter: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'EUR',
+      }),
+      plnFormatter: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'PLN',
+      }),
     };
   },
   mounted() {
@@ -76,11 +85,11 @@ export default GlobalMixin.extend({
     },
     currentPriceDependingOfCurrency(currency: string, price: string) {
       if (currency.toUpperCase() === 'PLN') {
-        return this.plnFormatter.format(price);
+        return this.plnFormatter.format(Number(price));
       } else if (currency.toUpperCase() === 'USD') {
-        return this.usdFormatter.format(price);
+        return this.usdFormatter.format(Number(price));
       } else if (currency.toUpperCase() === 'EUR') {
-        return this.eurFormatter.format(price);
+        return this.eurFormatter.format(Number(price));
       }
     },
     getPaymentDoneDate(row: any) {
@@ -89,8 +98,8 @@ export default GlobalMixin.extend({
         // todo tutaj nalezy wyfiltorwac te ktore maja w dodatku status Marked bo te sa oznaczone jako zaplacone
         // todo takzze wtedy ni emają listy payments (bo nie bylo platnosci)
         // if (!row.invoiceData.additionalStatus) {
-          console.log(row.invoicePayments.filter(invoicePayment => invoicePayment.payments.length > 0)[0].payments[0].receivedDate);
-          return new Date(row.invoicePayments.filter(invoicePayment => invoicePayment.payments.length > 0)[0].payments[0].receivedDate * 1000).getTime();
+          console.log(row.invoicePayments.filter((invoicePayment: any) => invoicePayment.payments.length > 0)[0].payments[0].receivedDate);
+          return new Date(row.invoicePayments.filter((invoicePayment: any) => invoicePayment.payments.length > 0)[0].payments[0].receivedDate * 1000).getTime();
         // }
       }
     },

@@ -144,13 +144,16 @@ export default GlobalMixin.extend({
     },
     watch: {
       show() {
+        // @ts-ignore
         this.showPopup = true;
+        // @ts-ignore
         this.restartClicked = false;
       },
     },
     computed: {
       newPaidToDate() {
         return formatOnlyDate(
+          // @ts-ignore
           addMonthsToDate(new Date(this.subscriptionDto.paidToDate).getTime(), this.selectedSubscriptionPaymentOption.value));
       },
       paidToDateFormatted() {
@@ -159,12 +162,15 @@ export default GlobalMixin.extend({
     },
     methods: {
       close() {
+        // @ts-ignore
         this.showPopup = false;
       },
       async extendSubscription() {
-          this.$emit('extendSubscriptionRequested', this.selectedSubscriptionPaymentOption.value);
+        // @ts-ignore
+        this.$emit('extendSubscriptionRequested', this.selectedSubscriptionPaymentOption.value);
           await sleep(200);
-          this.showPopup = false;
+        // @ts-ignore
+        this.showPopup = false;
       }
     },
   });

@@ -90,6 +90,7 @@
           await sleep(2000);
           this.showLoading = false;
           await sleep(100);
+          // @ts-ignore
           this.$router.go('/ln/overview');
         }, async () => {
           showNotificationError('LND unlock failed!', 'Error occurred on LND restarting');

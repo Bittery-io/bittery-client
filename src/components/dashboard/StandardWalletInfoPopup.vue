@@ -103,8 +103,10 @@ export default GlobalMixin.extend({
   computed: {
     rootPublicKeyLabel() {
       if (this.userBtcWalletDto) {
-        if (this.userBtcWalletDto.type === 'BIP49') {
+          // @ts-ignore
+        if (this.userBtcWalletDto!.type === 'BIP49') {
           return 'BIP49 Root Public Key';
+          // @ts-ignore
         } else if (this.userBtcWalletDto.type === 'ELECTRUM') {
           return 'Electrum master key';
         } else {
@@ -127,6 +129,7 @@ export default GlobalMixin.extend({
     async onPasswordConfirmed(password: string) {
       get(this.$axios, '/api/wallet/seed', (res: any) => {
         this.showSeedPopup = !this.showSeedPopup;
+        // @ts-ignore
         this.standardWalletSeed = decryptSymmetricCtr(res.data.seed, password);
       }, (err: any) => {
         showNotificationError('Getting standard wallet seed failed', 'Unexpected error occurred');

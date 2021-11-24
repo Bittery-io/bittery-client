@@ -183,21 +183,26 @@
     },
     computed: {
       isMacaroonHex() {
-        console.log(this.macaroonHex);
-        console.log(/^[a-fA-F0-9]+$/.test(this.macaroonHex));
+        // @ts-ignore
         return /^[a-fA-F0-9]+$/.test(this.macaroonHex);
       },
     },
     methods: {
       tlsCertFileUploaded(fileTextData: string) {
+        // @ts-ignore
         this.tlsCertFileText = fileTextData;
       },
       setupExistingLndNode() {
+          // @ts-ignore
         this.errorBannerMessage = '';
+          // @ts-ignore
         this.showLoading = true;
         post(this.$axios, '/api/lnd/external', {
+          // @ts-ignore
           macaroonHex: this.macaroonHex,
+          // @ts-ignore
           tlsCertFileText: this.tlsCertFileText,
+          // @ts-ignore
           lndRestAddress: `https://${this.lndRestAddress}`,
         }, async (err: any) => {
           this.showLoading = false;

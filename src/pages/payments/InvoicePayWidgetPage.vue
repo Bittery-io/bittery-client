@@ -18,6 +18,7 @@
       };
     },
     mounted() {
+      // @ts-ignore
       window.btcpay.onModalWillLeave(function () {
         window.close();
       });

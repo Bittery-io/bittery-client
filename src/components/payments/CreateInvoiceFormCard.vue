@@ -178,9 +178,18 @@
         currentBitcoinEurPrice: '',
         currentBitcoinPlnPrice: '',
         estimatedPriceInBitcoin: '',
-        usdFormatter: undefined,
-        plnFormatter: undefined,
-        eurFormatter: undefined,
+        usdFormatter: new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }),
+        plnFormatter: new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'PLN',
+        }),
+        eurFormatter: new Intl.NumberFormat('en-US', {
+          style: 'currency',
+          currency: 'EUR',
+        }),
         coingeckoResponded: false,
       };
     },
@@ -199,7 +208,7 @@
         currency: 'EUR',
       });
 
-      get(this.$axios, 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,eur,pln&include_last_updated_at=true', (res) => {
+      get(this.$axios, 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd,eur,pln&include_last_updated_at=true', (res: any) => {
         const currentPriceInUsd: number = res.data.bitcoin.usd;
         const currentPriceInEur: number = res.data.bitcoin.eur;
         const currentPriceInPln: number = res.data.bitcoin.pln;
@@ -209,7 +218,7 @@
           this.currentBitcoinPlnPrice = currentPriceInPln.toFixed(0);
           this.coingeckoResponded = true;
         }
-      });
+      }, (err: any) => {});
     },
     watch: {
       amount() {
@@ -228,14 +237,14 @@
       //copied in few places
       currentPriceDependingOfCurrency(currency: string) {
         if (currency.toUpperCase() === 'PLN') {
-          return this.plnFormatter.format(this.currentBitcoinPlnPrice);
+          return this.plnFormatter.format(Number(this.currentBitcoinPlnPrice));
         } else if (currency.toUpperCase() === 'USD') {
-          return this.usdFormatter.format(this.currentBitcoinUsdPrice);
+          return this.usdFormatter.format(Number(this.currentBitcoinUsdPrice));
         } else if (currency.toUpperCase() === 'EUR') {
-          return this.eurFormatter.format(this.currentBitcoinEurPrice);
+          return this.eurFormatter.format(Number(this.currentBitcoinEurPrice));
         }
       },
-      isNumber(event) {
+      isNumber(event: any) {
         const isCorrectNumberChar: boolean = this.numberInputChars.includes(event.key);
         if (!isCorrectNumberChar) {
           event.preventDefault();
@@ -267,7 +276,7 @@
           await this.sleep(200); // small sleep required
           this.showLoading = false;
           this.createInvoiceButtonLocked = false;
-          this.amount = 0;
+          this.amount = '0';
           this.$emit('invoiceCreated');
           showNotificationInfo('Invoice successfully created');
         }, (err: any) => {

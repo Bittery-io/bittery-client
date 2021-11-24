@@ -73,6 +73,7 @@ import Loader from 'components/utils/Loader.vue';
 import BitteryLogo from 'components/utils/BitteryLogo.vue';
 import BitteryLogoAnimated from 'components/utils/BitteryLogoAnimated.vue';
 import JSZip from 'jszip';
+// @ts-ignore
 import FileSaver from 'file-saver';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
 import { get } from 'src/api/http-service';

@@ -209,7 +209,10 @@ export default GlobalMixin.extend({
       totalPainInUsdLightning: '',
       totalPaidInUsdTransactions: '',
       currentBitcoinUsdPrice: '',
-      usdFormatter: undefined,
+      usdFormatter: new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      }),
     };
   },
   async mounted() {
@@ -218,7 +221,7 @@ export default GlobalMixin.extend({
       currency: 'USD',
     });
     // it is the same copied in createInvoiceFormCard so fix it to 1 place
-    get(this.$axios, 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_last_updated_at=true', (res) => {
+    get(this.$axios, 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_last_updated_at=true', (res: any) => {
       const currentPriceInUsd: number = res.data.bitcoin.usd;
       if (currentPriceInUsd) {
         this.currentBitcoinUsdPrice = this.usdFormatter.format(currentPriceInUsd);
@@ -226,7 +229,7 @@ export default GlobalMixin.extend({
         this.totalPainInUsdLightning = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedViaLightning);
         this.totalPaidInUsdTransactions = this.usdFormatter.format(currentPriceInUsd * this.dashboardInfo.totalReceivedViaTransactions);
       }
-    });
+    }, () => {});
     await this.sleep(200); // small sleep required
     this.timeframeValue = this.timeframe;
     const countUp = new CountUp('totalPaidInUsd', this.dashboardInfo.paidInvoicedAmountBtc, {

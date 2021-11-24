@@ -194,7 +194,9 @@
         post(this.$axios,
           '/api/user/register',
           {
+            // @ts-ignore
             password: sha256(this.password),
+            // @ts-ignore
             repeatPassword: sha256(this.password2),
             email: this.email.trim(),
             captchaCode: this.captchaCode,

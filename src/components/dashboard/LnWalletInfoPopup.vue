@@ -81,6 +81,7 @@ export default GlobalMixin.extend({
     async onPasswordConfirmed(password: string) {
       get(this.$axios, '/api/lnd/seed', (res: any) => {
         this.showSeedPopup = !this.showSeedPopup;
+        // @ts-ignore
         this.lnWalletSeed = decryptSymmetricCtr(res.data.encryptedArtefact, password);
       }, (err: any) => {
         showNotificationError('Getting LN node wallet seed failed', 'Unexpected error occurred');

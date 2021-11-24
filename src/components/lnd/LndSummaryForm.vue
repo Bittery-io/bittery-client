@@ -241,6 +241,7 @@
             await sleep(3000);
             this.showLoading = false;
             await sleep(100);
+            // @ts-ignore
             this.$router.go('/ln/overview');
           }, async () => {
             showNotificationError('LN Node unlocking failed!', 'Unlocking node failed, probably because of wrong master password.');

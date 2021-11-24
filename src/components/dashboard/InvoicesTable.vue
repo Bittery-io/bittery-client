@@ -238,13 +238,14 @@ export default InvoicesMixin.extend({
       return formatOnlyDate(date);
     },
     loadInvoices() {
+      // @ts-ignore
       this.data = this.invoices;
       this.filteredData = this.data;
       this.filteredData.sort((a: any, b: any) => b.invoiceData.createdTime - a.invoiceData.createdTime);
       this.filterSavedData = this.filteredData;
       console.log(this.filteredData);
     },
-    getAmountInBitcoin(row) {
+    getAmountInBitcoin(row: any) {
       const amount: string = row.invoicePayments[0].amount;
       if (amount === "0") {
         return row.invoicePayments[0].totalPaid;

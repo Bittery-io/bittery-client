@@ -305,6 +305,7 @@ export default GlobalMixin.extend({
             res.data.lndIpAddress,
             res.data.lndTlsCert,
             decryptSymmetricCtr(res.data.adminMacaroonEncrypted, masterPassword));
+          // @ts-ignore
           this.showQrCodePopup = !this.showQrCodePopup;
         }, () => {
           showNotificationError('Generating LN connect URI QR code failed', 'Internal server error occurred');
@@ -350,6 +351,7 @@ export default GlobalMixin.extend({
     },
     showQrCode() {
       if (this.connectUri !== 'initial_value') {
+        // @ts-ignore
         this.showQrCodePopup = !this.showQrCodePopup;
       } else {
         this.provideMasterPasswordPopupLoaderHeader = 'Decrypting your LN Node connection URI';

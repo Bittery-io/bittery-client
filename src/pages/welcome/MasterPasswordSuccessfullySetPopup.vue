@@ -57,6 +57,7 @@ export default GlobalMixin.extend({
   methods: {
     close() {
       this.showPopup = false;
+      // @ts-ignore
       this.$router.go();
     },
   },
