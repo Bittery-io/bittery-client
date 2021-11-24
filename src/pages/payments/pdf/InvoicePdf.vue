@@ -69,7 +69,6 @@
       const uri: string = this.$route.query.isBillingInvoice === 'true' ?
         `/api/account/subscription/pdf/${this.$route.params.invoiceId}` :
         `/api/payments/pdf/${this.$route.params.invoiceId}`;
-      console.log('mam to ziomo', Boolean(this.$route.query.isBillingInvoice), uri);
       get(this.$axios, uri, (res: any) => {
         this.showLoading = false;
         this.pdfData = {
