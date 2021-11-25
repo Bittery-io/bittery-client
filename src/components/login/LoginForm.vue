@@ -104,8 +104,8 @@
     components: { MainnetPopup, ErrorPopup, Loader },
     data: () => ({
       loginformstate: {},
-      email: 'peerzet3@gmail.com',
-      password: 'asdf',
+      email: '',
+      password: '',
       loginButtonLocked: false,
       emailInitialValid: true,
       passwordInitialValid: true,
