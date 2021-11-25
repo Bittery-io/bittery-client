@@ -20,3 +20,4 @@ yarn-error.log*
 *.sln
 *.log.gz
 src-cordova
+dist.tar.gz
