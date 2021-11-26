@@ -1,10 +1,18 @@
 <template>
   <q-card class="shadow-10 bg-grey-2" v-if="this.userLndDto">
     <loader :show="showLoading"></loader>
+    <error-popup header="LN Node wallet initialization failed"
+                 :error-message="errorBannerMessage"
+                 :show="errorBannerMessage !== ''">
+    </error-popup>
     <provide-master-password-popup :show="showConfirmMasterPasswordPopup"
                                    subheader="It is required for decrypting your LN Node password"
                                    @passwordConfirmed="onPasswordConfirmed"
                                    loader-header="Decrypting LN Node password">
+    </provide-master-password-popup>
+    <provide-master-password-popup :show="showConfirmMasterPasswordForLnInitPopup"
+                                   subheader="Password will be used for LN init data encryption"
+                                   @passwordConfirmed="onMasterPasswordForLnInitConfirmed">
     </provide-master-password-popup>
     <qr-code-popup :show="showQrCodePopup" :qr-code="userLndDto.lndConnectUri"></qr-code-popup>
     <confirm-lnd-restart-popup :show="showConfirmLndRestartPopup" :lnd-id="userLndDto.lndId" :turned-off="!isNotTurnedOff"></confirm-lnd-restart-popup>
@@ -163,7 +171,7 @@
               class="full-width"
               color="primary"
               icon="mdi-lock-open"
-              @click="$router.push(`/ln/setup/${userLndDto.lndId}/init/wallet`)">
+              @click="showConfirmMasterPasswordForLnInitPopup = !showConfirmMasterPasswordForLnInitPopup">
               <q-badge color="red" floating size>ACTION REQUIRED</q-badge>
             </q-btn>
           </q-field>
@@ -197,12 +205,17 @@
   import Loader from 'components/utils/Loader.vue';
   import { sleep } from 'src/api/sleep-service';
   import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
-  import { decryptSymmetricCtr } from 'src/api/encryption-service';
-  import sha256 from 'js-sha256';
+  import { decryptSymmetricCtr, encryptSymmetricCtr } from 'src/api/encryption-service';
   import RtlInsecurePopup from 'components/lnd/RtlInsecurePopup.vue';
+  import { LndInitWalletDto } from 'src/dto/lnd/lnd-init-wallet-dto';
+  import { SaveEncryptedAdminMacaroonDto } from 'src/dto/lnd/save-encrypted-admin-macaroon-dto';
+  import sha256 from 'js-sha256';
+  // @ts-ignore
+  import { v4 as uuidv4 } from 'uuid';
+  import ErrorPopup from 'components/utils/ErrorPopup.vue';
 
   export default GlobalMixin.extend({
-    components: { RtlInsecurePopup, ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip, ConfirmLndRestartPopup, Loader },
+    components: { RtlInsecurePopup, ProvideMasterPasswordPopup, QrCode, QrCodePopup, HeaderQchip, ConfirmLndRestartPopup, Loader, ErrorPopup },
     name: 'LndSummaryForm',
     mixins: [ LndFormMixin ],
     props: {
@@ -215,9 +228,12 @@
       return {
         isPwd: true,
         showConfirmMasterPasswordPopup: false,
+        showConfirmMasterPasswordForLnInitPopup: false,
         requestLndButtonDisabled: false,
         showConfirmLndRestartPopup: false,
         showRtlInsecurePopup: false,
+        seedMnemonic: [],
+        errorBannerMessage: '',
       };
     },
     computed: {
@@ -231,6 +247,42 @@
       },
       unlockLndNode() {
           this.showConfirmMasterPasswordPopup = !this.showConfirmMasterPasswordPopup;
+      },
+      onMasterPasswordForLnInitConfirmed(masterPassword: string) {
+        this.showLoading = true;
+        get(this.$axios, `/api/lnd/${this.userLndDto.lndId}/seed`, (res: any) => {
+          this.seedMnemonic = res.data;
+          // @ts-ignore
+          const lnPassword = sha256(uuidv4());
+          const lndInitWalletDto: LndInitWalletDto = new LndInitWalletDto(
+            lnPassword,
+            this.seedMnemonic,
+            encryptSymmetricCtr(lnPassword, masterPassword),
+            encryptSymmetricCtr(this.seedMnemonic.toString(), masterPassword));
+          post(this.$axios, `/api/lnd/${this.userLndDto.lndId}/initwallet`, lndInitWalletDto, async (res: any) => {
+            const saveEncryptedAdminMacaroonDto: SaveEncryptedAdminMacaroonDto =
+              new SaveEncryptedAdminMacaroonDto(encryptSymmetricCtr(res.data.adminMacaroonHex, masterPassword));
+            post(this.$axios, `/api/lnd/${this.userLndDto.lndId}/adminmacaroon`, saveEncryptedAdminMacaroonDto, async () => {
+              this.showLoading = false;
+              await this.sleep(200); // small sleep required
+              showNotificationInfo('LN Node wallet init succeed', 'Your LN Node is now ready to use');
+              //to odświeży url
+              // @ts-ignore
+              await this.$router.go('/ln/overview');
+            }, (err: any) => {
+              this.showLoading = false;
+              this.errorBannerMessage = 'Internal server error occurred. Please try again later.';
+              console.log(err);
+            });
+          }, (err: any) => {
+            this.showLoading = false;
+            this.errorBannerMessage = 'Internal server error occurred. Please try again later.';
+            console.log(err);
+          });
+        }, (err: any) => {
+          this.showLoading = false;
+          console.log(err);
+        });
       },
       onPasswordConfirmed(masterPassword: string) {
         this.showLoading = true;

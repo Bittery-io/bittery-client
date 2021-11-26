@@ -34,7 +34,6 @@ const routes: RouteConfig[] = [
       { path: 'setup/existing', component: () => import('pages/lnd/SetupExistingLndPage.vue') },
       { path: 'setup/new', component: () => import('pages/lnd/new/SetupNewLndPage.vue') },
       { path: 'setup/new/customize/:lndType', component: () => import('pages/lnd/new/CustomizeNewLndPage.vue') },
-      { path: 'setup/:lndId/init/wallet', component: () => import('pages/lnd/init/InitializeLndWalletPage.vue') },
       { path: 'overview', component: () => import('pages/lnd/LnOverviewPage.vue') },
     ],
   },
@@ -43,7 +42,7 @@ const routes: RouteConfig[] = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: 'overview', component: () => import('pages/payments/PaymentsOverviewPage.vue') },
-      { path: 'setup', component: () => import('pages/payments/SetupPaymentsPage.vue') },
+      // { path: 'setup', component: () => import('pages/payments/SetupPaymentsPage.vue') },
       { path: 'setup/new', component: () => import('pages/payments/SetupNewPaymentsPage.vue') },
       { path: 'pdf/:invoiceId', component: () => import('pages/payments/pdf/InvoicePdf.vue') },
     ],

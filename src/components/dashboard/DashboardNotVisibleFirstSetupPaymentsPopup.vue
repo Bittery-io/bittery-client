@@ -9,7 +9,7 @@
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
-            <div class="text-primary text-bold text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
+            <div class="text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
               Payments are required for dashboard
             </div>
             <div class="text-primary text-center text-subtitle2">
@@ -48,7 +48,7 @@ export default GlobalMixin.extend({
     return {
       showPopup: false,
       showLoading: false,
-      restartButtonDisabled: false,
+      buttonsDisabled: false,
       restartClicked: false,
     };
   },
@@ -60,7 +60,7 @@ export default GlobalMixin.extend({
   methods: {
     closeAndGoToSetupPayments() {
       this.showPopup = false;
-      this.$router.push('/payments/setup');
+      this.$router.push('/payments/setup/new');
     },
   },
 });

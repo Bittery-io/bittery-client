@@ -44,7 +44,7 @@
         this.showLoading = false;
       }, () => {
         this.showLoading = false;
-        this.$router.push('/payments/setup');
+        this.$router.push('/payments/setup/new');
       });
     },
     methods: {

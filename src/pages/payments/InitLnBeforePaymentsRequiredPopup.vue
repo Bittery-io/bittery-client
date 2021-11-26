@@ -4,22 +4,22 @@
       <q-card-section>
         <div class="row justify-center">
           <div class="col-auto text-primary">
-            <q-icon size="xl" name="mdi-flash-alert" color="primary"/>
+            <q-icon size="xl" name="mdi-flash-red-eye" color="primary"/>
           </div>
         </div>
         <div class="row justify-center q-pt-xs">
           <div class="col-auto items-center">
             <div class="text-primary text-center" :class="isMobile ? 'text-h6' : 'text-h5'">
-              Lightning Network (LN) is required for payments
+              Lightning Network node init required
             </div>
             <div class="text-primary text-center text-subtitle2">
-              You must setup Lightning Network before you will start accepting Bitcoin payments.
+              Your node is created but it must be yet initialized <br> before Bitcoin payments can be setup.
             </div>
           </div>
         </div>
         <div class="row justify-center q-pt-md">
           <div class="col-auto">
-            <q-btn glossy @click="close()" color="primary" text-color="white">SETUP LIGHTNING NETWORK</q-btn>
+            <q-btn glossy @click="close()" color="primary" text-color="white">INIT LN NODE</q-btn>
           </div>
         </div>
       </q-card-section>
@@ -35,7 +35,7 @@
 import GlobalMixin from 'src/mixins/global-mixin';
 
 export default GlobalMixin.extend({
-  name: 'SetupLndBeforePaymentsRequiredPopup',
+  name: 'InitLnBeforePaymentsRequiredPopup',
   components: {},
   props: {
     show: {
@@ -56,8 +56,7 @@ export default GlobalMixin.extend({
   methods: {
     close() {
       this.showPopup = false;
-      console.log('siemka');
-      this.$router.push('/ln/setup');
+      this.$router.push('/ln/overview');
     },
   },
 });

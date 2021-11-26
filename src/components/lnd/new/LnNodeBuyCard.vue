@@ -1,5 +1,9 @@
 <template>
-  <q-card class="grow text-center shadow-10 bg-grey-2" @click="$router.push(`/ln/setup/new/customize/${type}`)">
+  <q-card class="grow text-center shadow-10 bg-grey-2" @click="showConfirmLndSetupPopup = !showConfirmLndSetupPopup">
+    <confirm-new-lnd-setup-popup
+      :show="showConfirmLndSetupPopup" :type="type">
+
+    </confirm-new-lnd-setup-popup>
     <q-card-section>
       <q-item>
         <q-item-section>
@@ -134,11 +138,12 @@ import ErrorPopup from 'components/utils/ErrorPopup.vue';
 import Loader from 'components/utils/Loader.vue';
 import { get, post } from 'src/api/http-service';
 import { CountUp } from 'countup.js';
-import { showNotificationError } from 'src/api/notificatios-api';
+import { showNotificationError, showNotificationInfo } from 'src/api/notificatios-api';
+import ConfirmNewLndSetupPopup from 'components/lnd/ConfirmNewLndSetupPopup.vue';
 
 export default GlobalMixin.extend({
   name: 'SetupNewLndForm',
-  components: { ErrorPopup, Loader },
+  components: { ConfirmNewLndSetupPopup, ErrorPopup, Loader },
   props: {
     title: {
       type: String,
@@ -152,9 +157,10 @@ export default GlobalMixin.extend({
   data() {
     return {
       step: 1,
-      errorBannerMessage: '',
       lndVersion: '',
       lndPriceUsd: 0,
+      showLoading: false,
+      showConfirmLndSetupPopup: false,
     };
   },
   mounted() {
@@ -175,7 +181,7 @@ export default GlobalMixin.extend({
     }, async (err: any) => {
       showNotificationError('Fetching LND data failed', 'Unexpected server error occurred');
     });
-  },
+  }
 });
 
 </script>

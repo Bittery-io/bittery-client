@@ -8,7 +8,7 @@ export default GlobalMixin.extend({
   },
   mounted() {
     if (hasPasswordProofSet()) {
-      this.$router.push('/payments/setup');
+      this.$router.push('/payments/setup/new');
     }
   }
 });

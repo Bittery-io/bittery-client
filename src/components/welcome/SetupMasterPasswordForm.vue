@@ -142,15 +142,19 @@ export default GlobalMixin.extend({
       masterPassword: process.env.MASTER_PASSWORD ?? '',
       masterPasswordRepeat: process.env.MASTER_PASSWORD ?? '',
       isPwd: true,
-      understandRules: process.env.UNDERSTAND_MASTER_PASSWORD_CHECKBOX === 'true',
+      understandRules: Boolean(process.env.UNDERSTAND_MASTER_PASSWORD_CHECKBOX) === true,
       //10 characters, 1 number and 1 special character
       passwordRegexp: new RegExp(/^(?=[^A-Z\s]*[A-Z])(?=[^a-z\s]*[a-z])(?=[^\d\s]*\d)(?=\w*[\W_])\S{10,}$/),
     };
   },
   computed: {
     masterPasswordIsCorrect() {
-      // @ts-ignore
-      return this.passwordRegexp.test(this.masterPassword);
+      if (Boolean(process.env.IS_DEV)) {
+        return true;
+      } else {
+        // @ts-ignore
+        return this.passwordRegexp.test(this.masterPassword);
+      }
     },
   },
   methods: {
