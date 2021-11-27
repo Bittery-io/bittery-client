@@ -219,6 +219,9 @@
                 case 2:
                   this.errorBannerMessage = 'E-mail is incorrect. Please fix it.';
                   break;
+                case 9:
+                  this.errorBannerMessage = 'We are sorry but registration is currently disabled. We will notify you when it will be available again.';
+                  break;
                 default:
                   this.errorBannerMessage = 'Unexpected server error.';
               }
