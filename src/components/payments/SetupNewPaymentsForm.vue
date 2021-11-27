@@ -10,7 +10,7 @@
         subheader="Password will be used for payments related data encryption"
         @passwordConfirmed="onMasterPasswordConfirmed">
     </provide-master-password-popup>
-
+    <payments-setup-done-popup :show="showPaymentsSetupDonePopup"></payments-setup-done-popup>
     <q-stepper
       v-model="step"
       bordered
@@ -31,11 +31,11 @@
           payment widgets (like on a preview below) and PDF invoices.
         </div>
         <div class="row items-center justify-center">
-          <div class="col-lg-4 col-xs-auto q-pa-xs">
-            <q-img src="statics/store-name.png" class="shadow-8" style="width:250px; height:100%;">
+          <div class="col-lg-5 col-xs-auto q-pa-xs">
+            <q-img src="statics/store-name.png" class="shadow-8" style="max-width:300px; min-width:200px; height:100%;">
             </q-img>
           </div>
-          <div class="col-lg-8 col-xs-12 q-pa-xs">
+          <div class="col-lg-7 col-xs-12 q-pa-xs">
             <vue-form :state='storeNameState' @submit.prevent="() => {}">
               <validate>
                 <q-input
@@ -83,10 +83,11 @@ import WarningInfoBanner from 'components/utils/WarningInfoBanner.vue';
 import ProvideMasterPasswordPopup from 'components/welcome/ProvideMasterPasswordPopup.vue';
 import { encryptSymmetricCtr } from 'src/api/encryption-service';
 import Loader from 'components/utils/Loader.vue';
+import PaymentsSetupDonePopup from 'components/payments/PaymentsSetupDonePopup.vue';
 
 export default GlobalMixin.extend({
     name: 'SetupNewPayments',
-    components: { ProvideMasterPasswordPopup, WarningInfoBanner, ErrorPopup, Loader },
+    components: { PaymentsSetupDonePopup, ProvideMasterPasswordPopup, WarningInfoBanner, ErrorPopup, Loader },
     data() {
       return {
         storeNameState: {},
@@ -98,6 +99,7 @@ export default GlobalMixin.extend({
         masterPassword: '',
         showMasterPasswordPopup: false,
         showLoading: false,
+        showPaymentsSetupDonePopup: false,
       };
     },
     methods: {
@@ -128,8 +130,7 @@ export default GlobalMixin.extend({
         post(this.$axios, '/api/btcpay', createUserBtcpayDto, async () => {
           this.showLoading = false;
           await this.sleep(200); // small sleep required
-          showNotificationInfo('Payments services setup succeed', 'You are ready to create Bitcoin invoices');
-          await this.$router.push('/payments/overview');
+          this.showPaymentsSetupDonePopup = true;
         }, (err: any) => {
           this.showLoading = false;
           this.errorBannerMessage = 'Setup payments failed. Internal server error. Please try again later.';
