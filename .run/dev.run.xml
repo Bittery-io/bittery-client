@@ -3,7 +3,7 @@
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
-      <script value="start-dev" />
+      <script value="dev" />
     </scripts>
     <node-interpreter value="$USER_HOME$/.local/share/nvm/v14.15.5/bin/node" />
     <envs />
