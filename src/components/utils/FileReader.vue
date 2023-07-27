@@ -56,7 +56,6 @@
         const reader = new FileReader();
         console.log(this.asBase);
         if (this.asBase) {
-          console.log('czytam jako base64');
           reader.readAsDataURL(files[0]);
         } else {
           reader.readAsText(files[0], 'UTF-8');
